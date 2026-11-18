@@ -56,6 +56,11 @@
                 <span>অ্যাসাইন করা অর্ডারসমূহ</span>
             </a>
 
+            <a href="{{ route('designer.withdrawals') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ request()->routeIs('designer.withdrawals*') ? 'bg-teal-600 text-white font-bold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                <i class="fa-solid fa-money-bill-transfer w-4 text-center"></i>
+                <span>টাকা উত্তোলন (Payout)</span>
+            </a>
+
             <div class="text-[10px] uppercase font-bold text-slate-400 px-3 pt-4 pb-1 tracking-wider">প্রোফাইল ও সেটিংস</div>
 
             <a href="{{ route('designer.profile') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ request()->routeIs('designer.profile') ? 'bg-teal-600 text-white font-bold shadow-md' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">

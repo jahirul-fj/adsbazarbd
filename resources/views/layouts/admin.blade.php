@@ -92,6 +92,17 @@
                 @endif
             </a>
 
+            <a href="{{ route('admin.withdrawals') }}" class="flex items-center justify-between px-3 py-2.5 rounded-xl transition-all {{ request()->routeIs('admin.withdrawals*') ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-indigo-600' }}">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-wallet w-4 text-center"></i>
+                    <span>উইথড্র রিকোয়েস্ট</span>
+                </div>
+                @php $pWth = \App\Models\WithdrawalRequest::where('status', 'pending')->count(); @endphp
+                @if($pWth > 0)
+                    <span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-100 text-rose-800 border border-rose-200 font-bold">{{ $pWth }}</span>
+                @endif
+            </a>
+
             <div class="text-[10px] uppercase font-bold text-slate-400 px-3 pt-4 pb-1 tracking-wider">মার্কেটপ্লেস ও কনফিগারেশন</div>
 
             <a href="{{ route('admin.orders') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ request()->routeIs('admin.orders*') ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-indigo-600' }}">

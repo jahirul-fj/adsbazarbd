@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\DesignerProfile;
 use App\Models\DesignOrder;
 use App\Models\DesignOrderMessage;
+use App\Models\SystemSetting;
+use App\Models\WithdrawalRequest;
 use Illuminate\Http\Request;
 
 class DesignerDashboardController extends Controller
@@ -33,7 +35,11 @@ class DesignerDashboardController extends Controller
             ->take(5)
             ->get();
 
-        return view('designer.dashboard', compact('profile', 'activeOrdersCount', 'completedOrdersCount', 'recentOrders'));
+        $minWithdrawal = (float) SystemSetting::get('min_withdrawal_amount', 500.00);
+        $commissionPercent = (float) SystemSetting::get('designer_commission_percent', 15.00);
+        $recentWithdrawals = WithdrawalRequest::where('user_id', $userId)->latest()->take(5)->get();
+
+        return view('designer.dashboard', compact('profile', 'activeOrdersCount', 'completedOrdersCount', 'recentOrders', 'minWithdrawal', 'commissionPercent', 'recentWithdrawals'));
     }
 
     public function myOrders()
@@ -52,7 +58,9 @@ class DesignerDashboardController extends Controller
             ->where('designer_id', auth()->id())
             ->findOrFail($id);
 
-        return view('designer.order-show', compact('order'));
+        $commissionPercent = (float) SystemSetting::get('designer_commission_percent', 15.00);
+
+        return view('designer.order-show', compact('order', 'commissionPercent'));
     }
 
     public function sendOrderMessage(Request $request, $id)
@@ -134,5 +142,49 @@ class DesignerDashboardController extends Controller
         $profile->save();
 
         return back()->with('success', 'আপনার ডিজাইনার প্রোফাইল সফলভাবে আপডেট করা হয়েছে!');
+    }
+
+    public function withdrawals()
+    {
+        $userId = auth()->id();
+        $minWithdrawal = (float) SystemSetting::get('min_withdrawal_amount', 500.00);
+        $withdrawals = WithdrawalRequest::where('user_id', $userId)->latest()->paginate(10);
+
+        return view('designer.withdrawals', compact('minWithdrawal', 'withdrawals'));
+    }
+
+    public function requestWithdrawal(Request $request)
+    {
+        $user = auth()->user();
+        $minWithdrawal = (float) SystemSetting::get('min_withdrawal_amount', 500.00);
+
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:' . $minWithdrawal,
+            'payment_method' => 'required|in:bkash,nagad,rocket,bank',
+            'account_number' => 'required|string|max:50',
+            'account_details' => 'nullable|string|max:500',
+        ], [
+            'amount.min' => 'নূন্যতম উইথড্রয়াল পরিমাণ ৳' . number_format($minWithdrawal, 0) . ' হতে হবে।',
+        ]);
+
+        if ($user->balance < $validated['amount']) {
+            return back()->with('error', 'আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই। বর্তমান উত্তোলনযোগ্য ব্যালেন্স: ৳' . number_format($user->balance, 2));
+        }
+
+        // Deduct from user balance
+        $user->balance -= $validated['amount'];
+        $user->save();
+
+        WithdrawalRequest::create([
+            'request_no' => 'WTH-' . date('Ymd') . '-' . rand(1000, 9999),
+            'user_id' => $user->id,
+            'amount' => $validated['amount'],
+            'payment_method' => $validated['payment_method'],
+            'account_number' => $validated['account_number'],
+            'account_details' => $validated['account_details'] ?? null,
+            'status' => 'pending',
+        ]);
+
+        return back()->with('success', 'টাকা উত্তোলনের আবেদন সফলভাবে গৃহীত হয়েছে! অ্যাডমিন ভেরিফাই করে পেমেন্ট পাঠিয়ে দেবে।');
     }
 }

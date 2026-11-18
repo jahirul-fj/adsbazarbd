@@ -36,10 +36,21 @@
             <div class="text-xs text-slate-500 mt-1">সফলভাবে ডেলিভারি সম্পন্ন</div>
         </div>
 
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
-            <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">মোট ব্যালেন্স / আয়</div>
-            <div class="text-3xl font-black text-teal-700 mt-1">৳{{ number_format(auth()->user()->balance, 2) }}</div>
-            <div class="text-xs text-slate-500 mt-1">উইথড্র যোগ্য ফান্ড</div>
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">মোট ব্যালেন্স / আয়</span>
+                    <span class="text-[10px] font-bold px-2 py-0.5 bg-teal-50 text-teal-700 rounded-full border border-teal-200">ফি: {{ $commissionPercent }}%</span>
+                </div>
+                <div class="text-3xl font-black text-teal-700 mt-1">৳{{ number_format(auth()->user()->balance, 2) }}</div>
+                <div class="text-[11px] text-slate-500 mt-1">মিনিমাম উইথড্র: ৳{{ number_format($minWithdrawal) }}</div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100">
+                <a href="{{ route('designer.withdrawals') }}" class="w-full inline-flex justify-center items-center gap-1.5 py-2 px-3 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors">
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                    <span>উইথড্র রিকোয়েস্ট করুন</span>
+                </a>
+            </div>
         </div>
 
         <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs">
@@ -95,6 +106,57 @@
                     @empty
                         <tr>
                             <td colspan="7" class="p-8 text-center text-xs text-slate-400">এখনো কোনো অর্ডার পাওয়া যায়নি।</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Recent Withdrawals Section -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="p-5 border-b border-slate-100 flex justify-between items-center">
+            <h2 class="font-bold text-base text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-clock-rotate-left text-teal-600"></i> সাম্প্রতিক টাকা উত্তোলনের আবেদনসমূহ
+            </h2>
+            <a href="{{ route('designer.withdrawals') }}" class="text-xs font-bold text-teal-600 hover:underline">উইথড্রয়াল হিস্ট্রি &rarr;</a>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs sm:text-sm">
+                <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold">
+                    <tr>
+                        <th class="p-3.5">রিকোয়েস্ট নং</th>
+                        <th class="p-3.5">মেথড ও নম্বর</th>
+                        <th class="p-3.5">পরিমাণ</th>
+                        <th class="p-3.5">স্ট্যাটাস</th>
+                        <th class="p-3.5">ট্রানজেকশন আইডি</th>
+                        <th class="p-3.5">তারিখ</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse($recentWithdrawals as $req)
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="p-3.5 font-mono font-bold text-slate-900">{{ $req->request_no }}</td>
+                            <td class="p-3.5">
+                                <span class="font-bold text-slate-800 uppercase">{{ $req->payment_method }}</span>
+                                <div class="text-[11px] text-slate-500 font-mono">{{ $req->account_number }}</div>
+                            </td>
+                            <td class="p-3.5 font-black text-slate-900">৳{{ number_format($req->amount, 2) }}</td>
+                            <td class="p-3.5">
+                                @if($req->status === 'approved')
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">অনুমোদিত (পেইড)</span>
+                                @elseif($req->status === 'rejected')
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-800">বাতিল (রিফান্ডেড)</span>
+                                @else
+                                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">অপেক্ষমাণ (Pending)</span>
+                                @endif
+                            </td>
+                            <td class="p-3.5 font-mono text-[11px] text-slate-600">{{ $req->trx_id ?? '---' }}</td>
+                            <td class="p-3.5 text-slate-500 text-[11px]">{{ $req->created_at->format('d M, Y h:i A') }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="p-8 text-center text-xs text-slate-400">এখনো কোনো উইথড্রয়াল আবেদন করা হয়নি।</td>
                         </tr>
                     @endforelse
                 </tbody>

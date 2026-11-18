@@ -20,6 +20,9 @@ class DesignOrder extends Model
         'ad_size_requirement',
         'attachment_file',
         'budget',
+        'platform_commission_percent',
+        'platform_commission_amount',
+        'designer_earning',
         'revisions_remaining',
         'status',
         'escrow_funded',
@@ -32,6 +35,9 @@ class DesignOrder extends Model
     {
         return [
             'budget' => 'decimal:2',
+            'platform_commission_percent' => 'decimal:2',
+            'platform_commission_amount' => 'decimal:2',
+            'designer_earning' => 'decimal:2',
             'revisions_remaining' => 'integer',
             'escrow_funded' => 'boolean',
             'rating' => 'integer',

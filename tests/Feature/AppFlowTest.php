@@ -222,9 +222,128 @@ class AppFlowTest extends TestCase
         $this->get('/admin/newspapers')->assertStatus(200);
         $this->get('/admin/categories')->assertStatus(200);
         $this->get('/admin/design-orders')->assertStatus(200);
+        $this->get('/admin/withdrawals')->assertStatus(200);
         $this->get('/admin/payments')->assertStatus(200);
         $this->get('/admin/settings')->assertStatus(200);
         $this->get('/admin/designers')->assertStatus(200);
         $this->get('/admin/users')->assertStatus(200);
+    }
+
+    public function test_commission_and_withdrawal_lifecycle(): void
+    {
+        \App\Models\SystemSetting::set('designer_commission_percent', '20');
+        \App\Models\SystemSetting::set('min_withdrawal_amount', '500');
+
+        $designer = User::where('role', 'designer')->first();
+        $designer->update(['balance' => 0.00]);
+
+        $client = User::where('role', 'client')->first();
+
+        // Create an active order for this designer
+        $order = DesignOrder::create([
+            'order_no' => 'ORD-TEST-101',
+            'client_id' => $client->id,
+            'designer_id' => $designer->id,
+            'title' => 'টেস্ট ব্যানার ডিজাইন',
+            'ad_size_requirement' => '4x4 ইঞ্চি',
+            'brief_description' => 'টেস্ট ব্রিফ বিবরণী',
+            'budget' => 1000.00,
+            'status' => 'draft_submitted',
+            'revisions_allowed' => 3,
+            'revisions_remaining' => 3,
+            'payment_status' => 'escrow_held',
+            'payment_trx_id' => 'ESCROW-TRX-101',
+        ]);
+
+        // 1. Client approves design order
+        $this->actingAs($client)
+            ->post('/client/orders/' . $order->id . '/approve')
+            ->assertRedirect();
+
+        $order->refresh();
+        $designer->refresh();
+
+        $this->assertEquals('completed', $order->status);
+        $this->assertEquals(20.00, (float) $order->platform_commission_percent);
+        $this->assertEquals(200.00, (float) $order->platform_commission_amount);
+        $this->assertEquals(800.00, (float) $order->designer_earning);
+        $this->assertEquals(800.00, (float) $designer->balance);
+
+        // 2. Designer attempts withdrawal below minimum (300 < 500)
+        $this->actingAs($designer);
+        $failMinRes = $this->post('/designer/withdrawals', [
+            'amount' => 300,
+            'payment_method' => 'bkash',
+            'account_number' => '01711223344',
+        ]);
+        $failMinRes->assertSessionHasErrors(['amount']);
+        $this->assertEquals(800.00, (float) $designer->fresh()->balance);
+
+        // 3. Designer attempts withdrawal exceeding balance (1500 > 800)
+        $failBalRes = $this->post('/designer/withdrawals', [
+            'amount' => 1500,
+            'payment_method' => 'bkash',
+            'account_number' => '01711223344',
+        ]);
+        $failBalRes->assertSessionHas('error');
+        $this->assertEquals(800.00, (float) $designer->fresh()->balance);
+
+        // 4. Designer submits valid withdrawal of 600
+        $validRes = $this->from(route('designer.withdrawals'))->post('/designer/withdrawals', [
+            'amount' => 600,
+            'payment_method' => 'bkash',
+            'account_number' => '01711223344',
+            'account_details' => 'Personal Account',
+        ]);
+        $validRes->assertRedirect(route('designer.withdrawals'));
+        $designer->refresh();
+        $this->assertEquals(200.00, (float) $designer->balance);
+
+        $withdrawal = \App\Models\WithdrawalRequest::where('user_id', $designer->id)->latest()->first();
+        $this->assertNotNull($withdrawal);
+        $this->assertEquals('pending', $withdrawal->status);
+        $this->assertEquals(600.00, (float) $withdrawal->amount);
+
+        // 5. Admin rejects withdrawal -> balance must be refunded back to designer
+        $admin = User::where('role', 'admin')->first();
+        $this->actingAs($admin)
+            ->post('/admin/withdrawals/' . $withdrawal->id . '/status', [
+                'status' => 'rejected',
+                'admin_notes' => 'ভুল বিকাশ নম্বর দেওয়া হয়েছে।',
+            ])
+            ->assertRedirect();
+
+        $withdrawal->refresh();
+        $designer->refresh();
+        $this->assertEquals('rejected', $withdrawal->status);
+        $this->assertEquals(800.00, (float) $designer->balance); // 200 + 600 refunded
+
+        // 6. Designer submits another withdrawal for 700 and Admin approves
+        $this->actingAs($designer)
+            ->post('/designer/withdrawals', [
+                'amount' => 700,
+                'payment_method' => 'nagad',
+                'account_number' => '01811223344',
+            ])
+            ->assertRedirect();
+
+        $designer->refresh();
+        $this->assertEquals(100.00, (float) $designer->balance); // 800 - 700
+
+        $newWithdrawal = \App\Models\WithdrawalRequest::where('user_id', $designer->id)->latest()->first();
+
+        $this->actingAs($admin)
+            ->post('/admin/withdrawals/' . $newWithdrawal->id . '/status', [
+                'status' => 'approved',
+                'trx_id' => 'NAGAD-TXN-998877',
+                'admin_notes' => 'সফলভাবে টাকা পাঠানো হয়েছে।',
+            ])
+            ->assertRedirect();
+
+        $newWithdrawal->refresh();
+        $designer->refresh();
+        $this->assertEquals('approved', $newWithdrawal->status);
+        $this->assertEquals('NAGAD-TXN-998877', $newWithdrawal->trx_id);
+        $this->assertEquals(100.00, (float) $designer->balance);
     }
 }

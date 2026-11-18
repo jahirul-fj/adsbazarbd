@@ -11,6 +11,7 @@ use App\Models\Newspaper;
 use App\Models\PaymentRecord;
 use App\Models\SystemSetting;
 use App\Models\User;
+use App\Models\WithdrawalRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -29,6 +30,8 @@ class AdminDashboardController extends Controller
             'total_newspapers' => Newspaper::count(),
             'active_orders' => DesignOrder::whereIn('status', ['in_progress', 'draft_submitted', 'revision_requested'])->count(),
             'completed_ads' => ClassifiedAd::where('status', 'published')->count() + DisplayAd::where('status', 'published')->count(),
+            'total_commission_earnings' => DesignOrder::where('status', 'completed')->sum('platform_commission_amount'),
+            'pending_withdrawals' => WithdrawalRequest::where('status', 'pending')->count(),
         ];
 
         // Monthly revenue chart data (last 6 months)
@@ -304,6 +307,8 @@ class AdminDashboardController extends Controller
             'rocket_number',
             'bank_info',
             'cash_pickup_notice',
+            'designer_commission_percent',
+            'min_withdrawal_amount',
         ];
 
         foreach ($keys as $k) {
@@ -313,5 +318,51 @@ class AdminDashboardController extends Controller
         }
 
         return back()->with('success', 'সিস্টেম সেটিংস সফলভাবে সেভ করা হয়েছে!');
+    }
+
+    public function withdrawals(Request $request)
+    {
+        $query = WithdrawalRequest::with('user.designerProfile')->latest();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $withdrawals = $query->paginate(15)->withQueryString();
+
+        return view('admin.withdrawals', compact('withdrawals'));
+    }
+
+    public function updateWithdrawalStatus(Request $request, $id)
+    {
+        $withdrawal = WithdrawalRequest::findOrFail($id);
+
+        $validated = $request->validate([
+            'status' => 'required|in:approved,rejected',
+            'trx_id' => 'nullable|string|max:100',
+            'admin_notes' => 'nullable|string|max:1000',
+        ]);
+
+        if ($withdrawal->status === 'pending' && $validated['status'] === 'rejected') {
+            // Refund the requested amount back to designer balance
+            $designer = $withdrawal->user;
+            if ($designer) {
+                $designer->balance += $withdrawal->amount;
+                $designer->save();
+            }
+        }
+
+        $withdrawal->update([
+            'status' => $validated['status'],
+            'trx_id' => $validated['trx_id'] ?? $withdrawal->trx_id,
+            'admin_notes' => $validated['admin_notes'] ?? $withdrawal->admin_notes,
+            'processed_at' => now(),
+        ]);
+
+        $msg = $validated['status'] === 'approved' 
+            ? 'টাকা উত্তোলনের আবেদন সফলভাবে অনুমোদন ও পরিশোধিত হিসেবে মার্ক করা হয়েছে!' 
+            : 'টাকা উত্তোলনের আবেদন বাতিল করা হয়েছে এবং ডিজাইনারের ব্যালেন্সে টাকা রিফান্ড করা হয়েছে।';
+
+        return back()->with('success', $msg);
     }
 }

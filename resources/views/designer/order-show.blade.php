@@ -20,10 +20,27 @@
             </div>
         </div>
 
-        <div class="text-left md:text-right pr-4">
+        <div class="text-left md:text-right pr-4 space-y-1">
             <div class="text-xs text-slate-400">মোট পারিশ্রমিক (এসক্রো)</div>
             <div class="text-2xl font-black text-teal-600">৳{{ number_format($order->budget, 2) }}</div>
-            <div class="text-xs text-slate-500 mt-1">ক্লায়েন্টের রিভিশন বাকি: <strong>{{ $order->revisions_remaining }}</strong> টি</div>
+            @if($order->status === 'completed')
+                <div class="inline-block bg-teal-50 border border-teal-200 rounded-lg p-2 text-left text-[11px] space-y-0.5 mt-1">
+                    <div class="text-slate-600 flex justify-between gap-4">
+                        <span>প্ল্যাটফর্ম ফি ({{ $order->platform_commission_percent ?? 15 }}%):</span>
+                        <span class="font-bold text-rose-600">-৳{{ number_format($order->platform_commission_amount ?? ($order->budget * 0.15), 2) }}</span>
+                    </div>
+                    <div class="text-emerald-700 font-black flex justify-between gap-4 pt-1 border-t border-teal-200">
+                        <span>আপনার নিট আয়:</span>
+                        <span>৳{{ number_format($order->designer_earning ?? ($order->budget * 0.85), 2) }}</span>
+                    </div>
+                    <div class="text-[10px] text-emerald-600 font-semibold text-center mt-1">✓ ব্যালেন্সে যোগ হয়েছে</div>
+                </div>
+            @else
+                <div class="text-[11px] text-slate-500">
+                    প্ল্যাটফর্ম ফি: <strong>{{ $commissionPercent }}%</strong> | সম্ভাব্য আয়: <strong>৳{{ number_format($order->budget * (1 - ($commissionPercent / 100)), 2) }}</strong>
+                </div>
+                <div class="text-[10px] text-slate-400">রিভিশন বাকি: <strong>{{ $order->revisions_remaining }}</strong> টি</div>
+            @endif
         </div>
     </div>
 

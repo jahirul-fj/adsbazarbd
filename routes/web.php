@@ -74,6 +74,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/design-orders', [AdminDashboardController::class, 'designOrders'])->name('orders');
         Route::get('/payments', [AdminDashboardController::class, 'payments'])->name('payments');
         Route::post('/payments/{id}/status', [AdminDashboardController::class, 'updatePaymentStatus'])->name('payments.status');
+        Route::get('/withdrawals', [AdminDashboardController::class, 'withdrawals'])->name('withdrawals');
+        Route::post('/withdrawals/{id}/status', [AdminDashboardController::class, 'updateWithdrawalStatus'])->name('withdrawals.status');
         Route::get('/settings', [AdminDashboardController::class, 'settings'])->name('settings');
         Route::post('/settings', [AdminDashboardController::class, 'updateSettings'])->name('settings.update');
     });
@@ -124,6 +126,8 @@ Route::prefix('designer')->name('designer.')->group(function () {
         Route::get('/orders', [DesignerDashboardController::class, 'myOrders'])->name('orders');
         Route::get('/orders/{id}', [DesignerDashboardController::class, 'showOrder'])->name('order.show');
         Route::post('/orders/{id}/message', [DesignerDashboardController::class, 'sendOrderMessage'])->name('order.message');
+        Route::get('/withdrawals', [DesignerDashboardController::class, 'withdrawals'])->name('withdrawals');
+        Route::post('/withdrawals', [DesignerDashboardController::class, 'requestWithdrawal'])->name('withdrawals.request');
         Route::get('/profile', [DesignerDashboardController::class, 'profile'])->name('profile');
         Route::post('/profile', [DesignerDashboardController::class, 'updateProfile'])->name('profile.update');
     });

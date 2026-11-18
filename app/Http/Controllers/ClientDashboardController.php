@@ -6,6 +6,7 @@ use App\Models\ClassifiedAd;
 use App\Models\DesignOrder;
 use App\Models\DesignOrderMessage;
 use App\Models\DisplayAd;
+use App\Models\SystemSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -133,13 +134,21 @@ class ClientDashboardController extends Controller
             return back()->with('info', 'অর্ডারটি ইতিমধ্যে সম্পন্ন হয়েছে।');
         }
 
+        // Calculate dynamic platform commission
+        $commissionPercent = (float) SystemSetting::get('designer_commission_percent', 15.00);
+        $commissionAmount = round($order->budget * ($commissionPercent / 100), 2);
+        $designerEarning = round($order->budget - $commissionAmount, 2);
+
         $order->status = 'completed';
+        $order->platform_commission_percent = $commissionPercent;
+        $order->platform_commission_amount = $commissionAmount;
+        $order->designer_earning = $designerEarning;
         $order->save();
 
-        // Release escrow money to designer balance
+        // Release net earnings to designer balance
         $designer = User::find($order->designer_id);
         if ($designer) {
-            $designer->balance += $order->budget;
+            $designer->balance += $designerEarning;
             $designer->save();
 
             if ($designer->designerProfile) {
@@ -147,7 +156,7 @@ class ClientDashboardController extends Controller
             }
         }
 
-        return back()->with('success', 'ডিজাইনটি চূড়ান্তভাবে অনুমোদিত হয়েছে এবং ডিজাইনারকে এসক্রো পেমেন্ট প্রদান করা হয়েছে!');
+        return back()->with('success', 'ডিজাইনটি চূড়ান্তভাবে অনুমোদিত হয়েছে এবং ডিজাইনারকে নিট পেমেন্ট (৳' . number_format($designerEarning, 2) . ') প্রদান করা হয়েছে!');
     }
 
     public function submitReview(Request $request, $id)

@@ -78,6 +78,33 @@
         </div>
     </div>
 
+    <!-- Platform Monetization Banner -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div class="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 border border-indigo-200/80 rounded-2xl p-5 flex items-center justify-between">
+            <div>
+                <span class="text-[11px] font-bold text-indigo-700 uppercase tracking-wider">ডিজাইন কমিশন থেকে প্ল্যাটফর্ম নিট লাভ</span>
+                <div class="text-2xl font-black text-slate-900 mt-1">৳{{ number_format($metrics['total_commission_earnings'], 2) }}</div>
+                <p class="text-[11px] text-slate-500 mt-1">ক্লায়েন্টের ডিজাইন অর্ডার সম্পন্ন হওয়ার সাথে সাথে স্বয়ংক্রিয়ভাবে জমা হয়েছে</p>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl shadow-md">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+            </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-200/80 rounded-2xl p-5 flex items-center justify-between">
+            <div>
+                <span class="text-[11px] font-bold text-amber-800 uppercase tracking-wider">পেন্ডিং ডিজাইনার পে-আউট রিকোয়েস্ট</span>
+                <div class="text-2xl font-black text-slate-900 mt-1">{{ $metrics['pending_withdrawals'] }} <span class="text-sm font-normal text-slate-500">টি আবেদন</span></div>
+                <a href="{{ route('admin.withdrawals', ['status' => 'pending']) }}" class="text-[11px] text-amber-700 font-bold hover:underline mt-1 inline-block">
+                    আবেদন যাচাই ও পেমেন্ট পাঠান &rarr;
+                </a>
+            </div>
+            <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center text-xl shadow-md">
+                <i class="fa-solid fa-wallet"></i>
+            </div>
+        </div>
+    </div>
+
     <!-- Analytics Charts Section -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Monthly Revenue Chart (Visual Bar Representation) -->

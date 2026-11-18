@@ -31,6 +31,8 @@ class DatabaseSeeder extends Seeder
             'rocket_number' => '01779-870454-8',
             'bank_info' => 'ডাচ বাংলা ব্যাংক লিমিটেড, একাউন্ট নাম: Ads Bazar BD Ltd, একাউন্ট নং: 123.120.98765, ব্র্যাঞ্চ: ধানমন্ডি শাখা',
             'cash_pickup_notice' => 'শুধুমাত্র ঢাকা মহানগরীর ভেতরের ঠিকানার জন্য ক্যাশ পিকআপ প্রযোজ্য।',
+            'designer_commission_percent' => '15',
+            'min_withdrawal_amount' => '500',
         ];
 
         foreach ($settings as $key => $val) {

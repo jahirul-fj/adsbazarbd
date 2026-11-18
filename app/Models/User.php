@@ -79,4 +79,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(DesignOrder::class, 'designer_id');
     }
+
+    public function withdrawalRequests(): HasMany
+    {
+        return $this->hasMany(WithdrawalRequest::class);
+    }
 }
