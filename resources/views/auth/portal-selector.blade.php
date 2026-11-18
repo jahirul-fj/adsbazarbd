@@ -64,24 +64,24 @@
         </div>
 
         <!-- Portal 3: Admin -->
-        <div class="bg-slate-900 text-white rounded-3xl p-8 border border-slate-800 shadow-xl hover:shadow-2xl hover:border-indigo-500 transition-all duration-300 flex flex-col justify-between group">
+        <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-indigo-500 transition-all duration-300 flex flex-col justify-between group">
             <div class="space-y-4">
-                <div class="w-16 h-16 rounded-2xl bg-indigo-600/30 text-indigo-400 flex items-center justify-center text-3xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                <div class="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-3xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                     <i class="fa-solid fa-shield-halved"></i>
                 </div>
                 <div>
-                    <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">সিস্টেম কন্ট্রোল</span>
-                    <h3 class="text-xl font-black text-white mt-0.5">অ্যাডমিন পোর্টাল</h3>
+                    <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">সিস্টেম কন্ট্রোল</span>
+                    <h3 class="text-xl font-black text-slate-900 mt-0.5">অ্যাডমিন পোর্টাল</h3>
                 </div>
-                <p class="text-xs text-slate-400 leading-relaxed">
+                <p class="text-xs text-slate-600 leading-relaxed">
                     বিজ্ঞাপনের অনুমোদন, পেমেন্ট ভেরিফিকেশন, সংবাদপত্রের রেট আপডেট ও সিস্টেম সেটিংস ব্যবস্থাপনার জন্য।
                 </p>
             </div>
             <div class="pt-6 space-y-2">
-                <a href="{{ route('admin.login') }}" class="w-full inline-flex items-center justify-center gap-2 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg transition-colors">
+                <a href="{{ route('admin.login') }}" class="w-full inline-flex items-center justify-center gap-2 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors">
                     অ্যাডমিন সিকিউর লগইন <i class="fa-solid fa-lock text-[10px]"></i>
                 </a>
-                <div class="text-[11px] text-center text-slate-500 py-1 font-semibold">
+                <div class="text-[11px] text-center text-slate-400 py-1 font-semibold">
                     অননুমোদিত প্রবেশ নিষেধ
                 </div>
             </div>
