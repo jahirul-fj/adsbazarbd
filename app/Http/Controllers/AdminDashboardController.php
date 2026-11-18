@@ -13,6 +13,7 @@ use App\Models\SystemSetting;
 use App\Models\User;
 use App\Models\WithdrawalRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class AdminDashboardController extends Controller
@@ -364,5 +365,59 @@ class AdminDashboardController extends Controller
             : 'টাকা উত্তোলনের আবেদন বাতিল করা হয়েছে এবং ডিজাইনারের ব্যালেন্সে টাকা রিফান্ড করা হয়েছে।';
 
         return back()->with('success', $msg);
+    }
+
+    public function profile()
+    {
+        $user = auth()->user();
+        return view('admin.profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'phone' => 'required|string|max:30',
+            'bio' => 'nullable|string|max:500',
+            'avatar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $path;
+        }
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->phone = $validated['phone'];
+        $user->bio = $validated['bio'] ?? null;
+        $user->save();
+
+        return back()->with('success', 'আপনার অ্যাডমিন প্রোফাইল সফলভাবে আপডেট করা হয়েছে!');
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'current_password' => 'required|string',
+            'password' => 'required|string|min:6|confirmed',
+        ], [
+            'password.confirmed' => 'নতুন পাসওয়ার্ড নিশ্চিতকরণ মিলছে না।',
+            'password.min' => 'নতুন পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে।',
+        ]);
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->with('error', 'আপনার বর্তমান পাসওয়ার্ডটি সঠিক নয়!');
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return back()->with('success', 'আপনার পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে!');
     }
 }

@@ -155,19 +155,30 @@
                 <i class="fa-solid fa-gear w-4 text-center"></i>
                 <span>সিস্টেম সেটিংস</span>
             </a>
+
+            <div class="text-[10px] uppercase font-bold text-slate-400 px-3 pt-4 pb-1 tracking-wider">অ্যাকাউন্ট ও নিরাপত্তা</div>
+
+            <a href="{{ route('admin.profile') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ request()->routeIs('admin.profile*') ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-indigo-600' }}">
+                <i class="fa-solid fa-user-shield w-4 text-center"></i>
+                <span>প্রোফাইল ও পাসওয়ার্ড</span>
+            </a>
         </nav>
 
         <!-- Admin Profile Bottom (Pinned to bottom of sidebar) -->
         <div class="shrink-0 p-4 border-t border-slate-100 bg-slate-50/70 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
-                    {{ mb_substr(auth()->user()->name, 0, 1) }}
-                </div>
+            <a href="{{ route('admin.profile') }}" class="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+                @if(auth()->user()->avatar_url)
+                    <img src="{{ auth()->user()->avatar_url }}" alt="Avatar" class="w-8 h-8 rounded-full object-cover shadow-xs border border-slate-200">
+                @else
+                    <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                        {{ mb_substr(auth()->user()->name, 0, 1) }}
+                    </div>
+                @endif
                 <div class="truncate max-w-[120px]">
                     <div class="text-xs font-bold text-slate-900 truncate">{{ auth()->user()->name }}</div>
-                    <div class="text-[10px] text-slate-400 font-medium">সুপার অ্যাডমিন</div>
+                    <div class="text-[10px] text-slate-400 font-medium">প্রোফাইল এডিট &rarr;</div>
                 </div>
-            </div>
+            </a>
             <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf
                 <button type="submit" title="লগআউট" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">

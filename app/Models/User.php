@@ -55,6 +55,14 @@ class User extends Authenticatable
         return $this->role === 'client';
     }
 
+    public function getAvatarUrlAttribute(): ?string
+    {
+        if ($this->avatar) {
+            return str_starts_with($this->avatar, 'http') ? $this->avatar : asset('storage/' . $this->avatar);
+        }
+        return null;
+    }
+
     public function designerProfile(): HasOne
     {
         return $this->hasOne(DesignerProfile::class);

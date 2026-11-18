@@ -78,6 +78,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/withdrawals/{id}/status', [AdminDashboardController::class, 'updateWithdrawalStatus'])->name('withdrawals.status');
         Route::get('/settings', [AdminDashboardController::class, 'settings'])->name('settings');
         Route::post('/settings', [AdminDashboardController::class, 'updateSettings'])->name('settings.update');
+        Route::get('/profile', [AdminDashboardController::class, 'profile'])->name('profile');
+        Route::post('/profile', [AdminDashboardController::class, 'updateProfile'])->name('profile.update');
+        Route::post('/password', [AdminDashboardController::class, 'updatePassword'])->name('password.update');
     });
 });
 
@@ -104,6 +107,9 @@ Route::prefix('client')->name('client.')->group(function () {
         Route::post('/orders/{id}/message', [ClientDashboardController::class, 'sendOrderMessage'])->name('order.message');
         Route::post('/orders/{id}/approve', [ClientDashboardController::class, 'approveOrder'])->name('order.approve');
         Route::post('/orders/{id}/review', [ClientDashboardController::class, 'submitReview'])->name('order.review');
+        Route::get('/profile', [ClientDashboardController::class, 'profile'])->name('profile');
+        Route::post('/profile', [ClientDashboardController::class, 'updateProfile'])->name('profile.update');
+        Route::post('/password', [ClientDashboardController::class, 'updatePassword'])->name('password.update');
     });
 });
 
@@ -130,5 +136,6 @@ Route::prefix('designer')->name('designer.')->group(function () {
         Route::post('/withdrawals', [DesignerDashboardController::class, 'requestWithdrawal'])->name('withdrawals.request');
         Route::get('/profile', [DesignerDashboardController::class, 'profile'])->name('profile');
         Route::post('/profile', [DesignerDashboardController::class, 'updateProfile'])->name('profile.update');
+        Route::post('/password', [DesignerDashboardController::class, 'updatePassword'])->name('password.update');
     });
 });

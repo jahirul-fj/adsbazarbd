@@ -98,15 +98,19 @@
         </nav>
 
         <div class="shrink-0 p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 rounded-full bg-teal-500 text-slate-950 flex items-center justify-center font-bold text-xs">
-                    {{ mb_substr(auth()->user()->name, 0, 1) }}
-                </div>
+            <a href="{{ route('designer.profile') }}" class="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+                @if(auth()->user()->avatar_url)
+                    <img src="{{ auth()->user()->avatar_url }}" alt="Avatar" class="w-8 h-8 rounded-full object-cover border border-teal-500/40">
+                @else
+                    <div class="w-8 h-8 rounded-full bg-teal-500 text-slate-950 flex items-center justify-center font-bold text-xs">
+                        {{ mb_substr(auth()->user()->name, 0, 1) }}
+                    </div>
+                @endif
                 <div class="truncate max-w-[120px]">
                     <div class="text-xs font-bold text-white truncate">{{ auth()->user()->name }}</div>
                     <div class="text-[10px] text-teal-400 font-bold">৳{{ number_format(auth()->user()->balance, 0) }} ব্যালেন্স</div>
                 </div>
-            </div>
+            </a>
             <form action="{{ route('designer.logout') }}" method="POST">
                 @csrf
                 <button type="submit" title="লগআউট" class="p-2 text-slate-400 hover:text-rose-400 transition-colors">

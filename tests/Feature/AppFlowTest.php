@@ -346,4 +346,114 @@ class AppFlowTest extends TestCase
         $this->assertEquals('NAGAD-TXN-998877', $newWithdrawal->trx_id);
         $this->assertEquals(100.00, (float) $designer->balance);
     }
+
+    public function test_admin_profile_and_password_update(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+        $this->actingAs($admin);
+
+        // View profile
+        $this->get('/admin/profile')->assertStatus(200);
+
+        // Update profile
+        $this->post('/admin/profile', [
+            'name' => 'সুপার অ্যাডমিন আপডেট',
+            'email' => 'admin_updated@adsbazarbd.com',
+            'phone' => '01999887766',
+            'bio' => 'আপডেটেড বায়ো বিবরণ',
+        ])->assertRedirect();
+
+        $admin->refresh();
+        $this->assertEquals('সুপার অ্যাডমিন আপডেট', $admin->name);
+        $this->assertEquals('admin_updated@adsbazarbd.com', $admin->email);
+        $this->assertEquals('01999887766', $admin->phone);
+        $this->assertEquals('আপডেটেড বায়ো বিবরণ', $admin->bio);
+
+        // Password update fail on incorrect current password
+        $failPass = $this->post('/admin/password', [
+            'current_password' => 'wrong_password',
+            'password' => 'newpassword123',
+            'password_confirmation' => 'newpassword123',
+        ]);
+        $failPass->assertSessionHas('error');
+
+        // Password update success
+        $successPass = $this->post('/admin/password', [
+            'current_password' => 'password',
+            'password' => 'newpassword123',
+            'password_confirmation' => 'newpassword123',
+        ]);
+        $successPass->assertRedirect();
+        $admin->refresh();
+        $this->assertTrue(\Illuminate\Support\Facades\Hash::check('newpassword123', $admin->password));
+    }
+
+    public function test_client_profile_and_password_update(): void
+    {
+        $client = User::where('role', 'client')->first();
+        $this->actingAs($client);
+
+        // View profile
+        $this->get('/client/profile')->assertStatus(200);
+
+        // Update profile
+        $this->post('/client/profile', [
+            'name' => 'ক্লায়েন্ট ইউজার আপডেট',
+            'email' => 'client_updated@adsbazarbd.com',
+            'phone' => '01777665544',
+            'bio' => 'গুলশান ২, ঢাকা',
+        ])->assertRedirect();
+
+        $client->refresh();
+        $this->assertEquals('ক্লায়েন্ট ইউজার আপডেট', $client->name);
+        $this->assertEquals('client_updated@adsbazarbd.com', $client->email);
+        $this->assertEquals('01777665544', $client->phone);
+
+        // Password update
+        $this->post('/client/password', [
+            'current_password' => 'password',
+            'password' => 'clientSecret456',
+            'password_confirmation' => 'clientSecret456',
+        ])->assertRedirect();
+
+        $client->refresh();
+        $this->assertTrue(\Illuminate\Support\Facades\Hash::check('clientSecret456', $client->password));
+    }
+
+    public function test_designer_profile_and_password_update(): void
+    {
+        $designer = User::where('role', 'designer')->first();
+        $this->actingAs($designer);
+
+        // View profile
+        $this->get('/designer/profile')->assertStatus(200);
+
+        // Update profile
+        $this->post('/designer/profile', [
+            'name' => 'তানভীর রহমান প্রো',
+            'email' => 'tanvir_pro@adsbazarbd.com',
+            'phone' => '01888776655',
+            'tagline' => 'সিনিয়র বিজ্ঞাপন আর্ট ডিরেক্টর',
+            'about' => '৮ বছরের অধিক প্রি-প্রেস ও পত্রিকা বিজ্ঞাপন ডিজাইনের দীর্ঘ অভিজ্ঞতা রয়েছে।',
+            'experience_years' => 8,
+            'starting_rate' => 800,
+            'skills' => 'Illustrator, Photoshop, InDesign',
+            'is_available' => 1,
+        ])->assertRedirect();
+
+        $designer->refresh();
+        $this->assertEquals('তানভীর রহমান প্রো', $designer->name);
+        $this->assertEquals('tanvir_pro@adsbazarbd.com', $designer->email);
+        $this->assertEquals('সিনিয়র বিজ্ঞাপন আর্ট ডিরেক্টর', $designer->designerProfile->tagline);
+
+        // Password update
+        $this->post('/designer/password', [
+            'current_password' => 'password',
+            'password' => 'designerSecret789',
+            'password_confirmation' => 'designerSecret789',
+        ])->assertRedirect();
+
+        $designer->refresh();
+        $this->assertTrue(\Illuminate\Support\Facades\Hash::check('designerSecret789', $designer->password));
+    }
 }
