@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Reporter - সহজে জাতীয় পত্রিকায় বিজ্ঞাপন ও ডিজাইনার প্ল্যাটফর্ম')
+@section('title', 'Ads Bazar BD - সহজে জাতীয় পত্রিকায় বিজ্ঞাপন ও ডিজাইনার প্ল্যাটফর্ম')
 
 @section('content')
 <!-- Hero Section -->

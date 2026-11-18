@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'ডিজাইনার পোর্টাল লগইন - Reporter')
+@section('title', 'ডিজাইনার পোর্টাল লগইন - Ads Bazar BD')
 
 @section('content')
 <div class="min-h-[75vh] flex items-center justify-center px-4 py-12">
@@ -20,9 +20,9 @@
         <div class="p-3.5 bg-teal-50/70 rounded-2xl border border-teal-200 text-xs flex items-center justify-between">
             <div>
                 <div class="font-bold text-teal-900">ডিজাইনার ডেমো অ্যাকাউন্ট:</div>
-                <div class="text-[11px] text-slate-600 font-mono">tanvir@reporter.test | password</div>
+                <div class="text-[11px] text-slate-600 font-mono">tanvir@adsbazarbd.com | password</div>
             </div>
-            <button type="button" onclick="document.getElementById('email').value='tanvir@reporter.test'; document.getElementById('password').value='password';" class="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-[11px] font-bold rounded-lg transition-colors shadow-xs">
+            <button type="button" onclick="document.getElementById('email').value='tanvir@adsbazarbd.com'; document.getElementById('password').value='password';" class="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-[11px] font-bold rounded-lg transition-colors shadow-xs">
                 অটো-ফিল
             </button>
         </div>
@@ -31,7 +31,7 @@
             @csrf
             <div>
                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">ডিজাইনার ইমেইল</label>
-                <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="tanvir@reporter.test" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-teal-500 focus:bg-white focus:outline-hidden" required>
+                <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="tanvir@adsbazarbd.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-teal-500 focus:bg-white focus:outline-hidden" required>
             </div>
 
             <div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'সচরাচর জিজ্ঞাসা (FAQ) - Reporter | Procharok')
+@section('title', 'সচরাচর জিজ্ঞাসা (FAQ) - Ads Bazar BD')
 
 @section('content')
 <div class="bg-slate-900 text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
@@ -23,11 +23,11 @@
         <div class="space-y-3">
             <details class="group bg-white p-5 rounded-2xl border border-slate-200 shadow-xs" open>
                 <summary class="font-bold text-sm text-slate-800 cursor-pointer flex justify-between items-center list-none">
-                    <span>১. Reporter / প্রচারক প্ল্যাটফর্ম কী এবং এটি কীভাবে কাজ করে?</span>
+                    <span>১. Ads Bazar BD প্ল্যাটফর্ম কী এবং এটি কীভাবে কাজ করে?</span>
                     <i class="fa-solid fa-chevron-down text-xs text-slate-400 group-open:rotate-180 transition-transform"></i>
                 </summary>
                 <p class="text-xs text-slate-600 mt-3 leading-relaxed">
-                    Reporter একটি অনলাইন-বেসড প্রোগ্রাম্যাটিক অফলাইন সংবাদপত্র বিজ্ঞাপন প্ল্যাটফর্ম। প্রথাগত এজেন্টদের খোঁজার ঝামেলা ছাড়াই ঘরে বসে দেশের শীর্ষ সকল বাংলা ও ইংরেজি পত্রিকায় সহজে বিজ্ঞাপন প্রকাশ এবং পেশাদার গ্রাফিক ডিজাইনার দিয়ে বিজ্ঞাপন প্রস্তুত করার সুবিধা দিয়ে থাকে।
+                    Ads Bazar BD একটি অনলাইন-বেসড প্রোগ্রাম্যাটিক অফলাইন সংবাদপত্র বিজ্ঞাপন প্ল্যাটফর্ম। প্রথাগত এজেন্টদের খোঁজার ঝামেলা ছাড়াই ঘরে বসে দেশের শীর্ষ সকল বাংলা ও ইংরেজি পত্রিকায় সহজে বিজ্ঞাপন প্রকাশ এবং পেশাদার গ্রাফিক ডিজাইনার দিয়ে বিজ্ঞাপন প্রস্তুত করার সুবিধা দিয়ে থাকে।
                 </p>
             </details>
 

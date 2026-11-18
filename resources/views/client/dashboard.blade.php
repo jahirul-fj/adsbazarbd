@@ -1,6 +1,6 @@
 @extends('layouts.client')
 
-@section('title', 'গ্রাহক ড্যাশবোর্ড - Reporter')
+@section('title', 'গ্রাহক ড্যাশবোর্ড - Ads Bazar BD')
 @section('page_title', 'ড্যাশবোর্ড ওভারভিউ')
 
 @section('content')

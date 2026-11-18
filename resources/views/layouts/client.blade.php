@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'গ্রাহক ড্যাশবোর্ড - Reporter Ads')</title>
+    <title>@yield('title', 'গ্রাহক ড্যাশবোর্ড - Ads Bazar BD')</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,7 +37,7 @@
             </div>
             <div>
                 <div class="font-extrabold text-lg text-slate-900 tracking-tight flex items-center gap-1.5">
-                    Reporter <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold uppercase">গ্রাহক</span>
+                    Ads Bazar BD <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold uppercase">গ্রাহক</span>
                 </div>
                 <div class="text-[10px] text-slate-500">বিজ্ঞাপনদাতা ড্যাশবোর্ড</div>
             </div>

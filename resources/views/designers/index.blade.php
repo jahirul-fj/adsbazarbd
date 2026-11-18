@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'গ্রাফিক ডিজাইনার ডিরেক্টরি - Reporter | Procharok')
+@section('title', 'গ্রাফিক ডিজাইনার ডিরেক্টরি - Ads Bazar BD')
 
 @section('content')
 <div class="bg-slate-900 text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-800">

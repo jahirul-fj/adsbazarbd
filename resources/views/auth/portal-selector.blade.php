@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'লগইন পোর্টাল নির্বাচন করুন - Reporter')
+@section('title', 'লগইন পোর্টাল নির্বাচন করুন - Ads Bazar BD')
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-10">

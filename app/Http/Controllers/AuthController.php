@@ -252,9 +252,9 @@ class AuthController extends Controller
     public function quickLogin($role)
     {
         $email = match ($role) {
-            'admin' => 'admin@reporter.test',
-            'designer' => 'tanvir@reporter.test',
-            default => 'client@reporter.test',
+            'admin' => 'admin@adsbazarbd.com',
+            'designer' => 'tanvir@adsbazarbd.com',
+            default => 'client@adsbazarbd.com',
         };
 
         $user = User::where('email', $email)->first();

@@ -21,15 +21,15 @@ class DatabaseSeeder extends Seeder
     {
         // 1. System Settings
         $settings = [
-            'site_name' => 'Reporter (প্রচারক - অনলাইন সংবাদপত্র বিজ্ঞাপন প্ল্যাটফর্ম)',
+            'site_name' => 'Ads Bazar BD (অনলাইন সংবাদপত্র বিজ্ঞাপন প্ল্যাটফর্ম)',
             'site_tagline' => 'ঘরে বসেই সহজে যেকোনো জাতীয় পত্রিকায় বিজ্ঞাপন দিন ও দক্ষ ডিজাইনার হায়ার করুন',
             'helpline_phone' => '01854-820303',
-            'helpline_email' => 'contact@reporter.com.bd',
+            'helpline_email' => 'contact@adsbazarbd.com',
             'office_address' => 'বাড়ি # ১২, রোড # ০৫, ধানমন্ডি, ঢাকা-১২০৫, বাংলাদেশ',
             'bkash_merchant_number' => '01779-870454',
             'nagad_merchant_number' => '01854-820303',
             'rocket_number' => '01779-870454-8',
-            'bank_info' => 'ডাচ বাংলা ব্যাংক লিমিটেড, একাউন্ট নাম: Reporter Ads Ltd, একাউন্ট নং: 123.120.98765, ব্র্যাঞ্চ: ধানমন্ডি শাখা',
+            'bank_info' => 'ডাচ বাংলা ব্যাংক লিমিটেড, একাউন্ট নাম: Ads Bazar BD Ltd, একাউন্ট নং: 123.120.98765, ব্র্যাঞ্চ: ধানমন্ডি শাখা',
             'cash_pickup_notice' => 'শুধুমাত্র ঢাকা মহানগরীর ভেতরের ঠিকানার জন্য ক্যাশ পিকআপ প্রযোজ্য।',
         ];
 
@@ -249,7 +249,7 @@ class DatabaseSeeder extends Seeder
         // 4. Create Users (Admin, Clients, Designers)
         $admin = User::create([
             'name' => 'সিস্টেম অ্যাডমিন (Admin)',
-            'email' => 'admin@reporter.test',
+            'email' => 'admin@adsbazarbd.com',
             'phone' => '01854820303',
             'role' => 'admin',
             'password' => Hash::make('password'),
@@ -258,7 +258,7 @@ class DatabaseSeeder extends Seeder
 
         $client = User::create([
             'name' => 'রফিকুল ইসলাম',
-            'email' => 'client@reporter.test',
+            'email' => 'client@adsbazarbd.com',
             'phone' => '01711223344',
             'role' => 'client',
             'password' => Hash::make('password'),
@@ -268,7 +268,7 @@ class DatabaseSeeder extends Seeder
 
         $designerUser1 = User::create([
             'name' => 'তানভীর আহমেদ',
-            'email' => 'tanvir@reporter.test',
+            'email' => 'tanvir@adsbazarbd.com',
             'phone' => '01911223344',
             'role' => 'designer',
             'password' => Hash::make('password'),
@@ -298,7 +298,7 @@ class DatabaseSeeder extends Seeder
 
         $designerUser2 = User::create([
             'name' => 'নুসরাত জাহান রিয়া',
-            'email' => 'nusrat@reporter.test',
+            'email' => 'nusrat@adsbazarbd.com',
             'phone' => '01811223344',
             'role' => 'designer',
             'password' => Hash::make('password'),
@@ -327,7 +327,7 @@ class DatabaseSeeder extends Seeder
 
         $designerUser3 = User::create([
             'name' => 'আসিফ মাহমুদ',
-            'email' => 'asif@reporter.test',
+            'email' => 'asif@adsbazarbd.com',
             'phone' => '01611223344',
             'role' => 'designer',
             'password' => Hash::make('password'),

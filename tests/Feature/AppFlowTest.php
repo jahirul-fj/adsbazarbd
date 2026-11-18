@@ -55,18 +55,18 @@ class AppFlowTest extends TestCase
     {
         // 1. Admin Login: Only Admin can log in at /admin/login
         $adminRes = $this->post('/admin/login', [
-            'email' => 'admin@reporter.test',
+            'email' => 'admin@adsbazarbd.com',
             'password' => 'password',
         ]);
         $adminRes->assertRedirect(route('admin.dashboard'));
-        $this->assertAuthenticatedAs(User::where('email', 'admin@reporter.test')->first());
+        $this->assertAuthenticatedAs(User::where('email', 'admin@adsbazarbd.com')->first());
 
         $this->post('/admin/logout');
         $this->assertGuest();
 
         // Client attempting admin login fails
         $clientFailRes = $this->post('/admin/login', [
-            'email' => 'client@reporter.test',
+            'email' => 'client@adsbazarbd.com',
             'password' => 'password',
         ]);
         $clientFailRes->assertSessionHas('error');
@@ -74,18 +74,18 @@ class AppFlowTest extends TestCase
 
         // 2. Client Login: Only Client can log in at /client/login
         $clientRes = $this->post('/client/login', [
-            'email' => 'client@reporter.test',
+            'email' => 'client@adsbazarbd.com',
             'password' => 'password',
         ]);
         $clientRes->assertRedirect(route('client.dashboard'));
-        $this->assertAuthenticatedAs(User::where('email', 'client@reporter.test')->first());
+        $this->assertAuthenticatedAs(User::where('email', 'client@adsbazarbd.com')->first());
 
         $this->post('/client/logout');
         $this->assertGuest();
 
         // Designer attempting client login fails
         $designerFailRes = $this->post('/client/login', [
-            'email' => 'tanvir@reporter.test',
+            'email' => 'tanvir@adsbazarbd.com',
             'password' => 'password',
         ]);
         $designerFailRes->assertSessionHas('error');
@@ -93,18 +93,18 @@ class AppFlowTest extends TestCase
 
         // 3. Designer Login: Only Designer can log in at /designer/login
         $designerRes = $this->post('/designer/login', [
-            'email' => 'tanvir@reporter.test',
+            'email' => 'tanvir@adsbazarbd.com',
             'password' => 'password',
         ]);
         $designerRes->assertRedirect(route('designer.dashboard'));
-        $this->assertAuthenticatedAs(User::where('email', 'tanvir@reporter.test')->first());
+        $this->assertAuthenticatedAs(User::where('email', 'tanvir@adsbazarbd.com')->first());
 
         $this->post('/designer/logout');
         $this->assertGuest();
 
         // Admin attempting designer login fails
         $adminFailRes = $this->post('/designer/login', [
-            'email' => 'admin@reporter.test',
+            'email' => 'admin@adsbazarbd.com',
             'password' => 'password',
         ]);
         $adminFailRes->assertSessionHas('error');

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'গ্রাহক / ক্লায়েন্ট লগইন - Reporter')
+@section('title', 'গ্রাহক / ক্লায়েন্ট লগইন - Ads Bazar BD')
 
 @section('content')
 <div class="min-h-[75vh] flex items-center justify-center px-4 py-12">
@@ -20,9 +20,9 @@
         <div class="p-3.5 bg-emerald-50/70 rounded-2xl border border-emerald-200 text-xs flex items-center justify-between">
             <div>
                 <div class="font-bold text-emerald-900">ক্লায়েন্ট ডেমো অ্যাকাউন্ট:</div>
-                <div class="text-[11px] text-slate-600 font-mono">client@reporter.test | password</div>
+                <div class="text-[11px] text-slate-600 font-mono">client@adsbazarbd.com | password</div>
             </div>
-            <button type="button" onclick="document.getElementById('email').value='client@reporter.test'; document.getElementById('password').value='password';" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded-lg transition-colors shadow-xs">
+            <button type="button" onclick="document.getElementById('email').value='client@adsbazarbd.com'; document.getElementById('password').value='password';" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded-lg transition-colors shadow-xs">
                 অটো-ফিল
             </button>
         </div>
@@ -31,7 +31,7 @@
             @csrf
             <div>
                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">ইমেইল এড্রেস</label>
-                <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="client@reporter.test" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-hidden" required>
+                <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="client@adsbazarbd.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-hidden" required>
             </div>
 
             <div>

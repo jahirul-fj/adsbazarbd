@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'ডিসপ্লে বিজ্ঞাপন দিন - Reporter | Procharok')
+@section('title', 'ডিসপ্লে বিজ্ঞাপন দিন - Ads Bazar BD')
 
 @section('content')
 <div class="bg-slate-900 text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-800">

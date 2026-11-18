@@ -20,7 +20,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">ওয়েবসাইটের নাম</label>
-                    <input type="text" name="site_name" value="{{ $settings['site_name'] ?? 'Reporter' }}" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden">
+                    <input type="text" name="site_name" value="{{ $settings['site_name'] ?? 'Ads Bazar BD' }}" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">ট্যাগলাইন</label>
@@ -32,7 +32,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase mb-1.5">কাস্টমার সাপোর্ট ইমেইল</label>
-                    <input type="email" name="helpline_email" value="{{ $settings['helpline_email'] ?? 'contact@reporter.com.bd' }}" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden">
+                    <input type="email" name="helpline_email" value="{{ $settings['helpline_email'] ?? 'contact@adsbazarbd.com' }}" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden">
                 </div>
             </div>
             <div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'যোগাযোগ - Reporter | Procharok')
+@section('title', 'যোগাযোগ - Ads Bazar BD')
 
 @section('content')
 <div class="bg-slate-900 text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
@@ -32,7 +32,7 @@
                 </div>
                 <h3 class="font-bold text-slate-900 text-sm">ইমেইল সাপোর্ট</h3>
                 <p class="text-xs text-slate-500">বিজ্ঞাপন টেক্সট বা কোটেশনের জন্য</p>
-                <div class="text-sm font-bold text-slate-800">contact@reporter.com.bd</div>
+                <div class="text-sm font-bold text-slate-800">contact@adsbazarbd.com</div>
             </div>
 
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2">

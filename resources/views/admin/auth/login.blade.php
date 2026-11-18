@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'অ্যাডমিন সিকিউরিটি লগইন - Reporter Management')
+@section('title', 'অ্যাডমিন সিকিউরিটি লগইন - Ads Bazar BD Management')
 
 @section('content')
 <div class="min-h-[75vh] flex items-center justify-center px-4 py-12">
@@ -22,9 +22,9 @@
         <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-xs flex items-center justify-between">
             <div>
                 <div class="font-bold text-indigo-700">অ্যাডমিন ডেমো একাউন্ট:</div>
-                <div class="text-[11px] text-slate-500 font-mono">admin@reporter.test | password</div>
+                <div class="text-[11px] text-slate-500 font-mono">admin@adsbazarbd.com | password</div>
             </div>
-            <button type="button" onclick="document.getElementById('email').value='admin@reporter.test'; document.getElementById('password').value='password';" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold rounded-lg transition-colors shadow-xs">
+            <button type="button" onclick="document.getElementById('email').value='admin@adsbazarbd.com'; document.getElementById('password').value='password';" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold rounded-lg transition-colors shadow-xs">
                 অটো-ফিল
             </button>
         </div>
@@ -35,7 +35,7 @@
                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">অ্যাডমিন ইমেইল</label>
                 <div class="relative">
                     <i class="fa-solid fa-envelope absolute left-4 top-3.5 text-slate-400 text-xs"></i>
-                    <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="admin@reporter.test" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-10 pr-4 py-3 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden" required>
+                    <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="admin@adsbazarbd.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-10 pr-4 py-3 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden" required>
                 </div>
             </div>
 

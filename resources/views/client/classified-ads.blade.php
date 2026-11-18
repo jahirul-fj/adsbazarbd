@@ -1,6 +1,6 @@
 @extends('layouts.client')
 
-@section('title', 'আমার শ্রেণীভুক্ত বিজ্ঞাপনসমূহ - Reporter')
+@section('title', 'আমার শ্রেণীভুক্ত বিজ্ঞাপনসমূহ - Ads Bazar BD')
 @section('page_title', 'আমার শ্রেণীভুক্ত বিজ্ঞাপনসমূহ')
 
 @section('content')

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'সুপার অ্যাডমিন ড্যাশবোর্ড - Reporter')
+@section('title', 'সুপার অ্যাডমিন ড্যাশবোর্ড - Ads Bazar BD')
 @section('page_title', 'অ্যাডমিন ওভারভিউ ও অ্যানালিটিক্স')
 
 @section('content')

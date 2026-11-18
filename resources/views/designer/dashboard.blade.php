@@ -1,6 +1,6 @@
 @extends('layouts.designer')
 
-@section('title', 'ডিজাইনার ড্যাশবোর্ড - Reporter')
+@section('title', 'ডিজাইনার ড্যাশবোর্ড - Ads Bazar BD')
 @section('page_title', 'ওভারভিউ ড্যাশবোর্ড')
 
 @section('content')

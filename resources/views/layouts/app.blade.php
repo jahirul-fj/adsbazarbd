@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Reporter - অনলাইন সংবাদপত্র বিজ্ঞাপন প্ল্যাটফর্ম | Procharok Alternative')</title>
+    <title>@yield('title', 'Ads Bazar BD - অনলাইন সংবাদপত্র বিজ্ঞাপন ও ডিজাইনার প্ল্যাটফর্ম')</title>
 
     <!-- Google Fonts (Hind Siliguri for beautiful Bengali typography) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -60,7 +60,7 @@
             <div class="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
                 <span><i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> হেল্পলাইন: <strong>01854-820303</strong></span>
                 <span class="hidden md:inline text-slate-600">|</span>
-                <span class="hidden md:inline"><i class="fa-solid fa-envelope text-emerald-400 mr-1.5"></i> contact@reporter.com.bd</span>
+                <span class="hidden md:inline"><i class="fa-solid fa-envelope text-emerald-400 mr-1.5"></i> contact@adsbazarbd.com</span>
                 <span class="hidden lg:inline text-slate-600">|</span>
                 <span class="hidden lg:inline"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> এসক্রো পদ্ধতিতে ১০০% নিরাপদ ডিজাইন সার্ভিস</span>
             </div>
@@ -88,7 +88,7 @@
                         </div>
                         <div>
                             <div class="font-extrabold text-2xl tracking-tight text-slate-900 flex items-center gap-1.5">
-                                Reporter <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold uppercase tracking-wider">প্রচারক</span>
+                                Ads Bazar BD <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold uppercase tracking-wider">অ্যাডস বাজার</span>
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium">সহজে সংবাদপত্রে বিজ্ঞাপন ও ডিজাইনার প্ল্যাটফর্ম</div>
                         </div>
@@ -244,10 +244,10 @@
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white text-lg font-bold">
                             <i class="fa-solid fa-newspaper"></i>
                         </div>
-                        <div class="font-extrabold text-2xl text-white tracking-tight">Reporter <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-normal">প্রচারক</span></div>
+                        <div class="font-extrabold text-2xl text-white tracking-tight">Ads Bazar BD <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-normal">অ্যাডস বাজার বিডি</span></div>
                     </div>
                     <p class="text-sm text-slate-400 leading-relaxed pr-6">
-                        Reporter (প্রচারক) হলো বাংলাদেশের শীর্ষস্থানীয় অনলাইন সংবাদপত্রে বিজ্ঞাপন প্রকাশনা ও গ্রাফিক ডিজাইনার প্ল্যাটফর্ম। এজেন্ট খোঁজার ঝামেলা ছাড়াই ঘরে বসে দেশের শীর্ষ সকল বাংলা ও ইংরেজি পত্রিকায় সহজে বিজ্ঞাপন বুকিং দিন।
+                        Ads Bazar BD হলো বাংলাদেশের শীর্ষস্থানীয় অনলাইন সংবাদপত্রে বিজ্ঞাপন প্রকাশনা ও গ্রাফিক ডিজাইনার প্ল্যাটফর্ম। এজেন্ট খোঁজার ঝামেলা ছাড়াই ঘরে বসে দেশের শীর্ষ সকল বাংলা ও ইংরেজি পত্রিকায় সহজে বিজ্ঞাপন বুকিং দিন।
                     </p>
                     <div class="flex items-center gap-3 pt-2 text-slate-400">
                         <span class="text-xs uppercase tracking-wider text-slate-500 font-semibold">পেমেন্ট পার্টনার:</span>
@@ -296,7 +296,7 @@
                         </li>
                         <li class="flex items-center gap-2.5">
                             <i class="fa-solid fa-envelope text-emerald-400"></i>
-                            <span>contact@reporter.com.bd</span>
+                            <span>contact@adsbazarbd.com</span>
                         </li>
                         <li class="flex items-start gap-2.5">
                             <i class="fa-solid fa-location-dot text-emerald-400 mt-1"></i>
@@ -309,7 +309,7 @@
             <!-- Bottom Legal Bar -->
             <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
                 <div>
-                    &copy; {{ date('Y') }} Reporter Ads Communications Ltd. সর্বস্বত্ব সংরক্ষিত।
+                    &copy; {{ date('Y') }} Ads Bazar BD Ltd. সর্বস্বত্ব সংরক্ষিত।
                 </div>
                 <div class="flex gap-6">
                     <a href="{{ route('about') }}" class="hover:text-slate-400">আমাদের সম্পর্কে</a>

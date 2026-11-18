@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'শ্রেণীভুক্ত বিজ্ঞাপন দিন - Reporter | Procharok')
+@section('title', 'শ্রেণীভুক্ত বিজ্ঞাপন দিন - Ads Bazar BD')
 
 @section('content')
 <div class="bg-slate-900 text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
@@ -295,7 +295,7 @@
             instBox.innerHTML = `<strong>রকেট পেমেন্ট নিয়ম:</strong> রকেট ওয়ালেট <strong>01779-870454-8</strong> এ পেমেন্ট সম্পন্ন করে ট্রানজেকশন কোড লিখুন।`;
         } else if (method === 'bank') {
             trxFields.classList.remove('hidden');
-            instBox.innerHTML = `<strong>ব্যাংক ট্রান্সফার:</strong> Dutch Bangla Bank Ltd, Account Name: <strong>Reporter Ads Ltd</strong>, Acc: <strong>123.120.98765</strong>, Branch: Dhanmondi Branch. ডিপোজিট স্লিপের রেফারেন্স বা ট্রানজেকশন নম্বর দিন।`;
+            instBox.innerHTML = `<strong>ব্যাংক ট্রান্সফার:</strong> Dutch Bangla Bank Ltd, Account Name: <strong>Ads Bazar BD Ltd</strong>, Acc: <strong>123.120.98765</strong>, Branch: Dhanmondi Branch. ডিপোজিট স্লিপের রেফারেন্স বা ট্রানজেকশন নম্বর দিন।`;
         } else {
             trxFields.classList.add('hidden');
             instBox.innerHTML = `<strong>ক্যাশ অন পিকআপ:</strong> শুধুমাত্র ঢাকা মেট্রোর জন্য প্রযোজ্য। আমাদের প্রতিনিধি আপনার ঠিকানায় গিয়ে বিজ্ঞাপনের কপি ও নগদ টাকা সংগ্রহ করবে (সার্ভিস চার্জ ৳১০০ প্রযোজ্য হতে পারে)।`;
