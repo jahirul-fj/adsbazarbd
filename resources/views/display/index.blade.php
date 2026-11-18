@@ -39,7 +39,7 @@
                                     data-back="{{ $np->back_page_multiplier }}"
                                     data-inner="{{ $np->inner_page_multiplier }}"
                                     data-color="{{ $np->color_charge_percent }}"
-                                    {{ old('newspaper_id', request('newspaper_id')) == $np->id ? 'selected' : '' }}>
+                                    {{ (old('newspaper_id', request('newspaper_id')) == $np->id || request('newspaper') == $np->slug) ? 'selected' : '' }}>
                                 {{ $np->name }}
                             </option>
                         @endforeach

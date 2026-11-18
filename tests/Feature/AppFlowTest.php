@@ -508,4 +508,21 @@ class AppFlowTest extends TestCase
         $designer->refresh();
         $this->assertTrue(\Illuminate\Support\Facades\Hash::check('designerSecret789', $designer->password));
     }
+
+    public function test_ad_forms_preselect_newspaper_from_query_parameters(): void
+    {
+        $newspaper = Newspaper::where('slug', 'jugantor')->first();
+        $this->assertNotNull($newspaper);
+
+        // Classified advertisement preselects newspaper
+        $response = $this->get('/classified-advertisement?newspaper_id=' . $newspaper->id);
+        $response->assertStatus(200);
+        $response->assertSee('value="' . $newspaper->id . '"', false);
+        $response->assertSee('selected>' . "\n" . '                                ' . $newspaper->name, false);
+
+        // Display advertisement preselects newspaper
+        $response = $this->get('/display-advertisement?newspaper_id=' . $newspaper->id);
+        $response->assertStatus(200);
+        $response->assertSee('selected>' . "\n" . '                                ' . $newspaper->name, false);
+    }
 }

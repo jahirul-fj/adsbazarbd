@@ -35,7 +35,7 @@
                             <option value="{{ $np->id }}" 
                                     data-rate="{{ $np->classified_rate_per_word }}" 
                                     data-min="{{ $np->min_words }}"
-                                    {{ old('newspaper_id') == $np->id ? 'selected' : '' }}>
+                                    {{ (old('newspaper_id', request('newspaper_id')) == $np->id || request('newspaper') == $np->slug) ? 'selected' : '' }}>
                                 {{ $np->name }} (৳{{ number_format($np->classified_rate_per_word, 0) }}/শব্দ)
                             </option>
                         @endforeach
