@@ -1,0 +1,74 @@
+@extends('layouts.app')
+
+@section('title', 'আমার ডিসপ্লে বিজ্ঞাপনসমূহ - Reporter')
+
+@section('content')
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+            <h1 class="text-2xl font-black text-slate-900">আমার ডিসপ্লে বিজ্ঞাপনসমূহ</h1>
+            <p class="text-xs text-slate-500">ব্যানার ও বক্স বিজ্ঞাপনের বিস্তারিত তালিকা ও স্ট্যাটাস</p>
+        </div>
+        <a href="{{ route('display.index') }}" class="px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors">
+            + নতুন ডিসপ্লে অ্যাড বুক করুন
+        </a>
+    </div>
+
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs sm:text-sm">
+                <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold">
+                    <tr>
+                        <th class="p-4">ট্র্যাকিং নং</th>
+                        <th class="p-4">সংবাদপত্র</th>
+                        <th class="p-4">শিরোনাম</th>
+                        <th class="p-4">সাইজ</th>
+                        <th class="p-4">পৃষ্ঠা</th>
+                        <th class="p-4">তারিখ</th>
+                        <th class="p-4">মোট বিলিং</th>
+                        <th class="p-4">স্ট্যাটাস</th>
+                        <th class="p-4 text-right">অ্যাকশন</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @forelse($ads as $ad)
+                        <tr class="hover:bg-slate-50/60 transition-colors">
+                            <td class="p-4 font-mono font-bold text-slate-900">
+                                <a href="{{ route('track', ['tracking_no' => $ad->tracking_no]) }}" class="hover:text-teal-600 hover:underline">
+                                    {{ $ad->tracking_no }}
+                                </a>
+                            </td>
+                            <td class="p-4 font-medium">{{ $ad->newspaper->name }}</td>
+                            <td class="p-4 font-medium max-w-xs truncate">{{ $ad->title }}</td>
+                            <td class="p-4">{{ $ad->columns }} কলাম × {{ $ad->height_inches }}" ({{ $ad->total_col_inches }} CI)</td>
+                            <td class="p-4 uppercase text-xs text-slate-500">{{ str_replace('_', ' ', $ad->page_position) }}</td>
+                            <td class="p-4">{{ date('d/m/Y', strtotime($ad->publish_date)) }}</td>
+                            <td class="p-4 font-bold text-teal-700">৳{{ number_format($ad->total_amount, 2) }}</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase {{ $ad->status === 'published' ? 'bg-emerald-100 text-emerald-800' : ($ad->status === 'approved' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800') }}">
+                                    {{ $ad->status }}
+                                </span>
+                            </td>
+                            <td class="p-4 text-right space-x-2">
+                                <a href="{{ route('display.show', $ad->tracking_no) }}" class="font-bold text-xs text-slate-700 hover:text-teal-600">
+                                    রসিদ
+                                </a>
+                                <a href="{{ route('track', ['tracking_no' => $ad->tracking_no]) }}" class="font-bold text-xs text-teal-600 hover:underline">
+                                    ট্র্যাক
+                                </a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="9" class="p-8 text-center text-xs text-slate-400">কোনো ডিসপ্লে বিজ্ঞাপন পাওয়া যায়নি।</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        <div class="p-4 border-t border-slate-100">
+            {{ $ads->links() }}
+        </div>
+    </div>
+</div>
+@endsection

@@ -1,0 +1,264 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\AdCategory;
+use App\Models\ClassifiedAd;
+use App\Models\DesignOrder;
+use App\Models\DisplayAd;
+use App\Models\Newspaper;
+use App\Models\PaymentRecord;
+use App\Models\SystemSetting;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+class AdminDashboardController extends Controller
+{
+    public function index()
+    {
+        $metrics = [
+            'total_revenue' => PaymentRecord::where('status', 'approved')->sum('amount'),
+            'pending_classified' => ClassifiedAd::where('status', 'pending')->count(),
+            'pending_display' => DisplayAd::where('status', 'pending')->count(),
+            'pending_payments' => PaymentRecord::where('status', 'pending')->count(),
+            'total_users' => User::count(),
+            'total_newspapers' => Newspaper::count(),
+            'active_orders' => DesignOrder::whereIn('status', ['in_progress', 'draft_submitted', 'revision_requested'])->count(),
+        ];
+
+        $recentClassified = ClassifiedAd::with('newspaper')->latest()->take(5)->get();
+        $recentDisplay = DisplayAd::with('newspaper')->latest()->take(5)->get();
+        $recentPayments = PaymentRecord::latest()->take(5)->get();
+
+        return view('admin.dashboard', compact('metrics', 'recentClassified', 'recentDisplay', 'recentPayments'));
+    }
+
+    public function classifiedAds(Request $request)
+    {
+        $query = ClassifiedAd::with(['newspaper', 'category'])->latest();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('search')) {
+            $s = $request->search;
+            $query->where(function ($q) use ($s) {
+                $q->where('tracking_no', 'like', "%{$s}%")
+                  ->orWhere('customer_name', 'like', "%{$s}%")
+                  ->orWhere('customer_phone', 'like', "%{$s}%");
+            });
+        }
+
+        $ads = $query->paginate(15);
+        return view('admin.classified-ads', compact('ads'));
+    }
+
+    public function updateClassifiedStatus(Request $request, $id)
+    {
+        $ad = ClassifiedAd::findOrFail($id);
+
+        $validated = $request->validate([
+            'status' => 'required|in:pending,approved,published,rejected',
+            'payment_status' => 'required|in:unpaid,pending_verification,paid,rejected',
+            'published_proof_url' => 'nullable|url|max:500',
+            'admin_notes' => 'nullable|string|max:1000',
+        ]);
+
+        $ad->update($validated);
+
+        return back()->with('success', 'শ্রেণীভুক্ত বিজ্ঞাপনের স্ট্যাটাস সফলভাবে আপডেট করা হয়েছে!');
+    }
+
+    public function displayAds(Request $request)
+    {
+        $query = DisplayAd::with(['newspaper', 'category'])->latest();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('search')) {
+            $s = $request->search;
+            $query->where(function ($q) use ($s) {
+                $q->where('tracking_no', 'like', "%{$s}%")
+                  ->orWhere('customer_name', 'like', "%{$s}%")
+                  ->orWhere('customer_phone', 'like', "%{$s}%");
+            });
+        }
+
+        $ads = $query->paginate(15);
+        return view('admin.display-ads', compact('ads'));
+    }
+
+    public function updateDisplayStatus(Request $request, $id)
+    {
+        $ad = DisplayAd::findOrFail($id);
+
+        $validated = $request->validate([
+            'status' => 'required|in:pending,in_review,approved,published,rejected',
+            'payment_status' => 'required|in:unpaid,pending_verification,paid,rejected',
+            'published_proof_url' => 'nullable|url|max:500',
+            'admin_notes' => 'nullable|string|max:1000',
+        ]);
+
+        $ad->update($validated);
+
+        return back()->with('success', 'ডিসপ্লে বিজ্ঞাপনের স্ট্যাটাস সফলভাবে আপডেট করা হয়েছে!');
+    }
+
+    public function newspapers()
+    {
+        $newspapers = Newspaper::orderBy('sort_order')->get();
+        return view('admin.newspapers', compact('newspapers'));
+    }
+
+    public function storeNewspaper(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'language' => 'required|in:bangla,english',
+            'classified_rate_per_word' => 'required|numeric|min:1',
+            'display_rate_col_inch' => 'required|numeric|min:1',
+            'front_page_multiplier' => 'required|numeric|min:1',
+            'back_page_multiplier' => 'required|numeric|min:1',
+            'color_charge_percent' => 'required|integer|min:0',
+            'min_words' => 'required|integer|min:5',
+        ]);
+
+        $validated['slug'] = Str::slug($validated['name']);
+        Newspaper::create($validated);
+
+        return back()->with('success', 'নতুন সংবাদপত্র সফলভাবে যোগ করা হয়েছে!');
+    }
+
+    public function updateNewspaper(Request $request, $id)
+    {
+        $newspaper = Newspaper::findOrFail($id);
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'classified_rate_per_word' => 'required|numeric|min:1',
+            'display_rate_col_inch' => 'required|numeric|min:1',
+            'front_page_multiplier' => 'required|numeric|min:1',
+            'back_page_multiplier' => 'required|numeric|min:1',
+            'color_charge_percent' => 'required|integer|min:0',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        $validated['is_active'] = $request->boolean('is_active');
+        $newspaper->update($validated);
+
+        return back()->with('success', 'সংবাদপত্রের রেট ও তথ্য আপডেট করা হয়েছে!');
+    }
+
+    public function categories()
+    {
+        $categories = AdCategory::orderBy('sort_order')->get();
+        return view('admin.categories', compact('categories'));
+    }
+
+    public function storeCategory(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'required|in:all,classified,display',
+            'sample_text' => 'nullable|string',
+            'requires_document' => 'nullable|boolean',
+        ]);
+
+        $validated['slug'] = Str::slug($validated['name']);
+        $validated['requires_document'] = $request->boolean('requires_document');
+        AdCategory::create($validated);
+
+        return back()->with('success', 'নতুন ক্যাটাগরি সফলভাবে তৈরি করা হয়েছে!');
+    }
+
+    public function designOrders()
+    {
+        $orders = DesignOrder::with(['client', 'designer'])->latest()->paginate(15);
+        return view('admin.design-orders', compact('orders'));
+    }
+
+    public function payments(Request $request)
+    {
+        $query = PaymentRecord::latest();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $payments = $query->paginate(15);
+        return view('admin.payments', compact('payments'));
+    }
+
+    public function updatePaymentStatus(Request $request, $id)
+    {
+        $payment = PaymentRecord::findOrFail($id);
+
+        $validated = $request->validate([
+            'status' => 'required|in:pending,approved,rejected',
+            'notes' => 'nullable|string|max:500',
+        ]);
+
+        $payment->status = $validated['status'];
+        $payment->notes = $validated['notes'];
+        $payment->verified_by = auth()->id();
+        $payment->verified_at = now();
+        $payment->save();
+
+        // Also update linked ad payment_status if applicable
+        if ($payment->order_type === 'classified_ad') {
+            $ad = ClassifiedAd::find($payment->order_id);
+            if ($ad) {
+                $ad->payment_status = $payment->status === 'approved' ? 'paid' : ($payment->status === 'rejected' ? 'rejected' : 'pending_verification');
+                if ($payment->status === 'approved' && $ad->status === 'pending') {
+                    $ad->status = 'approved';
+                }
+                $ad->save();
+            }
+        } elseif ($payment->order_type === 'display_ad') {
+            $ad = DisplayAd::find($payment->order_id);
+            if ($ad) {
+                $ad->payment_status = $payment->status === 'approved' ? 'paid' : ($payment->status === 'rejected' ? 'rejected' : 'pending_verification');
+                if ($payment->status === 'approved' && $ad->status === 'pending') {
+                    $ad->status = 'approved';
+                }
+                $ad->save();
+            }
+        }
+
+        return back()->with('success', 'পেমেন্ট স্ট্যাটাস সফলভাবে আপডেট করা হয়েছে!');
+    }
+
+    public function settings()
+    {
+        $settings = SystemSetting::all()->pluck('value', 'key');
+        return view('admin.settings', compact('settings'));
+    }
+
+    public function updateSettings(Request $request)
+    {
+        $keys = [
+            'site_name',
+            'site_tagline',
+            'helpline_phone',
+            'helpline_email',
+            'office_address',
+            'bkash_merchant_number',
+            'nagad_merchant_number',
+            'rocket_number',
+            'bank_info',
+            'cash_pickup_notice',
+        ];
+
+        foreach ($keys as $k) {
+            if ($request->has($k)) {
+                SystemSetting::set($k, $request->input($k));
+            }
+        }
+
+        return back()->with('success', 'সিস্টেম সেটিংস সফলভাবে সেভ করা হয়েছে!');
+    }
+}
