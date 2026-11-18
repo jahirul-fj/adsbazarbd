@@ -31,8 +31,8 @@ class DisplayAdController extends Controller
             'ad_category_id' => 'nullable|exists:ad_categories,id',
             'publish_date' => 'required|date|after_or_equal:today',
             'title' => 'required|string|max:255',
-            'page_position' => 'required|in:front_page,back_page,inner_page',
-            'color_type' => 'required|in:color,black_white',
+            'page_position' => 'required|in:inner_page,inner,front_page,fp,back_page,bp,before_bp,page_2,page_3,page_5,sports_page,sports',
+            'color_type' => 'required|in:color,black_white,bw',
             'columns' => 'required|integer|min:1|max:8',
             'height_inches' => 'required|numeric|min:1|max:21',
             'artwork_file' => 'nullable|file|mimes:pdf,jpg,jpeg,png,eps,ai,psd|max:20480',
@@ -48,22 +48,9 @@ class DisplayAdController extends Controller
         $height = (float)$validated['height_inches'];
         $totalColInches = round($columns * $height, 2);
 
-        // Page multiplier
-        $multiplier = match ($validated['page_position']) {
-            'front_page' => (float)$newspaper->front_page_multiplier,
-            'back_page' => (float)$newspaper->back_page_multiplier,
-            default => (float)$newspaper->inner_page_multiplier,
-        };
-
-        // Base rate
-        $baseRate = (float)$newspaper->display_rate_col_inch * $multiplier;
-
-        // Color surcharge
-        if ($validated['color_type'] === 'color') {
-            $baseRate = $baseRate * (1 + ($newspaper->color_charge_percent / 100));
-        }
-
-        $totalAmount = round($totalColInches * $baseRate, 2);
+        // Calculate rate using new comprehensive rate chart
+        $appliedRate = $newspaper->getDisplayRate($validated['page_position'], $validated['color_type']);
+        $totalAmount = round($totalColInches * $appliedRate, 2);
 
         $artworkPath = null;
         if ($request->hasFile('artwork_file')) {
@@ -87,7 +74,7 @@ class DisplayAdController extends Controller
             'columns' => $columns,
             'height_inches' => $height,
             'total_col_inches' => $totalColInches,
-            'rate_applied' => $baseRate,
+            'rate_applied' => $appliedRate,
             'artwork_file' => $artworkPath,
             'needs_designer' => $request->boolean('needs_designer'),
             'total_amount' => $totalAmount,

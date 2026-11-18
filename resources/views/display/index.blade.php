@@ -33,13 +33,14 @@
                     <select name="newspaper_id" id="newspaper_id" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-teal-500 focus:bg-white focus:outline-hidden transition-all" required onchange="calculateDisplayPrice()">
                         @foreach($newspapers as $np)
                             <option value="{{ $np->id }}" 
-                                    data-rate="{{ $np->display_rate_col_inch }}" 
+                                    data-rates="{{ json_encode($np->display_rates ?? []) }}"
+                                    data-base="{{ $np->display_rate_col_inch }}" 
                                     data-front="{{ $np->front_page_multiplier }}"
                                     data-back="{{ $np->back_page_multiplier }}"
                                     data-inner="{{ $np->inner_page_multiplier }}"
                                     data-color="{{ $np->color_charge_percent }}"
-                                    {{ old('newspaper_id') == $np->id ? 'selected' : '' }}>
-                                {{ $np->name }} (বেস রেট: ৳{{ number_format($np->display_rate_col_inch, 0) }}/কলাম ইঞ্চি)
+                                    {{ old('newspaper_id', request('newspaper_id')) == $np->id ? 'selected' : '' }}>
+                                {{ $np->name }}
                             </option>
                         @endforeach
                     </select>
@@ -51,9 +52,14 @@
                         পৃষ্ঠার অবস্থান (Page Position) <span class="text-rose-500">*</span>
                     </label>
                     <select name="page_position" id="page_position" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-teal-500 focus:bg-white focus:outline-hidden transition-all" required onchange="calculateDisplayPrice()">
-                        <option value="inner_page" selected>ভেতরের পাতা (Inner Page - সাধারণ রেট)</option>
-                        <option value="back_page">শেষ পাতা / ব্যাক পেজ (Back Page - প্রিমিয়াম রেট)</option>
-                        <option value="front_page">প্রথম পাতা (Front Page - স্পেশাল রেট)</option>
+                        <option value="inner" selected>ভেতরের সাধারণ পাতা (Inner Page)</option>
+                        <option value="fp">১ম পাতা (Front Page - FP Color)</option>
+                        <option value="bp">শেষ পাতা (Back Page - BP Color)</option>
+                        <option value="before_bp">শেষ পাতার আগের পাতা (Before Back Page)</option>
+                        <option value="page_2">২য় পৃষ্ঠা (Page-2)</option>
+                        <option value="page_3">৩য় পৃষ্ঠা (Page-3)</option>
+                        <option value="page_5">৫ম পৃষ্ঠা (Page-5)</option>
+                        <option value="sports">খেলাধুলার পৃষ্ঠা (Sports Page)</option>
                     </select>
                 </div>
 
@@ -262,25 +268,40 @@
     function calculateDisplayPrice() {
         const npSelect = document.getElementById('newspaper_id');
         const opt = npSelect.options[npSelect.selectedIndex];
-        const baseRate = parseFloat(opt.getAttribute('data-rate')) || 2000;
-        const frontMult = parseFloat(opt.getAttribute('data-front')) || 2.5;
-        const backMult = parseFloat(opt.getAttribute('data-back')) || 1.8;
-        const innerMult = parseFloat(opt.getAttribute('data-inner')) || 1.0;
-        const colorPercent = parseInt(opt.getAttribute('data-color')) || 30;
+        let rates = {};
+        try {
+            rates = JSON.parse(opt.getAttribute('data-rates') || '{}');
+        } catch(e) { rates = {}; }
 
+        const baseRate = parseFloat(opt.getAttribute('data-base')) || 2000;
         const pagePos = document.getElementById('page_position').value;
-        const colorType = document.querySelector('input[name="color_type"]:checked').value;
+        const colorRadio = document.querySelector('input[name="color_type"]:checked');
+        const colorType = colorRadio ? colorRadio.value : 'color';
+        const colorKey = (colorType === 'color') ? 'color' : 'bw';
+
         const columns = parseInt(document.getElementById('columns').value) || 2;
         const height = parseFloat(document.getElementById('height_inches').value) || 4;
 
-        // Multipliers
-        let pageMult = innerMult;
-        if (pagePos === 'front_page') pageMult = frontMult;
-        if (pagePos === 'back_page') pageMult = backMult;
+        let appliedRate = 0;
+        const targetKey = `${pagePos}_${colorKey}`;
 
-        let appliedRate = baseRate * pageMult;
-        if (colorType === 'color') {
-            appliedRate = appliedRate * (1 + (colorPercent / 100));
+        if (rates && rates[targetKey] && parseFloat(rates[targetKey]) > 0) {
+            appliedRate = parseFloat(rates[targetKey]);
+        } else if (rates && colorKey === 'bw' && rates[`${pagePos}_color`]) {
+            appliedRate = Math.round(parseFloat(rates[`${pagePos}_color`]) * 0.75);
+        } else if (rates && colorKey === 'color' && rates[`${pagePos}_bw`]) {
+            appliedRate = Math.round(parseFloat(rates[`${pagePos}_bw`]) * 1.35);
+        } else if (rates && rates[`inner_${colorKey}`]) {
+            appliedRate = parseFloat(rates[`inner_${colorKey}`]);
+        } else {
+            // fallback
+            let mult = 1.0;
+            if (pagePos === 'fp' || pagePos === 'front_page') mult = parseFloat(opt.getAttribute('data-front')) || 2.5;
+            if (pagePos === 'bp' || pagePos === 'back_page') mult = parseFloat(opt.getAttribute('data-back')) || 1.8;
+            appliedRate = baseRate * mult;
+            if (colorType === 'color') {
+                appliedRate *= 1.35;
+            }
         }
 
         const totalColInches = (columns * height).toFixed(2);

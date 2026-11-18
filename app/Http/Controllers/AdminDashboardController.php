@@ -157,14 +157,31 @@ class AdminDashboardController extends Controller
             'name' => 'required|string|max:255',
             'language' => 'required|in:bangla,english',
             'classified_rate_per_word' => 'required|numeric|min:1',
-            'display_rate_col_inch' => 'required|numeric|min:1',
-            'front_page_multiplier' => 'required|numeric|min:1',
-            'back_page_multiplier' => 'required|numeric|min:1',
-            'color_charge_percent' => 'required|integer|min:0',
+            'display_rate_col_inch' => 'nullable|numeric|min:1',
+            'front_page_multiplier' => 'nullable|numeric|min:1',
+            'back_page_multiplier' => 'nullable|numeric|min:1',
+            'color_charge_percent' => 'nullable|integer|min:0',
             'min_words' => 'required|integer|min:5',
+            'display_rates' => 'nullable|array',
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
+        if ($request->has('display_rates')) {
+            $rates = [];
+            foreach ($request->input('display_rates', []) as $k => $v) {
+                $rates[$k] = ($v !== '' && $v !== null) ? (float)$v : null;
+            }
+            $validated['display_rates'] = $rates;
+            if (!empty($rates['inner_bw'])) {
+                $validated['display_rate_col_inch'] = $rates['inner_bw'];
+            }
+        }
+
+        $validated['display_rate_col_inch'] = $validated['display_rate_col_inch'] ?? 2000.00;
+        $validated['front_page_multiplier'] = $validated['front_page_multiplier'] ?? 2.50;
+        $validated['back_page_multiplier'] = $validated['back_page_multiplier'] ?? 1.80;
+        $validated['color_charge_percent'] = $validated['color_charge_percent'] ?? 30;
+
         Newspaper::create($validated);
 
         return back()->with('success', 'নতুন সংবাদপত্র সফলভাবে যোগ করা হয়েছে!');
@@ -177,14 +194,27 @@ class AdminDashboardController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'classified_rate_per_word' => 'required|numeric|min:1',
-            'display_rate_col_inch' => 'required|numeric|min:1',
-            'front_page_multiplier' => 'required|numeric|min:1',
-            'back_page_multiplier' => 'required|numeric|min:1',
-            'color_charge_percent' => 'required|integer|min:0',
+            'display_rate_col_inch' => 'nullable|numeric|min:1',
+            'front_page_multiplier' => 'nullable|numeric|min:1',
+            'back_page_multiplier' => 'nullable|numeric|min:1',
+            'color_charge_percent' => 'nullable|integer|min:0',
             'is_active' => 'nullable|boolean',
+            'display_rates' => 'nullable|array',
         ]);
 
         $validated['is_active'] = $request->boolean('is_active');
+
+        if ($request->has('display_rates')) {
+            $rates = $newspaper->display_rates ?? [];
+            foreach ($request->input('display_rates', []) as $k => $v) {
+                $rates[$k] = ($v !== '' && $v !== null) ? (float)$v : null;
+            }
+            $validated['display_rates'] = $rates;
+            if (!empty($rates['inner_bw'])) {
+                $validated['display_rate_col_inch'] = $rates['inner_bw'];
+            }
+        }
+
         $newspaper->update($validated);
 
         return back()->with('success', 'সংবাদপত্রের রেট ও তথ্য আপডেট করা হয়েছে!');

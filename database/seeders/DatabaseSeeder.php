@@ -159,6 +159,8 @@ class DatabaseSeeder extends Seeder
             Newspaper::create($np);
         }
 
+        $this->call(NewspaperRateSeeder::class);
+
         // 3. Ad Categories
         $categories = [
             [

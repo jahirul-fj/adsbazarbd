@@ -178,6 +178,58 @@ class AppFlowTest extends TestCase
         ]);
     }
 
+    public function test_comprehensive_display_rates_chart_and_booking(): void
+    {
+        // Find Prothom Alo
+        $newspaper = Newspaper::where('slug', 'prothom-alo')->first();
+        $this->assertNotNull($newspaper);
+        $this->assertEquals(30000, $newspaper->getDisplayRate('fp', 'color'));
+        $this->assertEquals(23000, $newspaper->getDisplayRate('page_3', 'color'));
+
+        // Book ad for Page 3 Color: 2 cols x 5 inches = 10 col-in @ 23000 = 230,000
+        $response = $this->post('/display-advertisement', [
+            'customer_name' => 'মেঘনা গ্রুপ',
+            'customer_email' => 'ad@meghnagroup.test',
+            'customer_phone' => '01711998877',
+            'newspaper_id' => $newspaper->id,
+            'publish_date' => now()->addDays(2)->toDateString(),
+            'title' => 'প্রোডাক্ট লঞ্চিং বিজ্ঞাপন',
+            'page_position' => 'page_3',
+            'color_type' => 'color',
+            'columns' => 2,
+            'height_inches' => 5.0,
+            'payment_method' => 'bkash',
+            'payment_trx_id' => 'BK-MEGHNA-101',
+            'payment_sender_phone' => '01711998877',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('display_ads', [
+            'customer_name' => 'মেঘনা গ্রুপ',
+            'page_position' => 'page_3',
+            'rate_applied' => 23000,
+            'total_amount' => 230000.00,
+        ]);
+
+        // Admin updates rate for newspaper
+        $admin = User::where('role', 'admin')->first();
+        $this->actingAs($admin)
+            ->post('/admin/newspapers/' . $newspaper->id, [
+                'name' => 'দৈনিক প্রথম আলো (Prothom Alo)',
+                'classified_rate_per_word' => 25,
+                'display_rates' => [
+                    'inner_bw' => 6500,
+                    'inner_color' => 9500,
+                    'fp_color' => 32000, // increased
+                    'page_3_color' => 24000, // increased
+                ]
+            ])->assertRedirect();
+
+        $newspaper->refresh();
+        $this->assertEquals(32000, $newspaper->getDisplayRate('fp', 'color'));
+        $this->assertEquals(24000, $newspaper->getDisplayRate('page_3', 'color'));
+    }
+
     public function test_client_dashboard_and_escrow_approval(): void
     {
         $client = User::where('role', 'client')->first();
