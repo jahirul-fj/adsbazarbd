@@ -42,6 +42,7 @@ Route::post('/designers/{id}/hire', [DesignerController::class, 'storeOrder'])->
 Route::get('/login', [AuthController::class, 'showPortalSelector'])->name('login');
 Route::get('/portal-select', [AuthController::class, 'showPortalSelector'])->name('portal.select');
 Route::get('/register', [AuthController::class, 'showClientRegister'])->name('register');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/quick-login/{role}', [AuthController::class, 'quickLogin'])->name('quick-login');
 
 /*

@@ -228,6 +228,22 @@ class AuthController extends Controller
     // 4. PORTAL SELECTOR / GENERIC REDIRECT
     // ==========================================
 
+    public function logout(Request $request)
+    {
+        $role = Auth::user()?->role;
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        if ($role === 'admin') {
+            return redirect()->route('admin.login')->with('info', 'অ্যাডমিন প্যানেল থেকে সফলভাবে লগআউট হয়েছেন।');
+        } elseif ($role === 'designer') {
+            return redirect()->route('designer.login')->with('info', 'ডিজাইনার পোর্টাল থেকে সফলভাবে লগআউট হয়েছেন।');
+        }
+
+        return redirect()->route('home')->with('info', 'সফলভাবে লগআউট হয়েছেন।');
+    }
+
     public function showPortalSelector()
     {
         return view('auth.portal-selector');

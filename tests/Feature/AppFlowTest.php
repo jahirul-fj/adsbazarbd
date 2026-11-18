@@ -39,6 +39,16 @@ class AppFlowTest extends TestCase
         $this->get('/admin/login')->assertStatus(200);
         $this->get('/client/login')->assertStatus(200);
         $this->get('/designer/login')->assertStatus(200);
+
+        // Verify public layout renders correctly when logged in as client, admin, and designer
+        $client = User::where('role', 'client')->first();
+        $this->actingAs($client)->get('/')->assertStatus(200);
+
+        $admin = User::where('role', 'admin')->first();
+        $this->actingAs($admin)->get('/')->assertStatus(200);
+
+        $designer = User::where('role', 'designer')->first();
+        $this->actingAs($designer)->get('/')->assertStatus(200);
     }
 
     public function test_strict_role_login_separation(): void
