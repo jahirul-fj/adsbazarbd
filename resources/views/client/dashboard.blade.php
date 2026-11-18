@@ -1,22 +1,23 @@
-@extends('layouts.app')
+@extends('layouts.client')
 
-@section('title', 'ক্লায়েন্ট ড্যাশবোর্ড - Reporter')
+@section('title', 'গ্রাহক ড্যাশবোর্ড - Reporter')
+@section('page_title', 'ড্যাশবোর্ড ওভারভিউ')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+<div class="space-y-8">
     <!-- Top Welcome Card -->
     <div class="bg-gradient-to-r from-emerald-800 to-slate-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-xl">
         <div class="space-y-1">
-            <span class="text-xs font-semibold text-emerald-300 uppercase tracking-wider">গ্রাহক ড্যাশবোর্ড</span>
+            <span class="text-xs font-semibold text-emerald-300 uppercase tracking-wider">বিজ্ঞাপনদাতা ড্যাশবোর্ড</span>
             <h1 class="text-2xl sm:text-3xl font-black">স্বাগতম, {{ auth()->user()->name }}!</h1>
-            <p class="text-xs text-slate-300">আপনার বুকিং করা বিজ্ঞাপন ও ডিজাইনার অর্ডারগুলো এখান থেকে পরিচালনা করুন।</p>
+            <p class="text-xs text-slate-300">আপনার বুকিং করা বিজ্ঞাপন, অনুমোদন স্ট্যাটাস ও ডিজাইনার অর্ডারগুলো এখান থেকে পরিচালনা করুন।</p>
         </div>
         <div class="flex gap-2">
-            <a href="{{ route('classified.index') }}" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all">
-                + শ্রেণীভুক্ত দিন
+            <a href="{{ route('classified.index') }}" class="px-4 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-plus text-xs"></i> শ্রেণীভুক্ত বিজ্ঞাপন
             </a>
-            <a href="{{ route('display.index') }}" class="px-4 py-2.5 bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all">
-                + ডিসপ্লে দিন
+            <a href="{{ route('display.index') }}" class="px-4 py-2.5 bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-plus text-xs"></i> ডিসপ্লে বিজ্ঞাপন
             </a>
         </div>
     </div>
@@ -60,7 +61,9 @@
     <!-- Recent Classified Ads -->
     <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
         <div class="p-5 border-b border-slate-100 flex justify-between items-center">
-            <h2 class="font-bold text-base text-slate-900">সাম্প্রতিক শ্রেণীভুক্ত বিজ্ঞাপনসমূহ</h2>
+            <h2 class="font-bold text-base text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-emerald-600"></i> সাম্প্রতিক শ্রেণীভুক্ত বিজ্ঞাপনসমূহ
+            </h2>
             <a href="{{ route('client.classified') }}" class="text-xs font-bold text-emerald-600 hover:underline">সকল বিজ্ঞাপন &rarr;</a>
         </div>
         <div class="overflow-x-auto">
@@ -78,23 +81,23 @@
                 </thead>
                 <tbody class="divide-y divide-slate-100">
                     @forelse($recentClassified as $ad)
-                        <tr>
+                        <tr class="hover:bg-slate-50/70 transition-colors">
                             <td class="p-3.5 font-bold font-mono text-slate-900">
-                                <a href="{{ route('track', ['tracking_no' => $ad->tracking_no]) }}" class="hover:text-emerald-600 hover:underline">
+                                <a href="{{ route('track', ['tracking_no' => $ad->tracking_no]) }}" class="text-emerald-700 hover:underline">
                                     {{ $ad->tracking_no }}
                                 </a>
                             </td>
-                            <td class="p-3.5">{{ $ad->newspaper->name }}</td>
-                            <td class="p-3.5 font-medium max-w-xs truncate">{{ $ad->title }}</td>
-                            <td class="p-3.5">{{ date('d/m/Y', strtotime($ad->publish_date)) }}</td>
+                            <td class="p-3.5 font-semibold text-slate-700">{{ $ad->newspaper->name }}</td>
+                            <td class="p-3.5 font-medium max-w-xs truncate text-slate-800">{{ $ad->title }}</td>
+                            <td class="p-3.5 text-slate-500">{{ date('d/m/Y', strtotime($ad->publish_date)) }}</td>
                             <td class="p-3.5 font-bold text-emerald-700">৳{{ number_format($ad->total_amount, 2) }}</td>
                             <td class="p-3.5">
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase {{ $ad->status === 'published' ? 'bg-emerald-100 text-emerald-800' : ($ad->status === 'approved' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800') }}">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase {{ $ad->status === 'published' ? 'bg-emerald-100 text-emerald-800' : ($ad->status === 'approved' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800') }}">
                                     {{ $ad->status }}
                                 </span>
                             </td>
                             <td class="p-3.5 text-right">
-                                <a href="{{ route('classified.show', $ad->tracking_no) }}" class="text-xs font-bold text-emerald-600 hover:underline">
+                                <a href="{{ route('classified.show', $ad->tracking_no) }}" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold inline-block">
                                     রসিদ
                                 </a>
                             </td>

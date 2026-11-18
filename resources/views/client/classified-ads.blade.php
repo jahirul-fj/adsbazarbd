@@ -1,16 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.client')
 
 @section('title', 'আমার শ্রেণীভুক্ত বিজ্ঞাপনসমূহ - Reporter')
+@section('page_title', 'আমার শ্রেণীভুক্ত বিজ্ঞাপনসমূহ')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+<div class="space-y-6">
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-            <h1 class="text-2xl font-black text-slate-900">আমার শ্রেণীভুক্ত বিজ্ঞাপনসমূহ</h1>
-            <p class="text-xs text-slate-500">আপনার বুকিং করা সকল শ্রেণীভুক্ত বিজ্ঞাপনের তালিকা ও লাইভ অবস্থা</p>
+            <h1 class="text-xl font-bold text-slate-900">আমার শ্রেণীভুক্ত বিজ্ঞাপনসমূহ</h1>
+            <p class="text-xs text-slate-500">আপনার বুকিং করা সকল শ্রেণীভুক্ত বিজ্ঞাপনের তালিকা, অনুমোদন ও প্রকাশনা অবস্থা</p>
         </div>
-        <a href="{{ route('classified.index') }}" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors">
-            + নতুন বিজ্ঞাপন দিন
+        <a href="{{ route('classified.index') }}" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-1.5">
+            <i class="fa-solid fa-plus text-xs"></i> নতুন বিজ্ঞাপন দিন
         </a>
     </div>
 
@@ -34,26 +35,26 @@
                     @forelse($ads as $ad)
                         <tr class="hover:bg-slate-50/60 transition-colors">
                             <td class="p-4 font-mono font-bold text-slate-900">
-                                <a href="{{ route('track', ['tracking_no' => $ad->tracking_no]) }}" class="hover:text-emerald-600 hover:underline">
+                                <a href="{{ route('track', ['tracking_no' => $ad->tracking_no]) }}" class="text-emerald-700 hover:underline">
                                     {{ $ad->tracking_no }}
                                 </a>
                             </td>
-                            <td class="p-4 font-medium">{{ $ad->newspaper->name }}</td>
+                            <td class="p-4 font-semibold text-slate-700">{{ $ad->newspaper->name }}</td>
                             <td class="p-4 text-slate-500">{{ $ad->category->name }}</td>
-                            <td class="p-4 font-medium max-w-xs truncate">{{ $ad->title }}</td>
-                            <td class="p-4">{{ date('d/m/Y', strtotime($ad->publish_date)) }}</td>
-                            <td class="p-4">{{ $ad->word_count }}</td>
+                            <td class="p-4 font-medium max-w-xs truncate text-slate-800">{{ $ad->title }}</td>
+                            <td class="p-4 text-slate-500">{{ date('d/m/Y', strtotime($ad->publish_date)) }}</td>
+                            <td class="p-4 text-slate-600">{{ $ad->word_count }}</td>
                             <td class="p-4 font-bold text-emerald-700">৳{{ number_format($ad->total_amount, 2) }}</td>
                             <td class="p-4">
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase {{ $ad->status === 'published' ? 'bg-emerald-100 text-emerald-800' : ($ad->status === 'approved' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800') }}">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase {{ $ad->status === 'published' ? 'bg-emerald-100 text-emerald-800' : ($ad->status === 'approved' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800') }}">
                                     {{ $ad->status }}
                                 </span>
                             </td>
                             <td class="p-4 text-right space-x-2">
-                                <a href="{{ route('classified.show', $ad->tracking_no) }}" class="font-bold text-xs text-slate-700 hover:text-emerald-600">
+                                <a href="{{ route('classified.show', $ad->tracking_no) }}" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold inline-block">
                                     ইনভয়েস
                                 </a>
-                                <a href="{{ route('track', ['tracking_no' => $ad->tracking_no]) }}" class="font-bold text-xs text-emerald-600 hover:underline">
+                                <a href="{{ route('track', ['tracking_no' => $ad->tracking_no]) }}" class="px-3 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-xs font-bold inline-block">
                                     ট্র্যাক
                                 </a>
                             </td>
@@ -66,9 +67,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="p-4 border-t border-slate-100">
-            {{ $ads->links() }}
-        </div>
+        @if($ads->hasPages())
+            <div class="p-4 border-t border-slate-100">
+                {{ $ads->links() }}
+            </div>
+        @endif
     </div>
 </div>
 @endsection

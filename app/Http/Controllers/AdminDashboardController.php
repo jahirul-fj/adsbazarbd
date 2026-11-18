@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AdCategory;
 use App\Models\ClassifiedAd;
+use App\Models\DesignerProfile;
 use App\Models\DesignOrder;
 use App\Models\DisplayAd;
 use App\Models\Newspaper;
@@ -19,19 +20,39 @@ class AdminDashboardController extends Controller
     {
         $metrics = [
             'total_revenue' => PaymentRecord::where('status', 'approved')->sum('amount'),
+            'today_revenue' => PaymentRecord::where('status', 'approved')->whereDate('created_at', today())->sum('amount'),
             'pending_classified' => ClassifiedAd::where('status', 'pending')->count(),
             'pending_display' => DisplayAd::where('status', 'pending')->count(),
             'pending_payments' => PaymentRecord::where('status', 'pending')->count(),
-            'total_users' => User::count(),
+            'total_users' => User::where('role', 'client')->count(),
+            'total_designers' => User::where('role', 'designer')->count(),
             'total_newspapers' => Newspaper::count(),
             'active_orders' => DesignOrder::whereIn('status', ['in_progress', 'draft_submitted', 'revision_requested'])->count(),
+            'completed_ads' => ClassifiedAd::where('status', 'published')->count() + DisplayAd::where('status', 'published')->count(),
         ];
 
-        $recentClassified = ClassifiedAd::with('newspaper')->latest()->take(5)->get();
-        $recentDisplay = DisplayAd::with('newspaper')->latest()->take(5)->get();
-        $recentPayments = PaymentRecord::latest()->take(5)->get();
+        // Monthly revenue chart data (last 6 months)
+        $monthlyRevenue = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $month = now()->subMonths($i);
+            $revenue = PaymentRecord::where('status', 'approved')
+                ->whereYear('created_at', $month->year)
+                ->whereMonth('created_at', $month->month)
+                ->sum('amount');
+            $monthlyRevenue[] = [
+                'month' => $month->format('M'),
+                'amount' => (float)$revenue,
+            ];
+        }
 
-        return view('admin.dashboard', compact('metrics', 'recentClassified', 'recentDisplay', 'recentPayments'));
+        // Ad distribution by category
+        $categoryStats = AdCategory::withCount('classifiedAds')->get();
+
+        $recentClassified = ClassifiedAd::with('newspaper')->latest()->take(6)->get();
+        $recentDisplay = DisplayAd::with('newspaper')->latest()->take(6)->get();
+        $recentPayments = PaymentRecord::latest()->take(6)->get();
+
+        return view('admin.dashboard', compact('metrics', 'monthlyRevenue', 'categoryStats', 'recentClassified', 'recentDisplay', 'recentPayments'));
     }
 
     public function classifiedAds(Request $request)
@@ -40,6 +61,10 @@ class AdminDashboardController extends Controller
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);
+        }
+
+        if ($request->filled('newspaper_id')) {
+            $query->where('newspaper_id', $request->newspaper_id);
         }
 
         if ($request->filled('search')) {
@@ -51,8 +76,10 @@ class AdminDashboardController extends Controller
             });
         }
 
-        $ads = $query->paginate(15);
-        return view('admin.classified-ads', compact('ads'));
+        $ads = $query->paginate(15)->withQueryString();
+        $newspapers = Newspaper::all();
+
+        return view('admin.classified-ads', compact('ads', 'newspapers'));
     }
 
     public function updateClassifiedStatus(Request $request, $id)
@@ -79,6 +106,10 @@ class AdminDashboardController extends Controller
             $query->where('status', $request->status);
         }
 
+        if ($request->filled('newspaper_id')) {
+            $query->where('newspaper_id', $request->newspaper_id);
+        }
+
         if ($request->filled('search')) {
             $s = $request->search;
             $query->where(function ($q) use ($s) {
@@ -88,8 +119,10 @@ class AdminDashboardController extends Controller
             });
         }
 
-        $ads = $query->paginate(15);
-        return view('admin.display-ads', compact('ads'));
+        $ads = $query->paginate(15)->withQueryString();
+        $newspapers = Newspaper::all();
+
+        return view('admin.display-ads', compact('ads', 'newspapers'));
     }
 
     public function updateDisplayStatus(Request $request, $id)
@@ -175,6 +208,27 @@ class AdminDashboardController extends Controller
         return back()->with('success', 'নতুন ক্যাটাগরি সফলভাবে তৈরি করা হয়েছে!');
     }
 
+    public function designers()
+    {
+        $designers = DesignerProfile::with('user')->latest()->paginate(15);
+        return view('admin.designers', compact('designers'));
+    }
+
+    public function toggleDesignerFeatured($id)
+    {
+        $profile = DesignerProfile::findOrFail($id);
+        $profile->is_featured = !$profile->is_featured;
+        $profile->save();
+
+        return back()->with('success', 'ডিজাইনার ফিচার্ড স্ট্যাটাস আপডেট করা হয়েছে!');
+    }
+
+    public function users()
+    {
+        $users = User::where('role', 'client')->withCount(['classifiedAds', 'displayAds'])->latest()->paginate(15);
+        return view('admin.users', compact('users'));
+    }
+
     public function designOrders()
     {
         $orders = DesignOrder::with(['client', 'designer'])->latest()->paginate(15);
@@ -189,7 +243,7 @@ class AdminDashboardController extends Controller
             $query->where('status', $request->status);
         }
 
-        $payments = $query->paginate(15);
+        $payments = $query->paginate(15)->withQueryString();
         return view('admin.payments', compact('payments'));
     }
 
@@ -208,7 +262,6 @@ class AdminDashboardController extends Controller
         $payment->verified_at = now();
         $payment->save();
 
-        // Also update linked ad payment_status if applicable
         if ($payment->order_type === 'classified_ad') {
             $ad = ClassifiedAd::find($payment->order_id);
             if ($ad) {
@@ -229,7 +282,7 @@ class AdminDashboardController extends Controller
             }
         }
 
-        return back()->with('success', 'পেমেন্ট স্ট্যাটাস সফলভাবে আপডেট করা হয়েছে!');
+        return back()->with('success', 'পেমেন্ট ট্রানজেকশন সফলভাবে ভেরিফাই ও আপডেট করা হয়েছে!');
     }
 
     public function settings()

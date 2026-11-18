@@ -35,6 +35,82 @@ class AppFlowTest extends TestCase
         $this->get('/display-advertisement')->assertStatus(200);
         $this->get('/designers')->assertStatus(200);
         $this->get('/designers/1')->assertStatus(200);
+        $this->get('/login')->assertStatus(200);
+        $this->get('/admin/login')->assertStatus(200);
+        $this->get('/client/login')->assertStatus(200);
+        $this->get('/designer/login')->assertStatus(200);
+    }
+
+    public function test_strict_role_login_separation(): void
+    {
+        // 1. Admin Login: Only Admin can log in at /admin/login
+        $adminRes = $this->post('/admin/login', [
+            'email' => 'admin@reporter.test',
+            'password' => 'password',
+        ]);
+        $adminRes->assertRedirect(route('admin.dashboard'));
+        $this->assertAuthenticatedAs(User::where('email', 'admin@reporter.test')->first());
+
+        $this->post('/admin/logout');
+        $this->assertGuest();
+
+        // Client attempting admin login fails
+        $clientFailRes = $this->post('/admin/login', [
+            'email' => 'client@reporter.test',
+            'password' => 'password',
+        ]);
+        $clientFailRes->assertSessionHas('error');
+        $this->assertGuest();
+
+        // 2. Client Login: Only Client can log in at /client/login
+        $clientRes = $this->post('/client/login', [
+            'email' => 'client@reporter.test',
+            'password' => 'password',
+        ]);
+        $clientRes->assertRedirect(route('client.dashboard'));
+        $this->assertAuthenticatedAs(User::where('email', 'client@reporter.test')->first());
+
+        $this->post('/client/logout');
+        $this->assertGuest();
+
+        // Designer attempting client login fails
+        $designerFailRes = $this->post('/client/login', [
+            'email' => 'tanvir@reporter.test',
+            'password' => 'password',
+        ]);
+        $designerFailRes->assertSessionHas('error');
+        $this->assertGuest();
+
+        // 3. Designer Login: Only Designer can log in at /designer/login
+        $designerRes = $this->post('/designer/login', [
+            'email' => 'tanvir@reporter.test',
+            'password' => 'password',
+        ]);
+        $designerRes->assertRedirect(route('designer.dashboard'));
+        $this->assertAuthenticatedAs(User::where('email', 'tanvir@reporter.test')->first());
+
+        $this->post('/designer/logout');
+        $this->assertGuest();
+
+        // Admin attempting designer login fails
+        $adminFailRes = $this->post('/designer/login', [
+            'email' => 'admin@reporter.test',
+            'password' => 'password',
+        ]);
+        $adminFailRes->assertSessionHas('error');
+        $this->assertGuest();
+    }
+
+    public function test_unauthenticated_role_redirects(): void
+    {
+        // Visiting admin routes when logged out redirects to /admin/login
+        $this->get('/admin/dashboard')->assertRedirect(route('admin.login'));
+
+        // Visiting client routes when logged out redirects to /client/login
+        $this->get('/client/dashboard')->assertRedirect(route('client.login'));
+
+        // Visiting designer routes when logged out redirects to /designer/login
+        $this->get('/designer/dashboard')->assertRedirect(route('designer.login'));
     }
 
     public function test_can_book_classified_ad(): void
@@ -138,5 +214,7 @@ class AppFlowTest extends TestCase
         $this->get('/admin/design-orders')->assertStatus(200);
         $this->get('/admin/payments')->assertStatus(200);
         $this->get('/admin/settings')->assertStatus(200);
+        $this->get('/admin/designers')->assertStatus(200);
+        $this->get('/admin/users')->assertStatus(200);
     }
 }

@@ -1,9 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.client')
 
 @section('title', 'ডিজাইন ওয়ার্কস্পেস - ' . $order->order_no)
+@section('page_title', 'ডিজাইন ওয়ার্কস্পেস ও চ্যাট')
 
 @section('content')
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+<div class="max-w-5xl space-y-6">
     <!-- Top Order Status Ribbon -->
     <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div class="space-y-1">

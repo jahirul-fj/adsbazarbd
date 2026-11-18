@@ -1,9 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.designer')
 
 @section('title', 'ডিজাইনার ওয়ার্কস্পেস - ' . $order->order_no)
+@section('page_title', 'অর্ডার ডেলিভারি ও ক্লায়েন্ট মেসেজ')
 
 @section('content')
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+<div class="max-w-5xl space-y-6">
     <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div class="space-y-1">
             <div class="flex items-center gap-2">
@@ -98,24 +99,19 @@
 
                             <label class="flex items-center gap-1.5 text-slate-700 cursor-pointer font-bold">
                                 <input type="checkbox" name="is_draft_submission" value="1" class="w-4 h-4 text-teal-600 rounded-sm border-slate-300">
-                                <span>এটি একটি ড্রাফট সাবমিশন</span>
-                            </label>
-
-                            <label class="flex items-center gap-1.5 text-emerald-800 cursor-pointer font-bold">
-                                <input type="checkbox" name="is_final_submission" value="1" class="w-4 h-4 text-emerald-600 rounded-sm border-slate-300">
-                                <span>এটি ফাইনাল ডেলিভারি ফাইল</span>
+                                <span>এটি একটি খসড়া/চূড়ান্ত ডিজাইন সাবমিশন</span>
                             </label>
                         </div>
 
                         <button type="submit" class="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors flex items-center gap-2">
-                            <i class="fa-solid fa-paper-plane"></i> সাবমিট করুন
+                            <i class="fa-solid fa-paper-plane"></i> মেসেজ ও ড্রাফট পাঠান
                         </button>
                     </div>
                 </form>
             </div>
         @else
             <div class="p-4 bg-emerald-50 text-center text-xs font-bold text-emerald-800 border-t border-emerald-100">
-                এই কাজটির চূড়ান্ত অনুমোদন পাওয়া গেছে এবং আপনার একাউন্টে ৳{{ number_format($order->budget, 2) }} যোগ হয়েছে।
+                এই অর্ডারটি ক্লায়েন্ট কর্তৃক অনুমোদিত ও সফলভাবে সম্পন্ন হয়েছে। পারিশ্রমিক ৳{{ number_format($order->budget, 2) }} আপনার অ্যাকাউন্টে জমা হয়েছে।
             </div>
         @endif
     </div>

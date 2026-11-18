@@ -11,11 +11,14 @@ class EnsureDesigner
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'ডিজাইনার ড্যাশবোর্ডে প্রবেশ করতে লগইন করুন।');
+            return redirect()->route('designer.login')->with('error', 'ডিজাইনার ড্যাশবোর্ডে প্রবেশ করতে ডিজাইনার একাউন্টে লগইন করুন।');
         }
 
-        if (auth()->user()->role !== 'designer' && auth()->user()->role !== 'admin') {
-            abort(403, 'শুধুমাত্র ডিজাইনারদের জন্য এই ড্যাশবোর্ড নির্ধারিত।');
+        if (auth()->user()->role !== 'designer') {
+            auth()->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('designer.login')->with('error', 'এই পোর্টালটি শুধুমাত্র নিবন্ধিত গ্রাফিক ডিজাইনারদের জন্য।');
         }
 
         return $next($request);
