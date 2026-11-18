@@ -96,7 +96,8 @@ class ClassifiedAdController extends Controller
 
     public function show($trackingNo)
     {
-        $ad = ClassifiedAd::with(['newspaper', 'category'])->where('tracking_no', $trackingNo)->firstOrFail();
+        $normalizedTracking = strtoupper(trim((string) $trackingNo));
+        $ad = ClassifiedAd::with(['newspaper', 'category'])->where('tracking_no', $normalizedTracking)->firstOrFail();
         return view('classified.show', compact('ad'));
     }
 }

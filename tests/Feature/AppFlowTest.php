@@ -525,4 +525,96 @@ class AppFlowTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('selected>' . "\n" . '                                ' . $newspaper->name, false);
     }
+
+    public function test_comprehensive_full_site_crawler_for_all_roles(): void
+    {
+        // 1. Guest / Public Visitors
+        $publicUrls = [
+            '/',
+            '/about',
+            '/faq',
+            '/contact',
+            '/pricing',
+            '/classified-advertisement',
+            '/display-advertisement',
+            '/designers',
+            '/designers/1',
+            '/login',
+            '/portal-select',
+            '/register',
+            '/admin/login',
+            '/client/login',
+            '/client/register',
+            '/designer/login',
+            '/designer/register',
+            '/track-ad',
+            '/track-ad?tracking_no=CLS-202611-1001',
+            '/track-ad?tracking_no=cls-202611-1001',
+            '/track-ad?tracking_no=DSP-202611-2001',
+            '/track-ad?tracking_no=dsp-202611-2001',
+            '/classified-advertisement/CLS-202611-1001',
+            '/classified-advertisement/cls-202611-1001',
+            '/display-advertisement/DSP-202611-2001',
+            '/display-advertisement/dsp-202611-2001',
+        ];
+
+        foreach ($publicUrls as $url) {
+            $res = $this->get($url);
+            $this->assertEquals(200, $res->status(), "Failed loading public URL: {$url}");
+        }
+
+        // 2. Admin User
+        $admin = User::where('role', 'admin')->first();
+        $adminUrls = [
+            '/admin/dashboard',
+            '/admin/classified-ads',
+            '/admin/display-ads',
+            '/admin/newspapers',
+            '/admin/categories',
+            '/admin/designers',
+            '/admin/users',
+            '/admin/design-orders',
+            '/admin/payments',
+            '/admin/withdrawals',
+            '/admin/settings',
+            '/admin/profile',
+        ];
+
+        foreach ($adminUrls as $url) {
+            $res = $this->actingAs($admin)->get($url);
+            $this->assertEquals(200, $res->status(), "Failed loading admin URL: {$url}");
+        }
+
+        // 3. Client User
+        $client = User::where('role', 'client')->first();
+        $clientUrls = [
+            '/client/dashboard',
+            '/client/classified-ads',
+            '/client/display-ads',
+            '/client/orders',
+            '/client/orders/1',
+            '/client/profile',
+            '/designers/1/hire',
+        ];
+
+        foreach ($clientUrls as $url) {
+            $res = $this->actingAs($client)->get($url);
+            $this->assertEquals(200, $res->status(), "Failed loading client URL: {$url}");
+        }
+
+        // 4. Designer User
+        $designer = User::where('role', 'designer')->first();
+        $designerUrls = [
+            '/designer/dashboard',
+            '/designer/orders',
+            '/designer/orders/1',
+            '/designer/withdrawals',
+            '/designer/profile',
+        ];
+
+        foreach ($designerUrls as $url) {
+            $res = $this->actingAs($designer)->get($url);
+            $this->assertEquals(200, $res->status(), "Failed loading designer URL: {$url}");
+        }
+    }
 }

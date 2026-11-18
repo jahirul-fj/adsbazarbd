@@ -303,7 +303,7 @@
     </div>
 </section>
 
-<!-- Client Testimonials (Real Testimonials from procharok.com) -->
+<!-- Client Testimonials (Real Testimonials) -->
 <section class="bg-slate-100 py-20 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto space-y-12">
         <div class="text-center max-w-2xl mx-auto space-y-2">
@@ -347,7 +347,7 @@
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                 </div>
                 <p class="text-sm text-slate-700 leading-relaxed italic">
-                    "Procharok advertising creates a concept to offline and online advertisement. It's really an excellent platform to maintain bridge communication between advertisers and publishers."
+                    "Ads Bazar BD creates a concept to offline and online advertisement. It's really an excellent platform to maintain bridge communication between advertisers and publishers."
                 </p>
                 <div class="pt-2 border-t border-slate-100">
                     <div class="font-bold text-slate-900 text-sm">Manager (Digital Advertisement)</div>

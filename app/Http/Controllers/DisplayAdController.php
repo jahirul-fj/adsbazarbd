@@ -104,7 +104,8 @@ class DisplayAdController extends Controller
 
     public function show($trackingNo)
     {
-        $ad = DisplayAd::with(['newspaper', 'category'])->where('tracking_no', $trackingNo)->firstOrFail();
+        $normalizedTracking = strtoupper(trim((string) $trackingNo));
+        $ad = DisplayAd::with(['newspaper', 'category'])->where('tracking_no', $normalizedTracking)->firstOrFail();
         return view('display.show', compact('ad'));
     }
 }

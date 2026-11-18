@@ -169,7 +169,7 @@
                     <input type="checkbox" name="needs_designer" id="needs_designer" value="1" class="mt-1 w-4 h-4 text-indigo-600 rounded-md border-slate-300 focus:ring-indigo-500">
                     <div>
                         <label for="needs_designer" class="font-bold text-xs text-indigo-900 cursor-pointer">
-                            আমার কোনো প্রস্তুত করা ডিজাইন নেই, প্রচারকের ডিজাইনার হায়ার করতে চাই
+                            আমার কোনো প্রস্তুত করা ডিজাইন নেই, Ads Bazar BD এর ডিজাইনার হায়ার করতে চাই
                         </label>
                         <p class="text-[11px] text-indigo-700 mt-0.5">
                             টিক দিলে বিজ্ঞাপন বুকিংয়ের পর আমাদের অভিজ্ঞ ডিজাইনার টিম আপনার পছন্দ অনুযায়ী ডিজাইন তৈরি করে দিবে।

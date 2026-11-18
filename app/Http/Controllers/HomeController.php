@@ -50,12 +50,12 @@ class HomeController extends Controller
 
     public function track(Request $request)
     {
-        $trackingNo = trim($request->input('tracking_no'));
+        $trackingNo = strtoupper(trim((string) $request->input('tracking_no')));
         $ad = null;
         $adType = null;
 
         if ($trackingNo) {
-            if (str_starts_with(strtoupper($trackingNo), 'DSP')) {
+            if (str_starts_with($trackingNo, 'DSP')) {
                 $ad = DisplayAd::with(['newspaper', 'category'])->where('tracking_no', $trackingNo)->first();
                 $adType = 'display';
             } else {

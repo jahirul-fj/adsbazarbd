@@ -57,7 +57,7 @@
         <!-- Escrow Payment Selection -->
         <div class="space-y-4 pt-4 border-t border-slate-100">
             <h2 class="text-base font-bold text-slate-900 pb-1">নিরাপদ এসক্রো পেমেন্ট</h2>
-            <p class="text-xs text-slate-500">আপনার টাকা প্রচারক প্ল্যাটফর্মে গচ্ছিত থাকবে। ডিজাইনার ৩টি রিভিশন দিবে এবং আপনার অনুমোদনের পর টাকা ডিজাইনারের ব্যালেন্সে যোগ হবে।</p>
+            <p class="text-xs text-slate-500">আপনার টাকা Ads Bazar BD প্ল্যাটফর্মে গচ্ছিত থাকবে। ডিজাইনার ৩টি রিভিশন দিবে এবং আপনার অনুমোদনের পর টাকা ডিজাইনারের ব্যালেন্সে যোগ হবে।</p>
 
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer has-checked:border-emerald-600 has-checked:bg-emerald-50/50 text-center">
