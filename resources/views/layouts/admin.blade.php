@@ -29,27 +29,48 @@
     </script>
     <style>
         body { font-family: 'Hind Siliguri', sans-serif; background-color: #f8fafc; }
+        .custom-sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-sidebar-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-sidebar-scroll::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.35);
+            border-radius: 8px;
+        }
+        .custom-sidebar-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(100, 116, 139, 0.6);
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex">
 
-    <!-- Admin Sidebar (Light Modern) -->
-    <aside class="w-64 bg-white border-r border-slate-200 flex flex-col shrink-0 min-h-screen shadow-xs">
+    <!-- Mobile Backdrop Overlay -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/50 z-30 hidden md:hidden transition-opacity"></div>
+
+    <!-- Admin Sidebar (Light Modern & Fixed) -->
+    <aside id="mainSidebar" class="fixed inset-y-0 left-0 w-64 h-screen bg-white border-r border-slate-200 flex flex-col z-40 shadow-xs -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out">
         <!-- Sidebar Brand -->
-        <div class="h-20 flex items-center gap-3 px-6 border-b border-slate-100">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-700 flex items-center justify-center text-white text-lg font-black shadow-md">
-                <i class="fa-solid fa-shield-halved"></i>
-            </div>
-            <div>
-                <div class="font-extrabold text-lg text-slate-900 tracking-tight flex items-center gap-1.5">
-                    Ads Bazar BD <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 font-bold uppercase border border-indigo-200">ADMIN</span>
+        <div class="h-20 shrink-0 flex items-center justify-between px-6 border-b border-slate-100">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-indigo-700 flex items-center justify-center text-white text-lg font-black shadow-md">
+                    <i class="fa-solid fa-shield-halved"></i>
                 </div>
-                <div class="text-[10px] text-slate-500">সেন্ট্রাল কন্ট্রোল প্যানেল</div>
+                <div>
+                    <div class="font-extrabold text-lg text-slate-900 tracking-tight flex items-center gap-1.5">
+                        Ads Bazar BD <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 font-bold uppercase border border-indigo-200">ADMIN</span>
+                    </div>
+                    <div class="text-[10px] text-slate-500">সেন্ট্রাল কন্ট্রোল প্যানেল</div>
+                </div>
             </div>
+            <button onclick="toggleSidebar()" type="button" aria-label="ক্লোজ মেনু" class="md:hidden text-slate-400 hover:text-slate-600 p-1">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
         </div>
 
         <!-- Navigation Links -->
-        <nav class="flex-1 px-4 py-6 space-y-1.5 text-xs font-semibold overflow-y-auto">
+        <nav class="flex-1 px-4 py-6 space-y-1.5 text-xs font-semibold overflow-y-auto custom-sidebar-scroll">
             <div class="text-[10px] uppercase font-bold text-slate-400 px-3 pb-1 tracking-wider">মেনু ও অ্যানালিটিক্স</div>
             
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all {{ request()->routeIs('admin.dashboard') ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'text-slate-600 hover:bg-slate-100 hover:text-indigo-600' }}">
@@ -136,8 +157,8 @@
             </a>
         </nav>
 
-        <!-- Admin Profile Bottom -->
-        <div class="p-4 border-t border-slate-100 bg-slate-50/70 flex items-center justify-between">
+        <!-- Admin Profile Bottom (Pinned to bottom of sidebar) -->
+        <div class="shrink-0 p-4 border-t border-slate-100 bg-slate-50/70 flex items-center justify-between">
             <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
                     {{ mb_substr(auth()->user()->name, 0, 1) }}
@@ -156,12 +177,15 @@
         </div>
     </aside>
 
-    <!-- Main Content Shell (Light Background) -->
-    <div class="flex-1 flex flex-col min-w-0 bg-slate-50 overflow-y-auto">
-        <!-- Top Navbar -->
-        <header class="h-20 bg-white border-b border-slate-200 px-6 sm:px-8 flex justify-between items-center sticky top-0 z-30 shadow-2xs">
+    <!-- Main Content Shell (Light Background & Offset for Fixed Sidebar) -->
+    <div class="flex-1 md:ml-64 flex flex-col min-w-0 bg-slate-50 min-h-screen">
+        <!-- Top Navbar (Sticky Header) -->
+        <header class="h-20 bg-white border-b border-slate-200 px-6 sm:px-8 flex justify-between items-center sticky top-0 z-20 shadow-2xs">
             <div class="flex items-center gap-3">
-                <span class="text-xs text-slate-400 font-medium">ড্যাশবোর্ড /</span>
+                <button onclick="toggleSidebar()" type="button" aria-label="মেনু খুলুন" class="md:hidden p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 mr-1 transition-colors">
+                    <i class="fa-solid fa-bars text-sm"></i>
+                </button>
+                <span class="text-xs text-slate-400 font-medium hidden sm:inline">ড্যাশবোর্ড /</span>
                 <span class="text-sm font-bold text-slate-900">@yield('page_title', 'অ্যাডমিন ওভারভিউ')</span>
             </div>
 
@@ -196,5 +220,19 @@
         </main>
     </div>
 
+    <!-- Mobile Sidebar Toggle Script -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mainSidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                backdrop.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                backdrop.classList.add('hidden');
+            }
+        }
+    </script>
 </body>
 </html>
