@@ -177,6 +177,14 @@
         <main class="flex-1 p-4 sm:p-6 lg:p-8">
             @yield('content')
         </main>
+
+        <!-- Designer Dashboard Footer -->
+        <footer class="px-4 sm:px-6 lg:px-8 py-3.5 border-t border-slate-200/80 bg-white/70 text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div>&copy; {{ date('Y') }} <strong class="text-slate-700">Ads Bazar BD Ltd.</strong></div>
+            <div class="text-[11px] text-slate-400">
+                Developed by <a href="https://extremecoder.net" target="_blank" rel="noopener noreferrer" class="text-teal-600 font-bold hover:underline">Extremecoder.net</a>
+            </div>
+        </footer>
     </div>
 
     <!-- Mobile Sidebar Toggle Script -->
@@ -204,19 +212,6 @@
                 }
             }
         });
-    </script>
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('mainSidebar');
-            const backdrop = document.getElementById('sidebarBackdrop');
-            if (sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.remove('-translate-x-full');
-                backdrop.classList.remove('hidden');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                backdrop.classList.add('hidden');
-            }
-        }
     </script>
 </body>
 </html>

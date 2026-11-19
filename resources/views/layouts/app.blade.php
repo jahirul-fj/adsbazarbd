@@ -448,9 +448,19 @@
             </div>
 
             <!-- Bottom Legal Bar & Socials -->
-            <div class="pt-2 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500 border-t border-slate-800/80">
-                <div class="text-center sm:text-left">
-                    &copy; {{ date('Y') }} <strong class="text-slate-300">Ads Bazar BD Ltd.</strong> সর্বস্বত্ব সংরক্ষিত।
+            <div class="pt-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 border-t border-slate-800/80">
+                <div class="text-center md:text-left flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3">
+                    <div>
+                        &copy; {{ date('Y') }} <strong class="text-slate-300">Ads Bazar BD Ltd.</strong> সর্বস্বত্ব সংরক্ষিত।
+                    </div>
+                    <span class="hidden sm:inline text-slate-700">•</span>
+                    <div class="text-slate-400 text-[11px] sm:text-xs">
+                        Developed with <i class="fa-solid fa-heart text-rose-500 text-[10px]"></i> by 
+                        <a href="https://extremecoder.net" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-bold hover:underline transition-colors inline-flex items-center gap-1">
+                            <span>Extremecoder.net</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[9px] opacity-70"></i>
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Social Media Badges -->
