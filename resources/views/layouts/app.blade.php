@@ -150,11 +150,9 @@
                             </button>
                         </form>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm font-medium text-slate-700 hover:text-emerald-600 px-3 py-2">
-                            লগইন
-                        </a>
-                        <a href="{{ route('register') }}" class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-xs transition-colors">
-                            <i class="fa-solid fa-user-plus text-xs"></i> সাইনআপ
+                        <a href="{{ route('login') }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-xs transition-colors">
+                            <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
+                            <span>লগইন</span>
                         </a>
                     @endauth
                 </div>
@@ -190,8 +188,10 @@
                         <button type="submit" class="w-full text-center py-2 text-rose-600 font-medium">লগআউট</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="w-full text-center py-2 rounded-lg border border-slate-300 text-slate-700 font-medium">লগইন</a>
-                    <a href="{{ route('register') }}" class="w-full text-center py-2 rounded-lg bg-emerald-600 text-white font-medium">নতুন অ্যাকাউন্ট খুলুন</a>
+                    <a href="{{ route('login') }}" class="w-full inline-flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold transition-colors shadow-xs">
+                        <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i>
+                        <span>লগইন</span>
+                    </a>
                 @endauth
             </div>
         </div>
