@@ -251,6 +251,8 @@ class AuthController extends Controller
 
     public function quickLogin($role)
     {
+        abort_unless(app()->isLocal(), 404);
+
         $email = match ($role) {
             'admin' => 'admin@adsbazarbd.com',
             'designer' => 'tanvir@adsbazarbd.com',

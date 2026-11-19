@@ -53,7 +53,7 @@ Route::get('/quick-login/{role}', [AuthController::class, 'quickLogin'])->name('
 Route::prefix('admin')->name('admin.')->group(function () {
     // Admin Auth
     Route::get('/login', [AuthController::class, 'showAdminLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'adminLogin'])->name('login.post');
+    Route::post('/login', [AuthController::class, 'adminLogin'])->name('login.post')->middleware('throttle:10,1');
     Route::post('/logout', [AuthController::class, 'adminLogout'])->name('logout');
 
     // Protected Admin Panel
@@ -92,9 +92,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::prefix('client')->name('client.')->group(function () {
     // Client Auth
     Route::get('/login', [AuthController::class, 'showClientLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'clientLogin'])->name('login.post');
+    Route::post('/login', [AuthController::class, 'clientLogin'])->name('login.post')->middleware('throttle:10,1');
     Route::get('/register', [AuthController::class, 'showClientRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'clientRegister'])->name('register.post');
+    Route::post('/register', [AuthController::class, 'clientRegister'])->name('register.post')->middleware('throttle:10,1');
     Route::post('/logout', [AuthController::class, 'clientLogout'])->name('logout');
 
     // Protected Client Dashboard
@@ -121,9 +121,9 @@ Route::prefix('client')->name('client.')->group(function () {
 Route::prefix('designer')->name('designer.')->group(function () {
     // Designer Auth
     Route::get('/login', [AuthController::class, 'showDesignerLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'designerLogin'])->name('login.post');
+    Route::post('/login', [AuthController::class, 'designerLogin'])->name('login.post')->middleware('throttle:10,1');
     Route::get('/register', [AuthController::class, 'showDesignerRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'designerRegister'])->name('register.post');
+    Route::post('/register', [AuthController::class, 'designerRegister'])->name('register.post')->middleware('throttle:10,1');
     Route::post('/logout', [AuthController::class, 'designerLogout'])->name('logout');
 
     // Protected Designer Dashboard

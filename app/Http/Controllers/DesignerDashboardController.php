@@ -6,8 +6,10 @@ use App\Models\DesignerProfile;
 use App\Models\DesignOrder;
 use App\Models\DesignOrderMessage;
 use App\Models\SystemSetting;
+use App\Models\User;
 use App\Models\WithdrawalRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DesignerDashboardController extends Controller
@@ -203,20 +205,28 @@ class DesignerDashboardController extends Controller
             return back()->with('error', 'আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই। বর্তমান উত্তোলনযোগ্য ব্যালেন্স: ৳' . number_format($user->balance, 2));
         }
 
-        // Deduct from user balance
-        $user->balance -= $validated['amount'];
-        $user->save();
+        return DB::transaction(function () use ($validated, $user) {
+            $lockedUser = User::where('id', $user->id)->lockForUpdate()->first();
 
-        WithdrawalRequest::create([
-            'request_no' => 'WTH-' . date('Ymd') . '-' . rand(1000, 9999),
-            'user_id' => $user->id,
-            'amount' => $validated['amount'],
-            'payment_method' => $validated['payment_method'],
-            'account_number' => $validated['account_number'],
-            'account_details' => $validated['account_details'] ?? null,
-            'status' => 'pending',
-        ]);
+            if ($lockedUser->balance < $validated['amount']) {
+                return back()->with('error', 'আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই। বর্তমান উত্তোলনযোগ্য ব্যালেন্স: ৳' . number_format($lockedUser->balance, 2));
+            }
 
-        return back()->with('success', 'টাকা উত্তোলনের আবেদন সফলভাবে গৃহীত হয়েছে! অ্যাডমিন ভেরিফাই করে পেমেন্ট পাঠিয়ে দেবে।');
+            // Deduct from user balance
+            $lockedUser->balance -= $validated['amount'];
+            $lockedUser->save();
+
+            WithdrawalRequest::create([
+                'request_no' => 'WTH-' . date('Ymd') . '-' . rand(1000, 9999),
+                'user_id' => $lockedUser->id,
+                'amount' => $validated['amount'],
+                'payment_method' => $validated['payment_method'],
+                'account_number' => $validated['account_number'],
+                'account_details' => $validated['account_details'] ?? null,
+                'status' => 'pending',
+            ]);
+
+            return back()->with('success', 'টাকা উত্তোলনের আবেদন সফলভাবে গৃহীত হয়েছে! অ্যাডমিন ভেরিফাই করে পেমেন্ট পাঠিয়ে দেবে।');
+        });
     }
 }

@@ -9,6 +9,7 @@ use App\Models\DisplayAd;
 use App\Models\SystemSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ClientDashboardController extends Controller
@@ -129,35 +130,37 @@ class ClientDashboardController extends Controller
 
     public function approveOrder(Request $request, $id)
     {
-        $order = DesignOrder::where('client_id', auth()->id())->findOrFail($id);
+        return DB::transaction(function () use ($id) {
+            $order = DesignOrder::where('client_id', auth()->id())->lockForUpdate()->findOrFail($id);
 
-        if ($order->status === 'completed') {
-            return back()->with('info', 'অর্ডারটি ইতিমধ্যে সম্পন্ন হয়েছে।');
-        }
-
-        // Calculate dynamic platform commission
-        $commissionPercent = (float) SystemSetting::get('designer_commission_percent', 15.00);
-        $commissionAmount = round($order->budget * ($commissionPercent / 100), 2);
-        $designerEarning = round($order->budget - $commissionAmount, 2);
-
-        $order->status = 'completed';
-        $order->platform_commission_percent = $commissionPercent;
-        $order->platform_commission_amount = $commissionAmount;
-        $order->designer_earning = $designerEarning;
-        $order->save();
-
-        // Release net earnings to designer balance
-        $designer = User::find($order->designer_id);
-        if ($designer) {
-            $designer->balance += $designerEarning;
-            $designer->save();
-
-            if ($designer->designerProfile) {
-                $designer->designerProfile->increment('completed_orders');
+            if ($order->status === 'completed') {
+                return back()->with('info', 'অর্ডারটি ইতিমধ্যে সম্পন্ন হয়েছে।');
             }
-        }
 
-        return back()->with('success', 'ডিজাইনটি চূড়ান্তভাবে অনুমোদিত হয়েছে এবং ডিজাইনারকে নিট পেমেন্ট (৳' . number_format($designerEarning, 2) . ') প্রদান করা হয়েছে!');
+            // Calculate dynamic platform commission
+            $commissionPercent = (float) SystemSetting::get('designer_commission_percent', 15.00);
+            $commissionAmount = round($order->budget * ($commissionPercent / 100), 2);
+            $designerEarning = round($order->budget - $commissionAmount, 2);
+
+            $order->status = 'completed';
+            $order->platform_commission_percent = $commissionPercent;
+            $order->platform_commission_amount = $commissionAmount;
+            $order->designer_earning = $designerEarning;
+            $order->save();
+
+            // Release net earnings to designer balance
+            $designer = User::where('id', $order->designer_id)->lockForUpdate()->first();
+            if ($designer) {
+                $designer->balance += $designerEarning;
+                $designer->save();
+
+                if ($designer->designerProfile) {
+                    $designer->designerProfile->increment('completed_orders');
+                }
+            }
+
+            return back()->with('success', 'ডিজাইনটি চূড়ান্তভাবে অনুমোদিত হয়েছে এবং ডিজাইনারকে নিট পেমেন্ট (৳' . number_format($designerEarning, 2) . ') প্রদান করা হয়েছে!');
+        });
     }
 
     public function submitReview(Request $request, $id)

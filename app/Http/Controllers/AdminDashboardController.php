@@ -13,6 +13,7 @@ use App\Models\SystemSetting;
 use App\Models\User;
 use App\Models\WithdrawalRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -283,38 +284,39 @@ class AdminDashboardController extends Controller
 
     public function updatePaymentStatus(Request $request, $id)
     {
-        $payment = PaymentRecord::findOrFail($id);
-
         $validated = $request->validate([
             'status' => 'required|in:pending,approved,rejected',
             'notes' => 'nullable|string|max:500',
         ]);
 
-        $payment->status = $validated['status'];
-        $payment->notes = $validated['notes'];
-        $payment->verified_by = auth()->id();
-        $payment->verified_at = now();
-        $payment->save();
+        DB::transaction(function () use ($id, $validated) {
+            $payment = PaymentRecord::lockForUpdate()->findOrFail($id);
+            $payment->status = $validated['status'];
+            $payment->notes = $validated['notes'];
+            $payment->verified_by = auth()->id();
+            $payment->verified_at = now();
+            $payment->save();
 
-        if ($payment->order_type === 'classified_ad') {
-            $ad = ClassifiedAd::find($payment->order_id);
-            if ($ad) {
-                $ad->payment_status = $payment->status === 'approved' ? 'paid' : ($payment->status === 'rejected' ? 'rejected' : 'pending_verification');
-                if ($payment->status === 'approved' && $ad->status === 'pending') {
-                    $ad->status = 'approved';
+            if ($payment->order_type === 'classified_ad') {
+                $ad = ClassifiedAd::lockForUpdate()->find($payment->order_id);
+                if ($ad) {
+                    $ad->payment_status = $payment->status === 'approved' ? 'paid' : ($payment->status === 'rejected' ? 'rejected' : 'pending_verification');
+                    if ($payment->status === 'approved' && $ad->status === 'pending') {
+                        $ad->status = 'approved';
+                    }
+                    $ad->save();
                 }
-                $ad->save();
-            }
-        } elseif ($payment->order_type === 'display_ad') {
-            $ad = DisplayAd::find($payment->order_id);
-            if ($ad) {
-                $ad->payment_status = $payment->status === 'approved' ? 'paid' : ($payment->status === 'rejected' ? 'rejected' : 'pending_verification');
-                if ($payment->status === 'approved' && $ad->status === 'pending') {
-                    $ad->status = 'approved';
+            } elseif ($payment->order_type === 'display_ad') {
+                $ad = DisplayAd::lockForUpdate()->find($payment->order_id);
+                if ($ad) {
+                    $ad->payment_status = $payment->status === 'approved' ? 'paid' : ($payment->status === 'rejected' ? 'rejected' : 'pending_verification');
+                    if ($payment->status === 'approved' && $ad->status === 'pending') {
+                        $ad->status = 'approved';
+                    }
+                    $ad->save();
                 }
-                $ad->save();
             }
-        }
+        });
 
         return back()->with('success', 'পেমেন্ট ট্রানজেকশন সফলভাবে ভেরিফাই ও আপডেট করা হয়েছে!');
     }
@@ -327,24 +329,24 @@ class AdminDashboardController extends Controller
 
     public function updateSettings(Request $request)
     {
-        $keys = [
-            'site_name',
-            'site_tagline',
-            'helpline_phone',
-            'helpline_email',
-            'office_address',
-            'bkash_merchant_number',
-            'nagad_merchant_number',
-            'rocket_number',
-            'bank_info',
-            'cash_pickup_notice',
-            'designer_commission_percent',
-            'min_withdrawal_amount',
-        ];
+        $validated = $request->validate([
+            'site_name' => 'nullable|string|max:100',
+            'site_tagline' => 'nullable|string|max:255',
+            'helpline_phone' => 'nullable|string|max:50',
+            'helpline_email' => 'nullable|email|max:100',
+            'office_address' => 'nullable|string|max:255',
+            'bkash_merchant_number' => 'nullable|string|max:50',
+            'nagad_merchant_number' => 'nullable|string|max:50',
+            'rocket_number' => 'nullable|string|max:50',
+            'bank_info' => 'nullable|string|max:1000',
+            'cash_pickup_notice' => 'nullable|string|max:1000',
+            'designer_commission_percent' => 'nullable|numeric|min:0|max:100',
+            'min_withdrawal_amount' => 'nullable|numeric|min:10',
+        ]);
 
-        foreach ($keys as $k) {
-            if ($request->has($k)) {
-                SystemSetting::set($k, $request->input($k));
+        foreach ($validated as $key => $value) {
+            if ($value !== null) {
+                SystemSetting::set($key, $value);
             }
         }
 
@@ -366,35 +368,37 @@ class AdminDashboardController extends Controller
 
     public function updateWithdrawalStatus(Request $request, $id)
     {
-        $withdrawal = WithdrawalRequest::findOrFail($id);
-
         $validated = $request->validate([
             'status' => 'required|in:approved,rejected',
             'trx_id' => 'nullable|string|max:100',
             'admin_notes' => 'nullable|string|max:1000',
         ]);
 
-        if ($withdrawal->status === 'pending' && $validated['status'] === 'rejected') {
-            // Refund the requested amount back to designer balance
-            $designer = $withdrawal->user;
-            if ($designer) {
-                $designer->balance += $withdrawal->amount;
-                $designer->save();
+        return DB::transaction(function () use ($id, $validated) {
+            $withdrawal = WithdrawalRequest::lockForUpdate()->findOrFail($id);
+
+            if ($withdrawal->status === 'pending' && $validated['status'] === 'rejected') {
+                // Refund the requested amount back to designer balance
+                $designer = User::where('id', $withdrawal->user_id)->lockForUpdate()->first();
+                if ($designer) {
+                    $designer->balance += $withdrawal->amount;
+                    $designer->save();
+                }
             }
-        }
 
-        $withdrawal->update([
-            'status' => $validated['status'],
-            'trx_id' => $validated['trx_id'] ?? $withdrawal->trx_id,
-            'admin_notes' => $validated['admin_notes'] ?? $withdrawal->admin_notes,
-            'processed_at' => now(),
-        ]);
+            $withdrawal->update([
+                'status' => $validated['status'],
+                'trx_id' => $validated['trx_id'] ?? $withdrawal->trx_id,
+                'admin_notes' => $validated['admin_notes'] ?? $withdrawal->admin_notes,
+                'processed_at' => now(),
+            ]);
 
-        $msg = $validated['status'] === 'approved' 
-            ? 'টাকা উত্তোলনের আবেদন সফলভাবে অনুমোদন ও পরিশোধিত হিসেবে মার্ক করা হয়েছে!' 
-            : 'টাকা উত্তোলনের আবেদন বাতিল করা হয়েছে এবং ডিজাইনারের ব্যালেন্সে টাকা রিফান্ড করা হয়েছে।';
+            $msg = $validated['status'] === 'approved' 
+                ? 'টাকা উত্তোলনের আবেদন সফলভাবে অনুমোদন ও পরিশোধিত হিসেবে মার্ক করা হয়েছে!' 
+                : 'টাকা উত্তোলনের আবেদন বাতিল করা হয়েছে এবং ডিজাইনারের ব্যালেন্সে টাকা রিফান্ড করা হয়েছে।';
 
-        return back()->with('success', $msg);
+            return back()->with('success', $msg);
+        });
     }
 
     public function profile()
