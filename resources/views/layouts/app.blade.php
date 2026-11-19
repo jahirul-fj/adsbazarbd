@@ -93,9 +93,8 @@
                     <a href="{{ route('home') }}" class="flex items-center gap-3 group">
                         <img src="{{ asset('images/logo-icon.svg') }}" alt="Ads Bazar BD" class="w-11 h-11 rounded-xl shadow-md group-hover:scale-105 transition-transform object-contain">
                         <div>
-                            <div class="font-extrabold text-2xl tracking-tight text-slate-900 flex items-center gap-2">
-                                <span>Ads Bazar BD</span>
-                                <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold uppercase tracking-wider">অ্যাডস বাজার</span>
+                            <div class="font-extrabold text-2xl tracking-tight text-slate-900">
+                                Ads Bazar BD
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium">সহজে সংবাদপত্রে বিজ্ঞাপন ও ডিজাইনার প্ল্যাটফর্ম</div>
                         </div>
@@ -249,9 +248,8 @@
                 <div class="lg:col-span-2 space-y-4">
                     <div class="flex items-center gap-3">
                         <img src="{{ asset('images/logo-icon.svg') }}" alt="Ads Bazar BD" class="w-11 h-11 rounded-xl shadow-md object-contain">
-                        <div class="font-extrabold text-2xl text-white tracking-tight flex items-center gap-2">
-                            <span>Ads Bazar BD</span>
-                            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-normal">অ্যাডস বাজার বিডি</span>
+                        <div class="font-extrabold text-2xl text-white tracking-tight">
+                            Ads Bazar BD
                         </div>
                     </div>
                     <p class="text-sm text-slate-400 leading-relaxed pr-6">

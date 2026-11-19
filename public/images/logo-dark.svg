@@ -49,10 +49,6 @@
       <rect x="0" y="0" width="36" height="20" rx="6" fill="#0284c7" />
       <text x="18" y="14" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">BD</text>
     </g>
-    <g transform="translate(148, 3)">
-      <rect x="0" y="0" width="76" height="20" rx="6" fill="#064e3b" stroke="#059669" stroke-width="1" />
-      <text x="38" y="14" font-family="'Hind Siliguri', system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">অ্যাডস বাজার</text>
-    </g>
     <text x="0" y="37" font-family="'Hind Siliguri', system-ui, sans-serif" font-size="10.5" font-weight="500" fill="#94A3B8" letter-spacing="0.2">সংবাদপত্রে বিজ্ঞাপন ও ডিজাইনার প্ল্যাটফর্ম</text>
   </g>
 </svg>
