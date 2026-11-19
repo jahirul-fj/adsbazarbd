@@ -482,5 +482,8 @@ class DatabaseSeeder extends Seeder
             'attachment_file' => 'https://images.unsplash.com/photo-1542744094-3a31f272c490?w=1000',
             'is_draft_submission' => true,
         ]);
+
+        // 8. Update comprehensive Newspaper Display Rates
+        $this->call(NewspaperRateSeeder::class);
     }
 }
