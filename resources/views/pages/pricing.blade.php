@@ -182,7 +182,7 @@
         </div>
 
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs sm:text-sm">
+            <table class="w-full text-left text-xs sm:text-sm min-w-[700px]">
                 <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 uppercase text-[11px] tracking-wider">
                     <tr>
                         <th class="p-4">সংবাদপত্রের নাম</th>

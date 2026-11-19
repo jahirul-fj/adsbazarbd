@@ -71,7 +71,7 @@
             <a href="{{ route('designer.orders') }}" class="text-xs font-bold text-teal-600 hover:underline">সকল অর্ডার &rarr;</a>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs sm:text-sm">
+            <table class="w-full text-left text-xs sm:text-sm min-w-[700px]">
                 <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold">
                     <tr>
                         <th class="p-3.5">অর্ডার নং</th>
@@ -122,7 +122,7 @@
             <a href="{{ route('designer.withdrawals') }}" class="text-xs font-bold text-teal-600 hover:underline">উইথড্রয়াল হিস্ট্রি &rarr;</a>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs sm:text-sm">
+            <table class="w-full text-left text-xs sm:text-sm min-w-[700px]">
                 <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold">
                     <tr>
                         <th class="p-3.5">রিকোয়েস্ট নং</th>

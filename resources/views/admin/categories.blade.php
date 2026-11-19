@@ -56,40 +56,42 @@
 
     <!-- Categories Table -->
     <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-        <table class="w-full text-left text-xs">
-            <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] font-bold border-b border-slate-200/70">
-                <tr>
-                    <th class="p-4">ক্যাটাগরি</th>
-                    <th class="p-4">টাইপ</th>
-                    <th class="p-4">ডকুমেন্ট প্রয়োজন?</th>
-                    <th class="p-4">নমুনা টেক্সট</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100">
-                @foreach($categories as $cat)
-                    <tr class="hover:bg-slate-50/70 transition-colors">
-                        <td class="p-4 font-bold text-slate-900">{{ $cat->name }}</td>
-                        <td class="p-4">
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-700 border border-slate-200">
-                                {{ $cat->type }}
-                            </span>
-                        </td>
-                        <td class="p-4">
-                            @if($cat->requires_document)
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-rose-100 text-rose-800 border border-rose-200">
-                                    জিডি কপি আবশ্যক
-                                </span>
-                            @else
-                                <span class="text-slate-400 text-xs">প্রয়োজন নেই</span>
-                            @endif
-                        </td>
-                        <td class="p-4 text-xs text-slate-500 italic max-w-md truncate">
-                            {{ $cat->sample_text ?? '-' }}
-                        </td>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs min-w-[550px]">
+                <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] font-bold border-b border-slate-200/70">
+                    <tr>
+                        <th class="p-4">ক্যাটাগরি</th>
+                        <th class="p-4">টাইপ</th>
+                        <th class="p-4">ডকুমেন্ট প্রয়োজন?</th>
+                        <th class="p-4">নমুনা টেক্সট</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    @foreach($categories as $cat)
+                        <tr class="hover:bg-slate-50/70 transition-colors">
+                            <td class="p-4 font-bold text-slate-900">{{ $cat->name }}</td>
+                            <td class="p-4">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-100 text-slate-700 border border-slate-200">
+                                    {{ $cat->type }}
+                                </span>
+                            </td>
+                            <td class="p-4">
+                                @if($cat->requires_document)
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-rose-100 text-rose-800 border border-rose-200">
+                                        জিডি কপি আবশ্যক
+                                    </span>
+                                @else
+                                    <span class="text-slate-400 text-xs">প্রয়োজন নেই</span>
+                                @endif
+                            </td>
+                            <td class="p-4 text-xs text-slate-500 italic max-w-md truncate">
+                                {{ $cat->sample_text ?? '-' }}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @endsection

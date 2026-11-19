@@ -177,7 +177,7 @@
             <a href="{{ route('admin.classified') }}" class="text-xs font-bold text-indigo-600 hover:underline">সবগুলো দেখুন &rarr;</a>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs">
+            <table class="w-full text-left text-xs min-w-[700px]">
                 <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] font-bold border-b border-slate-200/70">
                     <tr>
                         <th class="p-4">ট্র্যাকিং নং</th>

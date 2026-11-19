@@ -21,17 +21,17 @@
             </div>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-            <div class="text-left sm:text-right pr-4 border-r border-slate-100">
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+            <div class="text-left sm:text-right pb-3 sm:pb-0 sm:pr-4 border-b sm:border-b-0 sm:border-r border-slate-100">
                 <div class="text-xs text-slate-400">এসক্রো বাজেট</div>
                 <div class="text-xl font-black text-emerald-600">৳{{ number_format($order->budget, 2) }}</div>
                 <div class="text-[10px] text-slate-400">রিভিশন বাকি: <strong>{{ $order->revisions_remaining }}</strong> টি</div>
             </div>
 
             @if($order->status !== 'completed')
-                <form action="{{ route('client.order.approve', $order->id) }}" method="POST" onsubmit="return confirm('আপনি কি নিশ্চিত যে ডিজাইনটি চূড়ান্তভাবে পছন্দ হয়েছে এবং ডিজাইনারকে এসক্রো ফান্ড রিলিজ করতে চান?');">
+                <form action="{{ route('client.order.approve', $order->id) }}" method="POST" onsubmit="return confirm('আপনি কি নিশ্চিত যে ডিজাইনটি চূড়ান্তভাবে পছন্দ হয়েছে এবং ডিজাইনারকে এসক্রো ফান্ড রিলিজ করতে চান?');" class="w-full sm:w-auto">
                     @csrf
-                    <button type="submit" class="px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 whitespace-nowrap">
+                    <button type="submit" class="w-full sm:w-auto px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5 whitespace-nowrap">
                         <i class="fa-solid fa-circle-check"></i> ডিজাইন অনুমোদন ও পেমেন্ট রিলিজ
                     </button>
                 </form>

@@ -13,7 +13,8 @@
     </div>
 
     <div class="bg-white rounded-2xl border border-slate-200/80 shadow-xs overflow-hidden">
-        <table class="w-full text-left text-xs">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs min-w-[700px]">
             <thead class="bg-slate-50 text-slate-500 uppercase text-[10px] font-bold border-b border-slate-200/70">
                 <tr>
                     <th class="p-4">ডিজাইনার</th>
@@ -61,6 +62,7 @@
                 @endforelse
             </tbody>
         </table>
+        </div>
         @if($designers->hasPages())
             <div class="p-4 border-t border-slate-100">
                 {{ $designers->links() }}

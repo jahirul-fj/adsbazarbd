@@ -60,31 +60,33 @@
 
             <!-- Billing Table -->
             <div class="border border-slate-200 rounded-2xl overflow-hidden">
-                <table class="w-full text-left text-xs sm:text-sm">
-                    <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                        <tr>
-                            <th class="p-3.5">বিবরণ</th>
-                            <th class="p-3.5 text-center">শব্দ সংখ্যা</th>
-                            <th class="p-3.5 text-right">রেট / শব্দ</th>
-                            <th class="p-3.5 text-right">মোট টাকা</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                        <tr>
-                            <td class="p-3.5 font-medium">
-                                শ্রেণীভুক্ত বিজ্ঞাপন ({{ $ad->category->name }})<br>
-                                <span class="text-xs text-slate-400">{{ $ad->newspaper->name }}</span>
-                            </td>
-                            <td class="p-3.5 text-center font-bold">{{ $ad->word_count }}</td>
-                            <td class="p-3.5 text-right">৳{{ number_format($ad->newspaper->classified_rate_per_word, 2) }}</td>
-                            <td class="p-3.5 text-right font-bold text-slate-900">৳{{ number_format($ad->total_amount, 2) }}</td>
-                        </tr>
-                        <tr class="bg-slate-50 font-bold text-slate-900">
-                            <td colspan="3" class="p-3.5 text-right uppercase tracking-wider text-xs">সর্বমোট প্রদেয়:</td>
-                            <td class="p-3.5 text-right text-base text-emerald-600">৳{{ number_format($ad->total_amount, 2) }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs sm:text-sm min-w-[500px]">
+                        <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                            <tr>
+                                <th class="p-3.5">বিবরণ</th>
+                                <th class="p-3.5 text-center">শব্দ সংখ্যা</th>
+                                <th class="p-3.5 text-right">রেট / শব্দ</th>
+                                <th class="p-3.5 text-right">মোট টাকা</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <tr>
+                                <td class="p-3.5 font-medium">
+                                    শ্রেণীভুক্ত বিজ্ঞাপন ({{ $ad->category->name }})<br>
+                                    <span class="text-xs text-slate-400">{{ $ad->newspaper->name }}</span>
+                                </td>
+                                <td class="p-3.5 text-center font-bold">{{ $ad->word_count }}</td>
+                                <td class="p-3.5 text-right">৳{{ number_format($ad->newspaper->classified_rate_per_word, 2) }}</td>
+                                <td class="p-3.5 text-right font-bold text-slate-900">৳{{ number_format($ad->total_amount, 2) }}</td>
+                            </tr>
+                            <tr class="bg-slate-50 font-bold text-slate-900">
+                                <td colspan="3" class="p-3.5 text-right uppercase tracking-wider text-xs">সর্বমোট প্রদেয়:</td>
+                                <td class="p-3.5 text-right text-base text-emerald-600">৳{{ number_format($ad->total_amount, 2) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Payment Details Box -->

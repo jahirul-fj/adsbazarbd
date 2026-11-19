@@ -20,7 +20,7 @@
 
     <div class="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-xs">
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs sm:text-sm">
+            <table class="w-full text-left text-xs sm:text-sm min-w-[750px]">
                 <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold border-b border-slate-200/70">
                     <tr>
                         <th class="p-4">ইনভয়েস নং</th>

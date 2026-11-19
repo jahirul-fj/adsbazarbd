@@ -90,7 +90,7 @@
             </h2>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs sm:text-sm">
+            <table class="w-full text-left text-xs sm:text-sm min-w-[700px]">
                 <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold">
                     <tr>
                         <th class="p-4">রিকোয়েস্ট নং</th>

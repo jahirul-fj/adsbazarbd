@@ -67,7 +67,7 @@
             <a href="{{ route('client.classified') }}" class="text-xs font-bold text-emerald-600 hover:underline">সকল বিজ্ঞাপন &rarr;</a>
         </div>
         <div class="overflow-x-auto">
-            <table class="w-full text-left text-xs sm:text-sm">
+            <table class="w-full text-left text-xs sm:text-sm min-w-[650px]">
                 <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold">
                     <tr>
                         <th class="p-3.5">ট্র্যাকিং নং</th>

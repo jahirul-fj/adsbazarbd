@@ -50,22 +50,22 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex">
 
-    <!-- Mobile Backdrop Overlay -->
-    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-950/70 z-30 hidden md:hidden transition-opacity"></div>
+    <!-- Mobile Backdrop Overlay (< lg) -->
+    <div id="sidebarBackdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-950/70 backdrop-blur-xs z-30 hidden lg:hidden transition-opacity duration-200"></div>
 
-    <!-- Designer Sidebar (Fixed on Desktop) -->
-    <aside id="mainSidebar" class="fixed inset-y-0 left-0 w-64 h-screen bg-slate-900 text-white flex flex-col z-40 border-r border-slate-800 shadow-xl -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out">
+    <!-- Designer Sidebar (Fixed on Desktop, Slide-over on Mobile & Tablet) -->
+    <aside id="mainSidebar" class="fixed inset-y-0 left-0 w-64 h-screen bg-slate-900 text-white flex flex-col z-40 border-r border-slate-800 shadow-2xl lg:shadow-xl -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out">
         <div class="h-20 shrink-0 flex items-center justify-between px-6 border-b border-slate-800">
             <div class="flex items-center gap-3">
-                <img src="{{ asset('images/logo-icon.svg') }}" alt="Ads Bazar BD" class="w-10 h-10 rounded-xl shadow-md object-contain">
+                <img src="{{ asset('images/logo-icon.svg') }}" alt="Ads Bazar BD" class="w-10 h-10 rounded-xl shadow-md object-contain shrink-0">
                 <div>
                     <div class="font-extrabold text-lg text-white tracking-tight flex items-center gap-1.5">
                         Ads Bazar BD <span class="text-[10px] px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-400 font-bold uppercase">CREATIVE</span>
                     </div>
-                    <div class="text-[10px] text-slate-400">ডিজাইনার পোর্টাল</div>
+                    <div class="text-[10px] text-slate-400 font-medium">ডিজাইনার পোর্টাল</div>
                 </div>
             </div>
-            <button onclick="toggleSidebar()" type="button" aria-label="ক্লোজ মেনু" class="md:hidden text-slate-400 hover:text-white p-1">
+            <button onclick="toggleSidebar()" type="button" aria-label="ক্লোজ মেনু" class="lg:hidden text-slate-400 hover:text-white hover:bg-slate-800 p-1.5 rounded-lg transition-colors">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
         </div>
@@ -104,11 +104,11 @@
         </nav>
 
         <div class="shrink-0 p-4 border-t border-slate-800 bg-slate-950 flex items-center justify-between">
-            <a href="{{ route('designer.profile') }}" class="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+            <a href="{{ route('designer.profile') }}" class="flex items-center gap-2.5 hover:opacity-80 transition-opacity min-w-0">
                 @if(auth()->user()->avatar_url)
-                    <img src="{{ auth()->user()->avatar_url }}" alt="Avatar" class="w-8 h-8 rounded-full object-cover border border-teal-500/40">
+                    <img src="{{ auth()->user()->avatar_url }}" alt="Avatar" class="w-8 h-8 rounded-full object-cover border border-teal-500/40 shrink-0">
                 @else
-                    <div class="w-8 h-8 rounded-full bg-teal-500 text-slate-950 flex items-center justify-center font-bold text-xs">
+                    <div class="w-8 h-8 rounded-full bg-teal-500 text-slate-950 flex items-center justify-center font-bold text-xs shrink-0">
                         {{ mb_substr(auth()->user()->name, 0, 1) }}
                     </div>
                 @endif
@@ -126,50 +126,85 @@
         </div>
     </aside>
 
-    <!-- Main Content Area (Offset by sidebar width on desktop) -->
-    <div class="flex-1 md:ml-64 flex flex-col min-w-0 bg-slate-50 min-h-screen">
-        <header class="h-20 bg-white border-b border-slate-200 px-6 sm:px-8 flex justify-between items-center sticky top-0 z-20 shadow-2xs">
-            <div class="flex items-center gap-3">
-                <button onclick="toggleSidebar()" type="button" aria-label="মেনু খুলুন" class="md:hidden p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 mr-1 transition-colors">
+    <!-- Main Content Area (Offset by sidebar width on lg screens) -->
+    <div class="flex-1 lg:ml-64 flex flex-col min-w-0 bg-slate-50 min-h-screen">
+        <header class="h-20 bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 flex justify-between items-center sticky top-0 z-20 shadow-2xs">
+            <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                <button onclick="toggleSidebar()" type="button" aria-label="মেনু খুলুন" class="lg:hidden p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors shrink-0">
                     <i class="fa-solid fa-bars text-sm"></i>
                 </button>
-                <span class="text-xs text-slate-400 font-medium hidden sm:inline">ডিজাইনার প্যানেল /</span>
-                <span class="text-sm font-bold text-slate-900">@yield('page_title', 'ওভারভিউ')</span>
+                <div class="min-w-0">
+                    <span class="text-xs text-slate-400 font-medium hidden sm:inline">ডিজাইনার প্যানেল / </span>
+                    <span class="text-xs sm:text-sm font-bold text-slate-900 truncate inline-block max-w-[140px] sm:max-w-xs md:max-w-md">@yield('page_title', 'ওভারভিউ')</span>
+                </div>
             </div>
 
-            <div class="flex items-center gap-4">
-                <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold">
-                    <i class="fa-solid fa-shield-halved text-emerald-600"></i> এসক্রো প্রটেকশন অন
+            <div class="flex items-center gap-2 sm:gap-4 shrink-0">
+                <div class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold shadow-2xs">
+                    <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+                    <span>এসক্রো সুরক্ষিত</span>
                 </div>
-                <a href="{{ route('home') }}" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors flex items-center gap-1.5">
+                <a href="{{ route('home') }}" target="_blank" class="px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors flex items-center gap-1.5 border border-slate-200/70 shadow-2xs">
                     <i class="fa-solid fa-arrow-up-right-from-square text-[11px] text-teal-600"></i>
-                    <span>পোর্টাল</span>
+                    <span class="hidden sm:inline">পোর্টাল</span>
                 </a>
+
+                <form action="{{ route('designer.logout') }}" method="POST" class="inline lg:hidden">
+                    @csrf
+                    <button type="submit" title="লগআউট" class="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl border border-slate-200 transition-colors">
+                        <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+                    </button>
+                </form>
             </div>
         </header>
 
-        <div class="px-6 sm:px-8 pt-6">
+        <div class="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">
             @if(session('success'))
-                <div class="p-4 mb-4 text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-3 text-xs font-medium">
-                    <i class="fa-solid fa-circle-check text-emerald-600 text-base"></i>
+                <div class="p-4 mb-4 text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-3 text-xs font-medium shadow-2xs">
+                    <i class="fa-solid fa-circle-check text-emerald-600 text-base shrink-0"></i>
                     <div>{{ session('success') }}</div>
                 </div>
             @endif
 
             @if(session('error'))
-                <div class="p-4 mb-4 text-rose-800 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-3 text-xs font-medium">
-                    <i class="fa-solid fa-circle-exclamation text-rose-600 text-base"></i>
+                <div class="p-4 mb-4 text-rose-800 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-3 text-xs font-medium shadow-2xs">
+                    <i class="fa-solid fa-circle-exclamation text-rose-600 text-base shrink-0"></i>
                     <div>{{ session('error') }}</div>
                 </div>
             @endif
         </div>
 
-        <main class="flex-1 p-6 sm:p-8">
+        <main class="flex-1 p-4 sm:p-6 lg:p-8">
             @yield('content')
         </main>
     </div>
 
     <!-- Mobile Sidebar Toggle Script -->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mainSidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                backdrop.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                backdrop.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close sidebar on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const sidebar = document.getElementById('mainSidebar');
+                if (sidebar && !sidebar.classList.contains('-translate-x-full') && window.innerWidth < 1024) {
+                    toggleSidebar();
+                }
+            }
+        });
+    </script>
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('mainSidebar');
