@@ -11,21 +11,6 @@
             <p class="text-xs text-slate-500">আপনার একাউন্টে প্রবেশ করে বিজ্ঞাপন ও অর্ডার পরিচালনা করুন</p>
         </div>
 
-        <!-- Quick 1-Click Test Logins for Demonstration -->
-        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-            <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider text-center">টেস্ট ডেমো লগইন (১-ক্লিকে প্রবেশ করুন)</div>
-            <div class="grid grid-cols-3 gap-2 text-xs">
-                <a href="{{ route('quick-login', 'admin') }}" class="p-2 text-center rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold border border-indigo-200 transition-colors">
-                    👑 অ্যাডমিন
-                </a>
-                <a href="{{ route('quick-login', 'client') }}" class="p-2 text-center rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold border border-emerald-200 transition-colors">
-                    👤 ক্লায়েন্ট
-                </a>
-                <a href="{{ route('quick-login', 'designer') }}" class="p-2 text-center rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-700 font-bold border border-teal-200 transition-colors">
-                    🎨 ডিজাইনার
-                </a>
-            </div>
-        </div>
 
         <form action="{{ route('login.post') }}" method="POST" class="space-y-4">
             @csrf

@@ -16,16 +16,6 @@
             <p class="text-xs text-slate-500">বিজ্ঞাপন ও প্ল্যাটফর্ম পরিচালনার জন্য অ্যাডমিন একাউন্টে প্রবেশ করুন</p>
         </div>
 
-        <!-- 1-Click Demo Auto-fill -->
-        <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-xs flex items-center justify-between">
-            <div>
-                <div class="font-bold text-indigo-700">অ্যাডমিন ডেমো একাউন্ট:</div>
-                <div class="text-[11px] text-slate-500 font-mono">admin@adsbazarbd.com | password</div>
-            </div>
-            <button type="button" onclick="document.getElementById('email').value='admin@adsbazarbd.com'; document.getElementById('password').value='password';" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold rounded-lg transition-colors shadow-xs">
-                অটো-ফিল
-            </button>
-        </div>
 
         <form action="{{ route('admin.login.post') }}" method="POST" class="space-y-4">
             @csrf

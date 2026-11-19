@@ -14,16 +14,6 @@
             <p class="text-xs text-slate-500">আপনার বুকিং করা বিজ্ঞাপন ও অর্ডার দেখতে লগইন করুন</p>
         </div>
 
-        <!-- Demo auto-fill -->
-        <div class="p-3.5 bg-emerald-50/70 rounded-2xl border border-emerald-200 text-xs flex items-center justify-between">
-            <div>
-                <div class="font-bold text-emerald-900">ক্লায়েন্ট ডেমো অ্যাকাউন্ট:</div>
-                <div class="text-[11px] text-slate-600 font-mono">client@adsbazarbd.com | password</div>
-            </div>
-            <button type="button" onclick="document.getElementById('email').value='client@adsbazarbd.com'; document.getElementById('password').value='password';" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded-lg transition-colors shadow-xs">
-                অটো-ফিল
-            </button>
-        </div>
 
         <form action="{{ route('client.login.post') }}" method="POST" class="space-y-4">
             @csrf

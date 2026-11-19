@@ -14,16 +14,6 @@
             <p class="text-xs text-slate-500">বিজ্ঞাপন ডিজাইন অর্ডার ও আয় পরিচালনা করতে লগইন করুন</p>
         </div>
 
-        <!-- Demo auto-fill -->
-        <div class="p-3.5 bg-teal-50/70 rounded-2xl border border-teal-200 text-xs flex items-center justify-between">
-            <div>
-                <div class="font-bold text-teal-900">ডিজাইনার ডেমো অ্যাকাউন্ট:</div>
-                <div class="text-[11px] text-slate-600 font-mono">tanvir@adsbazarbd.com | password</div>
-            </div>
-            <button type="button" onclick="document.getElementById('email').value='tanvir@adsbazarbd.com'; document.getElementById('password').value='password';" class="px-3 py-1.5 bg-teal-600 hover:bg-teal-700 text-white text-[11px] font-bold rounded-lg transition-colors shadow-xs">
-                অটো-ফিল
-            </button>
-        </div>
 
         <form action="{{ route('designer.login.post') }}" method="POST" class="space-y-4">
             @csrf
