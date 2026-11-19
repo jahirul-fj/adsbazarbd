@@ -14,7 +14,7 @@
         </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
         <!-- Portal 1: Client -->
         <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-emerald-500 transition-all duration-300 flex flex-col justify-between group">
             <div class="space-y-4">
@@ -60,30 +60,6 @@
                 <a href="{{ route('designer.register') }}" class="w-full inline-flex items-center justify-center py-2 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-semibold rounded-xl transition-colors">
                     ডিজাইনার হিসেবে সাইনআপ
                 </a>
-            </div>
-        </div>
-
-        <!-- Portal 3: Admin -->
-        <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-indigo-500 transition-all duration-300 flex flex-col justify-between group">
-            <div class="space-y-4">
-                <div class="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-3xl group-hover:bg-indigo-600 group-hover:text-white transition-colors">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <div>
-                    <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">সিস্টেম কন্ট্রোল</span>
-                    <h3 class="text-xl font-black text-slate-900 mt-0.5">অ্যাডমিন পোর্টাল</h3>
-                </div>
-                <p class="text-xs text-slate-600 leading-relaxed">
-                    বিজ্ঞাপনের অনুমোদন, পেমেন্ট ভেরিফিকেশন, সংবাদপত্রের রেট আপডেট ও সিস্টেম সেটিংস ব্যবস্থাপনার জন্য।
-                </p>
-            </div>
-            <div class="pt-6 space-y-2">
-                <a href="{{ route('admin.login') }}" class="w-full inline-flex items-center justify-center gap-2 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors">
-                    অ্যাডমিন সিকিউর লগইন <i class="fa-solid fa-lock text-[10px]"></i>
-                </a>
-                <div class="text-[11px] text-center text-slate-400 py-1 font-semibold">
-                    অননুমোদিত প্রবেশ নিষেধ
-                </div>
             </div>
         </div>
     </div>
