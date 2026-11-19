@@ -16,49 +16,83 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
         <!-- Portal 1: Client -->
-        <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-emerald-500 transition-all duration-300 flex flex-col justify-between group">
-            <div class="space-y-4">
-                <div class="w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-3xl group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+        <div class="relative overflow-hidden bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/90 shadow-md hover:shadow-2xl hover:border-emerald-500 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between items-center text-center group">
+            <!-- Ambient corner glow -->
+            <div class="absolute -top-12 -right-12 w-36 h-36 bg-emerald-100/60 rounded-full blur-2xl group-hover:bg-emerald-200/70 transition-colors pointer-events-none"></div>
+
+            <div class="space-y-5 flex flex-col items-center w-full relative z-10">
+                <!-- Icon Badge -->
+                <div class="w-20 h-20 rounded-3xl bg-emerald-50 border border-emerald-100 text-emerald-600 flex items-center justify-center text-3xl shadow-xs group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white group-hover:shadow-lg transition-all duration-300">
                     <i class="fa-solid fa-user-check"></i>
                 </div>
-                <div>
-                    <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">বিজ্ঞাপনদাতা</span>
-                    <h3 class="text-xl font-black text-slate-900 mt-0.5">গ্রাহক পোর্টাল</h3>
+
+                <!-- Role Tag & Title -->
+                <div class="space-y-2 flex flex-col items-center">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        বিজ্ঞাপনদাতা
+                    </span>
+                    <h3 class="text-2xl font-black text-slate-900 tracking-tight group-hover:text-emerald-700 transition-colors">
+                        গ্রাহক পোর্টাল
+                    </h3>
                 </div>
-                <p class="text-xs text-slate-600 leading-relaxed">
+
+                <!-- Description -->
+                <p class="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-xs mx-auto">
                     সংবাদপত্রে আপনার বুকিং করা বিজ্ঞাপন, ইনভয়েস ডাউনলোড এবং ডিজাইনারদের সাথে কাজ সমন্বয়ের জন্য।
                 </p>
             </div>
-            <div class="pt-6 space-y-2">
-                <a href="{{ route('client.login') }}" class="w-full inline-flex items-center justify-center gap-2 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors">
-                    গ্রাহক লগইন <i class="fa-solid fa-arrow-right text-[10px]"></i>
+
+            <!-- Buttons -->
+            <div class="pt-8 space-y-2.5 w-full relative z-10">
+                <a href="{{ route('client.login') }}" class="w-full inline-flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-sm rounded-2xl shadow-md hover:shadow-lg transition-all">
+                    <span>গ্রাহক লগইন</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
-                <a href="{{ route('client.register') }}" class="w-full inline-flex items-center justify-center py-2 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-semibold rounded-xl transition-colors">
-                    নতুন অ্যাকাউন্ট খুলুন
+                <a href="{{ route('client.register') }}" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 bg-slate-50 hover:bg-emerald-50 text-slate-600 hover:text-emerald-700 text-xs font-bold rounded-xl transition-all border border-slate-100">
+                    <i class="fa-solid fa-user-plus text-[11px]"></i>
+                    <span>নতুন অ্যাকাউন্ট খুলুন</span>
                 </a>
             </div>
         </div>
 
         <!-- Portal 2: Designer -->
-        <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm hover:shadow-xl hover:border-teal-500 transition-all duration-300 flex flex-col justify-between group">
-            <div class="space-y-4">
-                <div class="w-16 h-16 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-3xl group-hover:bg-teal-600 group-hover:text-white transition-colors">
+        <div class="relative overflow-hidden bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/90 shadow-md hover:shadow-2xl hover:border-teal-500 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between items-center text-center group">
+            <!-- Ambient corner glow -->
+            <div class="absolute -top-12 -right-12 w-36 h-36 bg-teal-100/60 rounded-full blur-2xl group-hover:bg-teal-200/70 transition-colors pointer-events-none"></div>
+
+            <div class="space-y-5 flex flex-col items-center w-full relative z-10">
+                <!-- Icon Badge -->
+                <div class="w-20 h-20 rounded-3xl bg-teal-50 border border-teal-100 text-teal-600 flex items-center justify-center text-3xl shadow-xs group-hover:scale-110 group-hover:bg-teal-600 group-hover:text-white group-hover:shadow-lg transition-all duration-300">
                     <i class="fa-solid fa-paintbrush"></i>
                 </div>
-                <div>
-                    <span class="text-[10px] font-bold text-teal-600 uppercase tracking-wider">ফ্রিল্যান্সার</span>
-                    <h3 class="text-xl font-black text-slate-900 mt-0.5">ডিজাইনার পোর্টাল</h3>
+
+                <!-- Role Tag & Title -->
+                <div class="space-y-2 flex flex-col items-center">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-teal-50 text-teal-700 border border-teal-200">
+                        <span class="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse"></span>
+                        ফ্রিল্যান্সার
+                    </span>
+                    <h3 class="text-2xl font-black text-slate-900 tracking-tight group-hover:text-teal-700 transition-colors">
+                        ডিজাইনার পোর্টাল
+                    </h3>
                 </div>
-                <p class="text-xs text-slate-600 leading-relaxed">
+
+                <!-- Description -->
+                <p class="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-xs mx-auto">
                     বিজ্ঞাপনের ডিজাইন অর্ডার রিসিভ, ড্রাফট সাবমিশন, এসক্রো ব্যালেন্স ও পোর্টফোলিও পরিচালনার জন্য।
                 </p>
             </div>
-            <div class="pt-6 space-y-2">
-                <a href="{{ route('designer.login') }}" class="w-full inline-flex items-center justify-center gap-2 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors">
-                    ডিজাইনার লগইন <i class="fa-solid fa-arrow-right text-[10px]"></i>
+
+            <!-- Buttons -->
+            <div class="pt-8 space-y-2.5 w-full relative z-10">
+                <a href="{{ route('designer.login') }}" class="w-full inline-flex items-center justify-center gap-2 py-3.5 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-700 hover:to-emerald-700 text-white font-extrabold text-sm rounded-2xl shadow-md hover:shadow-lg transition-all">
+                    <span>ডিজাইনার লগইন</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
-                <a href="{{ route('designer.register') }}" class="w-full inline-flex items-center justify-center py-2 bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-semibold rounded-xl transition-colors">
-                    ডিজাইনার হিসেবে সাইনআপ
+                <a href="{{ route('designer.register') }}" class="w-full inline-flex items-center justify-center gap-1.5 py-2.5 bg-slate-50 hover:bg-teal-50 text-slate-600 hover:text-teal-700 text-xs font-bold rounded-xl transition-all border border-slate-100">
+                    <i class="fa-solid fa-palette text-[11px]"></i>
+                    <span>ডিজাইনার হিসেবে সাইনআপ</span>
                 </a>
             </div>
         </div>
