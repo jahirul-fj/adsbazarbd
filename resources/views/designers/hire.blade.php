@@ -56,39 +56,48 @@
 
         <!-- Escrow Payment Selection -->
         <div class="space-y-4 pt-4 border-t border-slate-100">
-            <h2 class="text-base font-bold text-slate-900 pb-1">নিরাপদ এসক্রো পেমেন্ট</h2>
-            <p class="text-xs text-slate-500">আপনার টাকা Ads Bazar BD প্ল্যাটফর্মে গচ্ছিত থাকবে। ডিজাইনার ৩টি রিভিশন দিবে এবং আপনার অনুমোদনের পর টাকা ডিজাইনারের ব্যালেন্সে যোগ হবে।</p>
+            <div>
+                <h2 class="text-base font-bold text-slate-900 pb-1 flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-emerald-600"></i> নিরাপদ এসক্রো পেমেন্ট
+                </h2>
+                <p class="text-xs text-slate-500">আপনার টাকা Ads Bazar BD প্ল্যাটফর্মে সুরক্ষিত এসক্রোতে গচ্ছিত থাকবে। ডিজাইনার ৩টি রিভিশন সম্পন্ন করে আপনার চূড়ান্ত অনুমোদন পাওয়ার পরই ডিজাইনারের একাউন্টে টাকা যোগ হবে।</p>
+            </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer has-checked:border-emerald-600 has-checked:bg-emerald-50/50 text-center">
-                    <input type="radio" name="payment_method" value="bkash" class="sr-only" checked>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="hirePaymentGrid">
+                <label id="hire_card_bkash" onclick="selectHirePayment('bkash')" class="hire-gateway-card flex flex-col items-center justify-center p-3.5 rounded-2xl border-2 border-emerald-600 bg-emerald-50/80 ring-2 ring-emerald-500/20 cursor-pointer transition-all text-center select-none shadow-xs">
+                    <input type="radio" name="payment_method" id="pay_bkash" value="bkash" class="sr-only" checked onchange="selectHirePayment('bkash')">
                     <span class="font-extrabold text-sm text-pink-600">বিকাশ (bKash)</span>
+                    <span class="text-[10px] text-slate-400 mt-0.5">মার্চেন্ট পেমেন্ট</span>
                 </label>
-                <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer has-checked:border-emerald-600 has-checked:bg-emerald-50/50 text-center">
-                    <input type="radio" name="payment_method" value="nagad" class="sr-only">
+                <label id="hire_card_nagad" onclick="selectHirePayment('nagad')" class="hire-gateway-card flex flex-col items-center justify-center p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition-all text-center select-none shadow-xs">
+                    <input type="radio" name="payment_method" id="pay_nagad" value="nagad" class="sr-only" onchange="selectHirePayment('nagad')">
                     <span class="font-extrabold text-sm text-orange-600">নগদ (Nagad)</span>
+                    <span class="text-[10px] text-slate-400 mt-0.5">মার্চেন্ট / সেন্ড মানি</span>
                 </label>
-                <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer has-checked:border-emerald-600 has-checked:bg-emerald-50/50 text-center">
-                    <input type="radio" name="payment_method" value="rocket" class="sr-only">
+                <label id="hire_card_rocket" onclick="selectHirePayment('rocket')" class="hire-gateway-card flex flex-col items-center justify-center p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition-all text-center select-none shadow-xs">
+                    <input type="radio" name="payment_method" id="pay_rocket" value="rocket" class="sr-only" onchange="selectHirePayment('rocket')">
                     <span class="font-extrabold text-sm text-purple-600">রকেট (Rocket)</span>
+                    <span class="text-[10px] text-slate-400 mt-0.5">ডিবিবিএল ওয়ালেট</span>
                 </label>
-                <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer has-checked:border-emerald-600 has-checked:bg-emerald-50/50 text-center">
-                    <input type="radio" name="payment_method" value="bank" class="sr-only">
+                <label id="hire_card_bank" onclick="selectHirePayment('bank')" class="hire-gateway-card flex flex-col items-center justify-center p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition-all text-center select-none shadow-xs">
+                    <input type="radio" name="payment_method" id="pay_bank" value="bank" class="sr-only" onchange="selectHirePayment('bank')">
                     <span class="font-extrabold text-sm text-sky-700">ব্যাংক ট্রান্সফার</span>
+                    <span class="text-[10px] text-slate-400 mt-0.5">সরাসরি একাউন্ট</span>
                 </label>
             </div>
 
-            <div class="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-900">
-                আমাদের বিকাশ নম্বর <strong>01779-870454</strong> অথবা নগদ <strong>01854-820303</strong> এ পেমেন্ট করে নিচের বক্সে ট্রানজেকশন আইডি প্রদান করুন।
+            <!-- Dynamic Payment Instructions Box -->
+            <div id="hireInstructionsBox" class="p-4 bg-emerald-50/80 rounded-2xl border border-emerald-200 text-xs text-emerald-950 leading-relaxed space-y-1">
+                <!-- Injected via JS -->
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Trx ID / ট্রানজেকশন আইডি <span class="text-rose-500">*</span></label>
-                    <input type="text" name="trx_id" value="{{ old('trx_id') }}" placeholder="যেমন: BK928371923" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-hidden" required>
+                    <label id="trxLabel" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Trx ID / ট্রানজেকশন আইডি <span class="text-rose-500">*</span></label>
+                    <input type="text" name="trx_id" id="trxInput" value="{{ old('trx_id') }}" placeholder="যেমন: BK928371923" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-hidden" required>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">প্রেরক ফোন নম্বর <span class="text-rose-500">*</span></label>
+                    <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">প্রেরক / যোগাযোগ ফোন নম্বর <span class="text-rose-500">*</span></label>
                     <input type="text" name="sender_phone" value="{{ old('sender_phone', auth()->user()?->phone) }}" placeholder="01xxxxxxxxx" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-hidden" required>
                 </div>
             </div>
@@ -102,3 +111,56 @@
     </form>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    function selectHirePayment(method) {
+        // Set radio checked
+        const radio = document.getElementById('pay_' + method);
+        if (radio) radio.checked = true;
+
+        const methods = ['bkash', 'nagad', 'rocket', 'bank'];
+        methods.forEach(m => {
+            const card = document.getElementById('hire_card_' + m);
+            if (!card) return;
+            if (m === method) {
+                card.className = 'hire-gateway-card flex flex-col items-center justify-center p-3.5 rounded-2xl border-2 border-emerald-600 bg-emerald-50/80 ring-2 ring-emerald-500/20 cursor-pointer transition-all text-center select-none shadow-xs';
+            } else {
+                card.className = 'hire-gateway-card flex flex-col items-center justify-center p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-slate-300 cursor-pointer transition-all text-center select-none shadow-xs';
+            }
+        });
+
+        const instBox = document.getElementById('hireInstructionsBox');
+        const trxLabel = document.getElementById('trxLabel');
+        const trxInput = document.getElementById('trxInput');
+
+        const bkashNum = {{ json_encode($siteSettings['bkash_merchant_number'] ?? '01779-870454') }};
+        const nagadNum = {{ json_encode($siteSettings['nagad_merchant_number'] ?? '01854-820303') }};
+        const rocketNum = {{ json_encode($siteSettings['rocket_number'] ?? '01779-870454-8') }};
+        const bankInfo = {{ json_encode($siteSettings['bank_info'] ?? 'Dutch Bangla Bank Ltd, Account Name: Ads Bazar BD Ltd, Acc: 123.120.98765, Branch: Dhanmondi Branch') }};
+
+        if (method === 'bkash') {
+            instBox.innerHTML = `<div><strong>বিকাশ পেমেন্ট নিয়ম:</strong> আমাদের বিকাশ মার্চেন্ট নম্বর <strong>${bkashNum}</strong> এ পেমেন্ট করুন অথবা সেন্ড মানি করুন। এরপর প্রাপ্ত ট্রানজেকশন আইডি (TrxID) নিচে ইনপুট দিন।</div>`;
+            trxLabel.innerHTML = 'বিকাশ Trx ID (ট্রানজেকশন আইডি) <span class="text-rose-500">*</span>';
+            trxInput.placeholder = 'যেমন: BK928371923';
+        } else if (method === 'nagad') {
+            instBox.innerHTML = `<div><strong>নগদ পেমেন্ট নিয়ম:</strong> আমাদের নগদ নম্বর <strong>${nagadNum}</strong> এ ক্যাশ আউট বা সেন্ড মানি করুন এবং প্রাপ্ত TrxID নিচে লিখুন।</div>`;
+            trxLabel.innerHTML = 'নগদ Trx ID (ট্রানজেকশন আইডি) <span class="text-rose-500">*</span>';
+            trxInput.placeholder = 'যেমন: 73GF9281';
+        } else if (method === 'rocket') {
+            instBox.innerHTML = `<div><strong>রকেট পেমেন্ট নিয়ম:</strong> রকেট ওয়ালেট <strong>${rocketNum}</strong> এ পেমেন্ট সম্পন্ন করে প্রাপ্ত ট্রানজেকশন আইডি লিখুন।</div>`;
+            trxLabel.innerHTML = 'রকেট ট্রানজেকশন আইডি <span class="text-rose-500">*</span>';
+            trxInput.placeholder = 'যেমন: RC8291038';
+        } else if (method === 'bank') {
+            instBox.innerHTML = `<div><strong>ব্যাংক একাউন্ট বিবরণ:</strong> ${bankInfo}. ব্যাংকে টাকা জমা দিয়ে প্রাপ্ত ডিপোজিট স্লিপ নম্বর বা রেফারেন্স নিচে দিন।</div>`;
+            trxLabel.innerHTML = 'ব্যাংক স্লিপ নং / রেফারেন্স আইডি <span class="text-rose-500">*</span>';
+            trxInput.placeholder = 'যেমন: DEP-202611-987';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const checked = document.querySelector('input[name="payment_method"]:checked');
+        selectHirePayment(checked ? checked.value : 'bkash');
+    });
+</script>
+@endpush

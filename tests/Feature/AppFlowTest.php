@@ -617,4 +617,60 @@ class AppFlowTest extends TestCase
             $this->assertEquals(200, $res->status(), "Failed loading designer URL: {$url}");
         }
     }
+
+    public function test_settings_update_propagates_to_frontend_and_designer_hire_gateways(): void
+    {
+        $admin = User::where('role', 'admin')->first();
+        $client = User::where('role', 'client')->first();
+        $designer = DesignerProfile::first();
+
+        // 1. Update settings as Admin
+        $res = $this->actingAs($admin)->post('/admin/settings', [
+            'site_name' => 'Ads Bazar BD Test Site',
+            'helpline_phone' => '01999-887766',
+            'helpline_email' => 'updated-support@adsbazarbd.com',
+            'office_address' => 'House 99, Road 7, Banani, Dhaka',
+            'bkash_merchant_number' => '01999-112233',
+            'nagad_merchant_number' => '01999-445566',
+            'rocket_number' => '01999-778899-1',
+            'bank_info' => 'City Bank Ltd, Account: 9988776655, Gulshan',
+        ]);
+        $res->assertSessionHas('success');
+
+        // 2. Verify frontend immediately shows updated phone, email, and address
+        $homeRes = $this->get('/');
+        $homeRes->assertSee('01999-887766');
+        $homeRes->assertSee('updated-support@adsbazarbd.com');
+
+        $contactRes = $this->get('/contact');
+        $contactRes->assertSee('01999-887766');
+        $contactRes->assertSee('updated-support@adsbazarbd.com');
+        $contactRes->assertSee('House 99, Road 7, Banani, Dhaka');
+
+        // 3. Verify designer hire accepts all payment gateways (nagad, rocket, bank)
+        foreach (['nagad', 'rocket', 'bank'] as $method) {
+            $hireRes = $this->actingAs($client)->post("/designers/{$designer->id}/hire", [
+                'title' => "Special Design Project via {$method}",
+                'brief_description' => 'Need an eye-catching creative graphic ad for our new product launch in nationwide newspapers.',
+                'ad_size_requirement' => '3 Col x 4 Inch',
+                'budget' => 1200,
+                'payment_method' => $method,
+                'trx_id' => "TRX-{$method}-998877",
+                'sender_phone' => '01711223344',
+            ]);
+            $hireRes->assertSessionHas('success');
+
+            $this->assertDatabaseHas('design_orders', [
+                'client_id' => $client->id,
+                'designer_id' => $designer->user_id,
+                'title' => "Special Design Project via {$method}",
+            ]);
+
+            $this->assertDatabaseHas('payment_records', [
+                'user_id' => $client->id,
+                'payment_method' => $method,
+                'trx_id' => "TRX-{$method}-998877",
+            ]);
+        }
+    }
 }

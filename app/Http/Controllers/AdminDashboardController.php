@@ -13,6 +13,7 @@ use App\Models\SystemSetting;
 use App\Models\User;
 use App\Models\WithdrawalRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -349,6 +350,8 @@ class AdminDashboardController extends Controller
                 SystemSetting::set($key, $value);
             }
         }
+
+        Cache::forget('site_settings');
 
         return back()->with('success', 'সিস্টেম সেটিংস সফলভাবে সেভ করা হয়েছে!');
     }

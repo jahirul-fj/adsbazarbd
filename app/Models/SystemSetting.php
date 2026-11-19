@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class SystemSetting extends Model
 {
@@ -17,15 +18,31 @@ class SystemSetting extends Model
 
     public static function get(string $key, $default = null)
     {
-        $setting = static::where('key', $key)->first();
-        return $setting ? $setting->value : $default;
+        $settings = static::getAllCached();
+        return $settings[$key] ?? $default;
+    }
+
+    public static function getAllCached(): array
+    {
+        try {
+            return Cache::remember('site_settings', 3600, function () {
+                return static::all()->pluck('value', 'key')->toArray();
+            });
+        } catch (\Throwable $e) {
+            return [];
+        }
     }
 
     public static function set(string $key, $value, string $group = 'general')
     {
-        return static::updateOrCreate(
+        $record = static::updateOrCreate(
             ['key' => $key],
             ['value' => $value, 'group' => $group]
         );
+
+        Cache::forget('site_settings');
+
+        return $record;
     }
 }
+

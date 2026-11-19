@@ -280,25 +280,45 @@
     }
 
     function updatePaymentInstructions() {
-        const method = document.querySelector('input[name="payment_method"]:checked').value;
+        const checkedRadio = document.querySelector('input[name="payment_method"]:checked');
+        if (!checkedRadio) return;
+        const method = checkedRadio.value;
         const instBox = document.getElementById('paymentInstructions');
         const trxFields = document.getElementById('trxFields');
 
+        // Update active class on labels
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            const label = radio.closest('label');
+            if (radio.checked) {
+                label.classList.add('border-emerald-600', 'bg-emerald-50/70', 'ring-2', 'ring-emerald-500/20');
+                label.classList.remove('border-slate-200');
+            } else {
+                label.classList.remove('border-emerald-600', 'bg-emerald-50/70', 'ring-2', 'ring-emerald-500/20');
+                label.classList.add('border-slate-200');
+            }
+        });
+
+        const bkashNum = {{ json_encode($siteSettings['bkash_merchant_number'] ?? '01779-870454') }};
+        const nagadNum = {{ json_encode($siteSettings['nagad_merchant_number'] ?? '01854-820303') }};
+        const rocketNum = {{ json_encode($siteSettings['rocket_number'] ?? '01779-870454-8') }};
+        const bankInfo = {{ json_encode($siteSettings['bank_info'] ?? 'Dutch Bangla Bank Ltd, Account Name: Ads Bazar BD Ltd, Acc: 123.120.98765, Branch: Dhanmondi Branch') }};
+        const cashNotice = {{ json_encode($siteSettings['cash_pickup_notice'] ?? 'শুধুমাত্র ঢাকা মেট্রোর জন্য প্রযোজ্য। আমাদের প্রতিনিধি আপনার ঠিকানায় গিয়ে বিজ্ঞাপনের কপি ও নগদ টাকা সংগ্রহ করবে।') }};
+
         if (method === 'bkash') {
             trxFields.classList.remove('hidden');
-            instBox.innerHTML = `<strong>বিকাশ পেমেন্ট নিয়ম:</strong> আমাদের বিকাশ মার্চেন্ট নম্বর <strong>01779-870454</strong> এ পেমেন্ট করুন অথবা পার্সোনাল একাউন্টে সেন্ড মানি করুন। এরপর প্রাপ্ত ট্রানজেকশন আইডি (TrxID) নিচে ইনপুট দিন।`;
+            instBox.innerHTML = `<strong>বিকাশ পেমেন্ট নিয়ম:</strong> আমাদের বিকাশ মার্চেন্ট নম্বর <strong>${bkashNum}</strong> এ পেমেন্ট করুন অথবা পার্সোনাল একাউন্টে সেন্ড মানি করুন। এরপর প্রাপ্ত ট্রানজেকশন আইডি (TrxID) নিচে ইনপুট দিন।`;
         } else if (method === 'nagad') {
             trxFields.classList.remove('hidden');
-            instBox.innerHTML = `<strong>নগদ পেমেন্ট নিয়ম:</strong> আমাদের নগদ নম্বর <strong>01854-820303</strong> এ ক্যাশ আউট বা সেন্ড মানি করুন এবং TrxID নিচে লিখুন।`;
+            instBox.innerHTML = `<strong>নগদ পেমেন্ট নিয়ম:</strong> আমাদের নগদ নম্বর <strong>${nagadNum}</strong> এ ক্যাশ আউট বা সেন্ড মানি করুন এবং TrxID নিচে লিখুন।`;
         } else if (method === 'rocket') {
             trxFields.classList.remove('hidden');
-            instBox.innerHTML = `<strong>রকেট পেমেন্ট নিয়ম:</strong> রকেট ওয়ালেট <strong>01779-870454-8</strong> এ পেমেন্ট সম্পন্ন করে ট্রানজেকশন কোড লিখুন।`;
+            instBox.innerHTML = `<strong>রকেট পেমেন্ট নিয়ম:</strong> রকেট ওয়ালেট <strong>${rocketNum}</strong> এ পেমেন্ট সম্পন্ন করে ট্রানজেকশন কোড লিখুন।`;
         } else if (method === 'bank') {
             trxFields.classList.remove('hidden');
-            instBox.innerHTML = `<strong>ব্যাংক ট্রান্সফার:</strong> Dutch Bangla Bank Ltd, Account Name: <strong>Ads Bazar BD Ltd</strong>, Acc: <strong>123.120.98765</strong>, Branch: Dhanmondi Branch. ডিপোজিট স্লিপের রেফারেন্স বা ট্রানজেকশন নম্বর দিন।`;
+            instBox.innerHTML = `<strong>ব্যাংক ট্রান্সফার:</strong> ${bankInfo}. ডিপোজিট স্লিপের রেফারেন্স বা ট্রানজেকশন নম্বর দিন।`;
         } else {
             trxFields.classList.add('hidden');
-            instBox.innerHTML = `<strong>ক্যাশ অন পিকআপ:</strong> শুধুমাত্র ঢাকা মেট্রোর জন্য প্রযোজ্য। আমাদের প্রতিনিধি আপনার ঠিকানায় গিয়ে বিজ্ঞাপনের কপি ও নগদ টাকা সংগ্রহ করবে (সার্ভিস চার্জ ৳১০০ প্রযোজ্য হতে পারে)।`;
+            instBox.innerHTML = `<strong>ক্যাশ অন পিকআপ:</strong> ${cashNotice}`;
         }
     }
 

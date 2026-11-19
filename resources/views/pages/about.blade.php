@@ -52,12 +52,12 @@
             <h3 class="text-xl font-bold">সরাসরি আমাদের সাথে যোগাযোগ করুন</h3>
             <p class="text-xs text-slate-300">যেকোনো বিজ্ঞাপন সংক্রান্ত পরামর্শ ও কর্পোরেট সেবার জন্য আমরা প্রস্তুত আছি।</p>
             <div class="text-xs text-emerald-400 font-bold pt-2">
-                <i class="fa-solid fa-location-dot mr-1"></i> বাড়ি # ১২, রোড # ০৫, ধানমন্ডি, ঢাকা-১২০৫, বাংলাদেশ
+                <i class="fa-solid fa-location-dot mr-1"></i> {{ $siteSettings['office_address'] ?? 'বাড়ি # ১২, রোড # ০৫, ধানমন্ডি, ঢাকা-১২০৫, বাংলাদেশ' }}
             </div>
         </div>
         <div class="flex gap-3">
-            <a href="tel:01854820303" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all">
-                <i class="fa-solid fa-phone mr-1"></i> 01854-820303
+            <a href="tel:{{ preg_replace('/[^0-9]/', '', $siteSettings['helpline_phone'] ?? '01854820303') }}" class="px-6 py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl shadow-md transition-all">
+                <i class="fa-solid fa-phone mr-1"></i> {{ $siteSettings['helpline_phone'] ?? '01854-820303' }}
             </a>
             <a href="{{ route('classified.index') }}" class="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold text-xs rounded-xl border border-white/20 transition-all">
                 বিজ্ঞাপন দিন

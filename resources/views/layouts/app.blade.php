@@ -62,18 +62,26 @@
 </head>
 <body class="flex flex-col min-h-screen bg-slate-50 text-slate-800">
 
+    @php
+        $sitePhone = $siteSettings['helpline_phone'] ?? '01854-820303';
+        $siteEmail = $siteSettings['helpline_email'] ?? 'contact@adsbazarbd.com';
+        $siteAddress = $siteSettings['office_address'] ?? 'বাড়ি # ১২, রোড # ০৫, ধানমন্ডি, ঢাকা';
+        $cleanPhone = preg_replace('/[^0-9]/', '', $sitePhone);
+        $waPhone = str_starts_with($cleanPhone, '88') ? $cleanPhone : (str_starts_with($cleanPhone, '0') ? '88' . $cleanPhone : '880' . $cleanPhone);
+    @endphp
+
     <!-- Top Announcement & Support Bar -->
     <div class="bg-slate-900 text-slate-300 text-xs sm:text-sm py-2 px-4 border-b border-slate-800">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
             <div class="flex items-center gap-3 sm:gap-4 flex-wrap justify-center sm:justify-start">
                 <span>
                     <i class="fa-solid fa-phone text-emerald-400 mr-1.5"></i> হেল্পলাইন: 
-                    <a href="tel:01854820303" class="font-bold text-white hover:text-emerald-400 transition-colors">01854-820303</a>
+                    <a href="tel:{{ $cleanPhone }}" class="font-bold text-white hover:text-emerald-400 transition-colors">{{ $sitePhone }}</a>
                 </span>
                 <span class="hidden md:inline text-slate-600">|</span>
                 <span class="hidden md:inline">
                     <i class="fa-solid fa-envelope text-emerald-400 mr-1.5"></i>
-                    <a href="mailto:contact@adsbazarbd.com" class="hover:text-emerald-400 transition-colors">contact@adsbazarbd.com</a>
+                    <a href="mailto:{{ $siteEmail }}" class="hover:text-emerald-400 transition-colors">{{ $siteEmail }}</a>
                 </span>
                 <span class="hidden lg:inline text-slate-600">|</span>
                 <span class="hidden lg:inline"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1.5"></i> এসক্রো পদ্ধতিতে ১০০% নিরাপদ ডিজাইন সার্ভিস</span>
@@ -388,18 +396,18 @@
                     <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3.5 shadow-xs">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <!-- Direct Call Button -->
-                            <a href="tel:01854820303" class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/80 hover:bg-emerald-950/40 border border-slate-700/60 hover:border-emerald-500/50 transition-all group">
+                            <a href="tel:{{ $cleanPhone }}" class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/80 hover:bg-emerald-950/40 border border-slate-700/60 hover:border-emerald-500/50 transition-all group">
                                 <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                                     <i class="fa-solid fa-phone text-sm"></i>
                                 </div>
                                 <div class="min-w-0">
                                     <div class="text-[10px] text-slate-400 font-medium">জরুরি হেল্পলাইন</div>
-                                    <div class="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">01854-820303</div>
+                                    <div class="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">{{ $sitePhone }}</div>
                                 </div>
                             </a>
 
                             <!-- WhatsApp Direct Chat Button -->
-                            <a href="https://wa.me/8801854820303" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/80 hover:bg-emerald-950/40 border border-slate-700/60 hover:border-emerald-500/50 transition-all group">
+                            <a href="https://wa.me/{{ $waPhone }}" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/80 hover:bg-emerald-950/40 border border-slate-700/60 hover:border-emerald-500/50 transition-all group">
                                 <div class="w-9 h-9 rounded-lg bg-emerald-500 text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                                     <i class="fa-brands fa-whatsapp text-lg"></i>
                                 </div>
@@ -414,11 +422,11 @@
                         <div class="pt-2 border-t border-slate-800/80 flex flex-col sm:flex-row justify-between gap-2 text-xs text-slate-400">
                             <div class="flex items-center gap-2">
                                 <i class="fa-solid fa-envelope text-emerald-400 shrink-0"></i>
-                                <a href="mailto:contact@adsbazarbd.com" class="hover:text-emerald-400 transition-colors">contact@adsbazarbd.com</a>
+                                <a href="mailto:{{ $siteEmail }}" class="hover:text-emerald-400 transition-colors">{{ $siteEmail }}</a>
                             </div>
                             <div class="flex items-center gap-2">
                                 <i class="fa-solid fa-location-dot text-emerald-400 shrink-0"></i>
-                                <span>বাড়ি # ১২, রোড # ০৫, ধানমন্ডি, ঢাকা</span>
+                                <span>{{ $siteAddress }}</span>
                             </div>
                         </div>
                     </div>
@@ -451,7 +459,7 @@
             <div class="pt-4 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500 border-t border-slate-800/80">
                 <div class="text-center md:text-left flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3">
                     <div>
-                        &copy; {{ date('Y') }} <strong class="text-slate-300">Ads Bazar BD Ltd.</strong> সর্বস্বত্ব সংরক্ষিত।
+                        &copy; {{ date('Y') }} <strong class="text-slate-300">{{ $siteSettings['site_name'] ?? 'Ads Bazar BD Ltd.' }}</strong> সর্বস্বত্ব সংরক্ষিত।
                     </div>
                     <span class="hidden sm:inline text-slate-700">•</span>
                     <div class="text-slate-400 text-[11px] sm:text-xs">
@@ -465,7 +473,7 @@
 
                 <!-- Social Media Badges -->
                 <div class="flex items-center gap-2.5">
-                    <a href="https://wa.me/8801854820303" target="_blank" aria-label="WhatsApp" class="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-emerald-600 hover:text-white text-slate-400 flex items-center justify-center transition-all shadow-xs">
+                    <a href="https://wa.me/{{ $waPhone }}" target="_blank" aria-label="WhatsApp" class="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-emerald-600 hover:text-white text-slate-400 flex items-center justify-center transition-all shadow-xs">
                         <i class="fa-brands fa-whatsapp text-xs"></i>
                     </a>
                     <a href="#" aria-label="Facebook" class="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-blue-600 hover:text-white text-slate-400 flex items-center justify-center transition-all shadow-xs">
@@ -491,7 +499,7 @@
     </footer>
 
     <!-- Floating Quick WhatsApp Button on Mobile/Desktop -->
-    <a href="https://wa.me/8801854820303" target="_blank" title="সরাসরি হোয়াটসঅ্যাপে যোগাযোগ করুন" class="fixed bottom-5 right-5 z-40 w-12 h-12 sm:w-14 sm:h-14 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white rounded-full shadow-2xl flex items-center justify-center text-2xl sm:text-3xl transition-transform hover:scale-105">
+    <a href="https://wa.me/{{ $waPhone }}" target="_blank" title="সরাসরি হোয়াটসঅ্যাপে যোগাযোগ করুন" class="fixed bottom-5 right-5 z-40 w-12 h-12 sm:w-14 sm:h-14 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white rounded-full shadow-2xl flex items-center justify-center text-2xl sm:text-3xl transition-transform hover:scale-105">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 

@@ -117,7 +117,7 @@
         </div>
 
         <div class="bg-slate-50 px-6 sm:px-8 py-4 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500">
-            <div>সহায়তার জন্য হেল্পলাইন: <strong>01854-820303</strong></div>
+            <div>সহায়তার জন্য হেল্পলাইন: <strong>{{ $siteSettings['helpline_phone'] ?? '01854-820303' }}</strong></div>
             <div class="flex gap-2">
                 <button type="button" onclick="window.print()" class="px-4 py-2 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors">
                     <i class="fa-solid fa-print mr-1"></i> প্রিন্ট ইনভয়েস

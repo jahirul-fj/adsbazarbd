@@ -23,7 +23,11 @@
                 </div>
                 <h3 class="font-bold text-slate-900 text-sm">সরাসরি ফোন হেল্পলাইন</h3>
                 <p class="text-xs text-slate-500">সকাল ৯টা থেকে রাত ১০টা পর্যন্ত</p>
-                <div class="text-base font-extrabold text-emerald-700">01854-820303</div>
+                <div class="text-base font-extrabold text-emerald-700">
+                    <a href="tel:{{ preg_replace('/[^0-9]/', '', $siteSettings['helpline_phone'] ?? '01854820303') }}" class="hover:underline">
+                        {{ $siteSettings['helpline_phone'] ?? '01854-820303' }}
+                    </a>
+                </div>
             </div>
 
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2">
@@ -32,7 +36,11 @@
                 </div>
                 <h3 class="font-bold text-slate-900 text-sm">ইমেইল সাপোর্ট</h3>
                 <p class="text-xs text-slate-500">বিজ্ঞাপন টেক্সট বা কোটেশনের জন্য</p>
-                <div class="text-sm font-bold text-slate-800">contact@adsbazarbd.com</div>
+                <div class="text-sm font-bold text-slate-800">
+                    <a href="mailto:{{ $siteSettings['helpline_email'] ?? 'contact@adsbazarbd.com' }}" class="hover:text-emerald-600 transition-colors">
+                        {{ $siteSettings['helpline_email'] ?? 'contact@adsbazarbd.com' }}
+                    </a>
+                </div>
             </div>
 
             <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2">
@@ -41,7 +49,7 @@
                 </div>
                 <h3 class="font-bold text-slate-900 text-sm">কর্পোরেট অফিস</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                    বাড়ি # ১২, রোড # ০৫, ধানমন্ডি, ঢাকা-১২০৫, বাংলাদেশ
+                    {{ $siteSettings['office_address'] ?? 'বাড়ি # ১২, রোড # ০৫, ধানমন্ডি, ঢাকা-১২০৫, বাংলাদেশ' }}
                 </p>
             </div>
         </div>

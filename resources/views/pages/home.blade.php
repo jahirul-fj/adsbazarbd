@@ -369,8 +369,8 @@
             <a href="{{ route('classified.index') }}" class="px-6 py-3.5 bg-white text-emerald-800 font-bold text-sm rounded-xl hover:bg-emerald-50 transition-all text-center shadow-md">
                 বিজ্ঞাপন বুক করুন
             </a>
-            <a href="tel:01854820303" class="px-6 py-3.5 bg-emerald-700/80 hover:bg-emerald-800 text-white font-bold text-sm rounded-xl transition-all text-center border border-emerald-400/30 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-phone"></i> 01854-820303
+            <a href="tel:{{ preg_replace('/[^0-9]/', '', $siteSettings['helpline_phone'] ?? '01854820303') }}" class="px-6 py-3.5 bg-emerald-700/80 hover:bg-emerald-800 text-white font-bold text-sm rounded-xl transition-all text-center border border-emerald-400/30 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-phone"></i> {{ $siteSettings['helpline_phone'] ?? '01854-820303' }}
             </a>
         </div>
     </div>

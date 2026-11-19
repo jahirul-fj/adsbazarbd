@@ -138,7 +138,7 @@
                 </div>
 
                 <div class="flex justify-between items-center text-xs text-slate-500 pt-2">
-                    <div>কোনো জিজ্ঞাসা থাকলে কল করুন: <strong>01854-820303</strong></div>
+                    <div>কোনো জিজ্ঞাসা থাকলে কল করুন: <strong>{{ $siteSettings['helpline_phone'] ?? '01854-820303' }}</strong></div>
                     <a href="{{ $adType === 'display' ? route('display.show', $ad->tracking_no) : route('classified.show', $ad->tracking_no) }}" class="font-bold text-emerald-600 hover:underline">
                         পূর্ণাঙ্গ ইনভয়েস দেখুন &rarr;
                     </a>

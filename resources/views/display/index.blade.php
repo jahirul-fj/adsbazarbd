@@ -218,26 +218,30 @@
             <div class="space-y-4 pt-4 border-t border-slate-100">
                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">পেমেন্ট মেথড <span class="text-rose-500">*</span></label>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-500 has-checked:border-teal-600 has-checked:bg-teal-50/50 transition-all text-center">
-                        <input type="radio" name="payment_method" value="bank" class="sr-only" checked>
+                    <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-500 transition-all text-center">
+                        <input type="radio" name="payment_method" value="bank" class="sr-only" checked onchange="updateDisplayPaymentInstructions()">
                         <span class="font-extrabold text-sm text-sky-800">ব্যাংক ট্রান্সফার</span>
                         <span class="text-[10px] text-slate-400 mt-0.5">কর্পোরেট একাউন্ট</span>
                     </label>
-                    <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-500 has-checked:border-teal-600 has-checked:bg-teal-50/50 transition-all text-center">
-                        <input type="radio" name="payment_method" value="bkash" class="sr-only">
+                    <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-500 transition-all text-center">
+                        <input type="radio" name="payment_method" value="bkash" class="sr-only" onchange="updateDisplayPaymentInstructions()">
                         <span class="font-extrabold text-sm text-pink-600">বিকাশ (bKash)</span>
                         <span class="text-[10px] text-slate-400 mt-0.5">মার্চেন্ট পে</span>
                     </label>
-                    <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-500 has-checked:border-teal-600 has-checked:bg-teal-50/50 transition-all text-center">
-                        <input type="radio" name="payment_method" value="nagad" class="sr-only">
+                    <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-500 transition-all text-center">
+                        <input type="radio" name="payment_method" value="nagad" class="sr-only" onchange="updateDisplayPaymentInstructions()">
                         <span class="font-extrabold text-sm text-orange-600">নগদ (Nagad)</span>
                         <span class="text-[10px] text-slate-400 mt-0.5">মার্চেন্ট পে</span>
                     </label>
-                    <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-500 has-checked:border-teal-600 has-checked:bg-teal-50/50 transition-all text-center">
-                        <input type="radio" name="payment_method" value="cash_pickup" class="sr-only">
+                    <label class="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 cursor-pointer hover:border-teal-500 transition-all text-center">
+                        <input type="radio" name="payment_method" value="cash_pickup" class="sr-only" onchange="updateDisplayPaymentInstructions()">
                         <span class="font-extrabold text-sm text-slate-800">ক্যাশ অন পিকআপ</span>
                         <span class="text-[10px] text-slate-400 mt-0.5">ঢাকা মহানগর</span>
                     </label>
+                </div>
+
+                <!-- Payment Instruction Box -->
+                <div id="displayPaymentInstructions" class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 leading-relaxed">
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -323,6 +327,43 @@
         document.getElementById('visualDimensionHint').innerText = `প্রস্থ: প্রায় ${(columns * 1.5).toFixed(1)} ইঞ্চি | উচ্চতা: ${height.toFixed(1)} ইঞ্চি`;
     }
 
-    document.addEventListener('DOMContentLoaded', calculateDisplayPrice);
+    function updateDisplayPaymentInstructions() {
+        const checkedRadio = document.querySelector('input[name="payment_method"]:checked');
+        if (!checkedRadio) return;
+        const method = checkedRadio.value;
+        const instBox = document.getElementById('displayPaymentInstructions');
+
+        const bkashNum = {{ json_encode($siteSettings['bkash_merchant_number'] ?? '01779-870454') }};
+        const nagadNum = {{ json_encode($siteSettings['nagad_merchant_number'] ?? '01854-820303') }};
+        const bankInfo = {{ json_encode($siteSettings['bank_info'] ?? 'Dutch Bangla Bank Ltd, Account Name: Ads Bazar BD Ltd, Acc: 123.120.98765, Branch: Dhanmondi Branch') }};
+        const cashNotice = {{ json_encode($siteSettings['cash_pickup_notice'] ?? 'শুধুমাত্র ঢাকা মহানগরীর ভেতরের ঠিকানার জন্য ক্যাশ পিকআপ প্রযোজ্য।') }};
+
+        // Update active class on labels
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            const label = radio.closest('label');
+            if (radio.checked) {
+                label.classList.add('border-teal-600', 'bg-teal-50/70', 'ring-2', 'ring-teal-500/20');
+                label.classList.remove('border-slate-200');
+            } else {
+                label.classList.remove('border-teal-600', 'bg-teal-50/70', 'ring-2', 'ring-teal-500/20');
+                label.classList.add('border-slate-200');
+            }
+        });
+
+        if (method === 'bank') {
+            instBox.innerHTML = `<strong>ব্যাংক ট্রান্সফার:</strong> ${bankInfo}. ডিপোজিট স্লিপের রেফারেন্স বা ট্রানজেকশন নম্বর নিচে দিন।`;
+        } else if (method === 'bkash') {
+            instBox.innerHTML = `<strong>বিকাশ পেমেন্ট নিয়ম:</strong> আমাদের বিকাশ মার্চেন্ট নম্বর <strong>${bkashNum}</strong> এ পেমেন্ট করুন অথবা পার্সোনাল একাউন্টে সেন্ড মানি করে TrxID নিচে লিখুন।`;
+        } else if (method === 'nagad') {
+            instBox.innerHTML = `<strong>নগদ পেমেন্ট নিয়ম:</strong> আমাদের নগদ মার্চেন্ট নম্বর <strong>${nagadNum}</strong> এ ক্যাশ আউট বা সেন্ড মানি করুন এবং TrxID নিচে লিখুন।`;
+        } else {
+            instBox.innerHTML = `<strong>ক্যাশ অন পিকআপ:</strong> ${cashNotice}`;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        calculateDisplayPrice();
+        updateDisplayPaymentInstructions();
+    });
 </script>
 @endpush
