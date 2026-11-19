@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" width="320" height="64">
+  <defs>
+    <linearGradient id="logoBgGradD" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="60%" stop-color="#14b8a6" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <linearGradient id="goldGradHD" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="100%" stop-color="#F59E0B" />
+    </linearGradient>
+    <filter id="shadowHD" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.4" />
+    </filter>
+  </defs>
+
+  <!-- Left Icon Mark -->
+  <g transform="translate(6, 6) scale(0.1015625)">
+    <rect x="0" y="0" width="512" height="512" rx="112" fill="url(#logoBgGradD)" filter="url(#shadowHD)" />
+    <rect x="110" y="115" width="245" height="300" rx="20" fill="#FFFFFF" />
+    <rect x="130" y="135" width="205" height="24" rx="6" fill="#059669" />
+    <rect x="138" y="142" width="70" height="10" rx="4" fill="#ffffff" fill-opacity="0.9" />
+    <rect x="130" y="172" width="165" height="14" rx="4" fill="#1e293b" />
+    <rect x="130" y="195" width="130" height="8" rx="3" fill="#64748b" />
+    <rect x="130" y="242" width="95" height="80" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="4" stroke-dasharray="6,4" />
+    <rect x="140" y="255" width="50" height="10" rx="4" fill="#059669" />
+    <rect x="140" y="272" width="75" height="8" rx="3" fill="#34d399" />
+    <rect x="238" y="242" width="97" height="10" rx="4" fill="#475569" />
+    <rect x="238" y="260" width="85" height="8" rx="3" fill="#94a3b8" />
+    <rect x="238" y="276" width="92" height="8" rx="3" fill="#cbd5e1" />
+    <rect x="130" y="336" width="205" height="58" rx="10" fill="#f0fdfa" stroke="#0d9488" stroke-width="4" />
+    <g transform="translate(265, 80) scale(1.15)">
+      <path d="M 98 42 C 108 52, 108 72, 98 82" fill="none" stroke="#FBBF24" stroke-width="8" stroke-linecap="round" />
+      <path d="M 112 30 C 128 46, 128 78, 112 94" fill="none" stroke="#F59E0B" stroke-width="8" stroke-linecap="round" />
+      <path d="M 40 45 L 85 24 C 88 23, 92 26, 92 30 L 92 94 C 92 98, 88 101, 85 100 L 40 79 Z" fill="url(#goldGradHD)" />
+      <ellipse cx="90" cy="62" rx="6" ry="36" fill="#F59E0B" stroke="#D97706" stroke-width="3" />
+      <rect x="18" y="47" width="26" height="30" rx="6" fill="#EA580C" />
+      <path d="M 28 77 L 24 102 C 23 105, 27 108, 30 106 L 40 96 L 38 77 Z" fill="#C2410C" />
+      <circle cx="18" cy="62" r="10" fill="#BE123C" />
+    </g>
+    <circle cx="390" cy="385" r="34" fill="#E11D48" stroke="#FFFFFF" stroke-width="8" />
+  </g>
+
+  <!-- Typography: White Ads Bazar BD -->
+  <g transform="translate(68, 16)">
+    <text x="0" y="20" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="900" fill="#FFFFFF" letter-spacing="-0.5">Ads</text>
+    <text x="44" y="20" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="900" fill="#34D399" letter-spacing="-0.5">Bazar</text>
+    <g transform="translate(108, 3)">
+      <rect x="0" y="0" width="36" height="20" rx="6" fill="#0284c7" />
+      <text x="18" y="14" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">BD</text>
+    </g>
+    <g transform="translate(148, 3)">
+      <rect x="0" y="0" width="76" height="20" rx="6" fill="#064e3b" stroke="#059669" stroke-width="1" />
+      <text x="38" y="14" font-family="'Hind Siliguri', system-ui, sans-serif" font-size="11" font-weight="700" fill="#34d399" text-anchor="middle">অ্যাডস বাজার</text>
+    </g>
+    <text x="0" y="37" font-family="'Hind Siliguri', system-ui, sans-serif" font-size="10.5" font-weight="500" fill="#94A3B8" letter-spacing="0.2">সংবাদপত্রে বিজ্ঞাপন ও ডিজাইনার প্ল্যাটফর্ম</text>
+  </g>
+</svg>

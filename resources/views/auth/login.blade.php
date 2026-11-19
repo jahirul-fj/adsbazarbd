@@ -6,9 +6,7 @@
 <div class="max-w-md mx-auto px-4 sm:px-6 py-12">
     <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-xl space-y-6">
         <div class="text-center space-y-2">
-            <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl mx-auto font-black shadow-xs">
-                <i class="fa-solid fa-right-to-bracket"></i>
-            </div>
+            <img src="{{ asset('images/logo-icon.svg') }}" alt="Ads Bazar BD" class="w-14 h-14 rounded-2xl mx-auto shadow-md object-contain">
             <h1 class="text-2xl font-black text-slate-900">লগইন করুন</h1>
             <p class="text-xs text-slate-500">আপনার একাউন্টে প্রবেশ করে বিজ্ঞাপন ও অর্ডার পরিচালনা করুন</p>
         </div>

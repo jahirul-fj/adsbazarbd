@@ -6,6 +6,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Ads Bazar BD - অনলাইন সংবাদপত্র বিজ্ঞাপন ও ডিজাইনার প্ল্যাটফর্ম')</title>
 
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <meta name="theme-color" content="#059669">
+
     <!-- Google Fonts (Hind Siliguri for beautiful Bengali typography) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,13 +90,12 @@
             <div class="flex justify-between items-center h-20">
                 <!-- Brand / Logo -->
                 <div class="flex items-center gap-3">
-                    <a href="{{ route('home') }}" class="flex items-center gap-2.5 group">
-                        <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-105 transition-transform">
-                            <i class="fa-solid fa-newspaper"></i>
-                        </div>
+                    <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+                        <img src="{{ asset('images/logo-icon.svg') }}" alt="Ads Bazar BD" class="w-11 h-11 rounded-xl shadow-md group-hover:scale-105 transition-transform object-contain">
                         <div>
-                            <div class="font-extrabold text-2xl tracking-tight text-slate-900 flex items-center gap-1.5">
-                                Ads Bazar BD <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold uppercase tracking-wider">অ্যাডস বাজার</span>
+                            <div class="font-extrabold text-2xl tracking-tight text-slate-900 flex items-center gap-2">
+                                <span>Ads Bazar BD</span>
+                                <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-semibold uppercase tracking-wider">অ্যাডস বাজার</span>
                             </div>
                             <div class="text-[11px] text-slate-500 font-medium">সহজে সংবাদপত্রে বিজ্ঞাপন ও ডিজাইনার প্ল্যাটফর্ম</div>
                         </div>
@@ -240,11 +247,12 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800">
                 <!-- Col 1: Brand Info -->
                 <div class="lg:col-span-2 space-y-4">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white text-lg font-bold">
-                            <i class="fa-solid fa-newspaper"></i>
+                    <div class="flex items-center gap-3">
+                        <img src="{{ asset('images/logo-icon.svg') }}" alt="Ads Bazar BD" class="w-11 h-11 rounded-xl shadow-md object-contain">
+                        <div class="font-extrabold text-2xl text-white tracking-tight flex items-center gap-2">
+                            <span>Ads Bazar BD</span>
+                            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-normal">অ্যাডস বাজার বিডি</span>
                         </div>
-                        <div class="font-extrabold text-2xl text-white tracking-tight">Ads Bazar BD <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-normal">অ্যাডস বাজার বিডি</span></div>
                     </div>
                     <p class="text-sm text-slate-400 leading-relaxed pr-6">
                         Ads Bazar BD হলো বাংলাদেশের শীর্ষস্থানীয় অনলাইন সংবাদপত্রে বিজ্ঞাপন প্রকাশনা ও গ্রাফিক ডিজাইনার প্ল্যাটফর্ম। এজেন্ট খোঁজার ঝামেলা ছাড়াই ঘরে বসে দেশের শীর্ষ সকল বাংলা ও ইংরেজি পত্রিকায় সহজে বিজ্ঞাপন বুকিং দিন।

@@ -6,9 +6,7 @@
 <div class="min-h-[75vh] flex items-center justify-center px-4 py-12">
     <div class="max-w-md w-full bg-white rounded-3xl p-8 border border-slate-200 shadow-xl space-y-6">
         <div class="text-center space-y-2">
-            <div class="w-14 h-14 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center text-2xl mx-auto shadow-xs">
-                <i class="fa-solid fa-paintbrush"></i>
-            </div>
+            <img src="{{ asset('images/logo-icon.svg') }}" alt="Ads Bazar BD" class="w-14 h-14 rounded-2xl mx-auto shadow-md object-contain">
             <span class="inline-block px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-[11px] font-bold uppercase tracking-wider">
                 ফ্রিল্যান্স ডিজাইনার পোর্টাল
             </span>
