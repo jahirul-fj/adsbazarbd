@@ -197,43 +197,45 @@
         </div>
     </header>
 
-    <!-- Global Flash Alerts -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
-        @if(session('success'))
-            <div class="p-4 mb-4 text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl flex items-start gap-3 shadow-xs">
-                <i class="fa-solid fa-circle-check text-emerald-600 text-lg mt-0.5"></i>
-                <div class="flex-1 text-sm font-medium leading-relaxed">{{ session('success') }}</div>
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="p-4 mb-4 text-rose-800 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-3 shadow-xs">
-                <i class="fa-solid fa-circle-exclamation text-rose-600 text-lg mt-0.5"></i>
-                <div class="flex-1 text-sm font-medium leading-relaxed">{{ session('error') }}</div>
-            </div>
-        @endif
-
-        @if(session('info'))
-            <div class="p-4 mb-4 text-sky-800 bg-sky-50 border border-sky-200 rounded-xl flex items-start gap-3 shadow-xs">
-                <i class="fa-solid fa-circle-info text-sky-600 text-lg mt-0.5"></i>
-                <div class="flex-1 text-sm font-medium leading-relaxed">{{ session('info') }}</div>
-            </div>
-        @endif
-
-        @if ($errors->any())
-            <div class="p-4 mb-4 text-rose-800 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-3 shadow-xs">
-                <i class="fa-solid fa-triangle-exclamation text-rose-600 text-lg mt-0.5"></i>
-                <div class="flex-1 text-sm">
-                    <div class="font-bold mb-1">অনুগ্রহ করে নিচের ভুলগুলো সংশোধন করুন:</div>
-                    <ul class="list-disc list-inside space-y-0.5">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+    <!-- Global Flash Alerts (Only rendered when active alerts exist) -->
+    @if(session('success') || session('error') || session('info') || $errors->any())
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 w-full">
+            @if(session('success'))
+                <div class="p-4 text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-xl flex items-start gap-3 shadow-xs">
+                    <i class="fa-solid fa-circle-check text-emerald-600 text-lg mt-0.5"></i>
+                    <div class="flex-1 text-sm font-medium leading-relaxed">{{ session('success') }}</div>
                 </div>
-            </div>
-        @endif
-    </div>
+            @endif
+
+            @if(session('error'))
+                <div class="p-4 text-rose-800 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-3 shadow-xs">
+                    <i class="fa-solid fa-circle-exclamation text-rose-600 text-lg mt-0.5"></i>
+                    <div class="flex-1 text-sm font-medium leading-relaxed">{{ session('error') }}</div>
+                </div>
+            @endif
+
+            @if(session('info'))
+                <div class="p-4 text-sky-800 bg-sky-50 border border-sky-200 rounded-xl flex items-start gap-3 shadow-xs">
+                    <i class="fa-solid fa-circle-info text-sky-600 text-lg mt-0.5"></i>
+                    <div class="flex-1 text-sm font-medium leading-relaxed">{{ session('info') }}</div>
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="p-4 text-rose-800 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-3 shadow-xs">
+                    <i class="fa-solid fa-triangle-exclamation text-rose-600 text-lg mt-0.5"></i>
+                    <div class="flex-1 text-sm">
+                        <div class="font-bold mb-1">অনুগ্রহ করে নিচের ভুলগুলো সংশোধন করুন:</div>
+                        <ul class="list-disc list-inside space-y-0.5">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
+        </div>
+    @endif
 
     <!-- Main Page Content -->
     <main class="flex-1">
