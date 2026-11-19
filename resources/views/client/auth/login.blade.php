@@ -19,7 +19,7 @@
             @csrf
             <div>
                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">ইমেইল এড্রেস</label>
-                <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="client@adsbazarbd.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-hidden" required>
+                <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="আপনার ইমেইল এড্রেস" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white focus:outline-hidden" required>
             </div>
 
             <div>

@@ -23,7 +23,7 @@
                 <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">অ্যাডমিন ইমেইল</label>
                 <div class="relative">
                     <i class="fa-solid fa-envelope absolute left-4 top-3.5 text-slate-400 text-xs"></i>
-                    <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="admin@adsbazarbd.com" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-10 pr-4 py-3 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden" required>
+                    <input type="email" name="email" id="email" value="{{ old('email') }}" placeholder="আপনার ইমেইল এড্রেস" class="w-full bg-slate-50 border border-slate-300 rounded-xl pl-10 pr-4 py-3 text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-hidden" required>
                 </div>
             </div>
 
