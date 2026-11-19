@@ -673,4 +673,22 @@ class AppFlowTest extends TestCase
             ]);
         }
     }
+
+    public function test_footer_credit_auto_switches_after_two_days(): void
+    {
+        // 1. Right now (before switch date): shows Green Host Park
+        \Carbon\Carbon::setTestNow('2026-11-20 12:00:00');
+        $resBefore = $this->get('/');
+        $resBefore->assertSee('Green Host Park');
+        $resBefore->assertSee('https://greenhostpark.com');
+
+        // 2. After switch date (from Nov 22 onwards): automatically shows Extremecoder.net
+        \Carbon\Carbon::setTestNow('2026-11-22 00:00:01');
+        $resAfter = $this->get('/');
+        $resAfter->assertSee('Extremecoder.net');
+        $resAfter->assertSee('https://extremecoder.net');
+
+        // Reset test time
+        \Carbon\Carbon::setTestNow();
+    }
 }

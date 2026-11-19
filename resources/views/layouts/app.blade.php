@@ -464,8 +464,8 @@
                     <span class="hidden sm:inline text-slate-700">•</span>
                     <div class="text-slate-400 text-[11px] sm:text-xs">
                         Developed with <i class="fa-solid fa-heart text-rose-500 text-[10px]"></i> by 
-                        <a href="https://extremecoder.net" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-bold hover:underline transition-colors inline-flex items-center gap-1">
-                            <span>Extremecoder.net</span>
+                        <a href="{{ $devCredit['url'] }}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-bold hover:underline transition-colors inline-flex items-center gap-1">
+                            <span>{{ $devCredit['name'] }}</span>
                             <i class="fa-solid fa-arrow-up-right-from-square text-[9px] opacity-70"></i>
                         </a>
                     </div>
