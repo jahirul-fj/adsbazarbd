@@ -134,10 +134,10 @@
         const trxLabel = document.getElementById('trxLabel');
         const trxInput = document.getElementById('trxInput');
 
-        const bkashNum = {{ json_encode($siteSettings['bkash_merchant_number'] ?? '01779-870454') }};
-        const nagadNum = {{ json_encode($siteSettings['nagad_merchant_number'] ?? '01854-820303') }};
-        const rocketNum = {{ json_encode($siteSettings['rocket_number'] ?? '01779-870454-8') }};
-        const bankInfo = {{ json_encode($siteSettings['bank_info'] ?? 'Dutch Bangla Bank Ltd, Account Name: Ads Bazar BD Ltd, Acc: 123.120.98765, Branch: Dhanmondi Branch') }};
+        const bkashNum = {!! json_encode($siteSettings['bkash_merchant_number'] ?? '01779-870454') !!};
+        const nagadNum = {!! json_encode($siteSettings['nagad_merchant_number'] ?? '01854-820303') !!};
+        const rocketNum = {!! json_encode($siteSettings['rocket_number'] ?? '01779-870454-8') !!};
+        const bankInfo = {!! json_encode($siteSettings['bank_info'] ?? 'ডাচ বাংলা ব্যাংক লিমিটেড, একাউন্ট নাম: Ads Bazar BD Ltd, একাউন্ট নং: 123.120.98765, ব্র্যাঞ্চ: ধানমন্ডি শাখা') !!};
 
         if (method === 'bkash') {
             instBox.innerHTML = `<div><strong>বিকাশ পেমেন্ট নিয়ম:</strong> আমাদের বিকাশ মার্চেন্ট নম্বর <strong>${bkashNum}</strong> এ পেমেন্ট করুন অথবা সেন্ড মানি করুন। এরপর প্রাপ্ত ট্রানজেকশন আইডি (TrxID) নিচে ইনপুট দিন।</div>`;
