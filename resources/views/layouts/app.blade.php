@@ -306,133 +306,177 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-300 mt-16 pt-16 pb-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10 pb-12 border-b border-slate-800">
-                <!-- Col 1: Brand Info (span 2 on lg) -->
-                <div class="sm:col-span-2 lg:col-span-2 space-y-4">
+    <footer class="bg-slate-950 text-slate-300 mt-16 pt-12 sm:pt-16 pb-24 sm:pb-12 border-t border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
+            
+            <!-- Top Section: Brand & Trust Highlights -->
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 pb-8 border-b border-slate-800/70">
+                <div class="space-y-3 max-w-xl">
                     <div class="flex items-center gap-3">
-                        <img src="{{ asset('images/logo-icon.svg') }}" alt="Ads Bazar BD" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl shadow-md object-contain">
-                        <div class="font-extrabold text-2xl text-white tracking-tight">
-                            Ads Bazar BD
-                        </div>
-                    </div>
-                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed pr-0 lg:pr-6">
-                        Ads Bazar BD হলো বাংলাদেশের শীর্ষস্থানীয় অনলাইন সংবাদপত্রে বিজ্ঞাপন প্রকাশনা ও গ্রাফিক ডিজাইনার প্ল্যাটফর্ম। এজেন্ট খোঁজার ঝামেলা ছাড়াই ঘরে বসে দেশের শীর্ষ সকল বাংলা ও ইংরেজি পত্রিকায় সহজে বিজ্ঞাপন বুকিং দিন।
-                    </p>
-
-                    <!-- Trust Badges -->
-                    <div class="flex flex-wrap items-center gap-3 pt-1 text-[11px] text-emerald-400 font-semibold">
-                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-800/60">
-                            <i class="fa-solid fa-shield-halved"></i> ১০০% সুরক্ষিত এসক্রো গ্যারান্টি
-                        </span>
-                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-800/60">
-                            <i class="fa-solid fa-circle-check"></i> ভেরিফাইড সংবাদপত্র রেট
-                        </span>
-                    </div>
-
-                    <!-- Payment Partner Badges -->
-                    <div class="space-y-2 pt-2">
-                        <span class="block text-xs uppercase tracking-wider text-slate-400 font-semibold">পেমেন্ট পার্টনার:</span>
-                        <div class="flex flex-wrap items-center gap-2 text-slate-300">
-                            <span class="px-2.5 py-1 bg-slate-800 text-pink-400 rounded-lg text-xs font-bold border border-slate-700/60">
-                                <i class="fa-solid fa-mobile-screen-button mr-1"></i>বিকাশ (bKash)
-                            </span>
-                            <span class="px-2.5 py-1 bg-slate-800 text-orange-400 rounded-lg text-xs font-bold border border-slate-700/60">
-                                <i class="fa-solid fa-bolt mr-1"></i>নগদ (Nagad)
-                            </span>
-                            <span class="px-2.5 py-1 bg-slate-800 text-purple-400 rounded-lg text-xs font-bold border border-slate-700/60">
-                                <i class="fa-solid fa-rocket mr-1"></i>রকেট (Rocket)
-                            </span>
-                            <span class="px-2.5 py-1 bg-slate-800 text-sky-400 rounded-lg text-xs font-bold border border-slate-700/60">
-                                <i class="fa-solid fa-building-columns mr-1"></i>ব্যাংক ট্রান্সফার
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Col 2: Services -->
-                <div class="space-y-3">
-                    <h4 class="text-white font-bold text-sm sm:text-base border-b border-slate-800 pb-2">বিজ্ঞাপন সেবা</h4>
-                    <ul class="space-y-2.5 text-xs sm:text-sm">
-                        <li><a href="{{ route('classified.index') }}" class="block py-1 hover:text-emerald-400 transition-colors">শ্রেণীভুক্ত বিজ্ঞাপন (Classified)</a></li>
-                        <li><a href="{{ route('display.index') }}" class="block py-1 hover:text-emerald-400 transition-colors">ডিসপ্লে বিজ্ঞাপন (Display Ads)</a></li>
-                        <li><a href="{{ route('designers.index') }}" class="block py-1 hover:text-emerald-400 transition-colors">গ্রাফিক ডিজাইনার হায়ার</a></li>
-                        <li><a href="{{ route('pricing') }}" class="block py-1 hover:text-emerald-400 transition-colors">বিজ্ঞাপনের মূল্য তালিকা</a></li>
-                        <li><a href="{{ route('track') }}" class="block py-1 hover:text-emerald-400 transition-colors">বিজ্ঞাপনের লাইভ স্ট্যাটাস</a></li>
-                    </ul>
-                </div>
-
-                <!-- Col 3: Newspapers -->
-                <div class="space-y-3">
-                    <h4 class="text-white font-bold text-sm sm:text-base border-b border-slate-800 pb-2">জনপ্রিয় সংবাদপত্র</h4>
-                    <ul class="space-y-2.5 text-xs sm:text-sm">
-                        <li><span class="block py-1 text-slate-400">দৈনিক প্রথম আলো</span></li>
-                        <li><span class="block py-1 text-slate-400">বাংলাদেশ প্রতিদিন</span></li>
-                        <li><span class="block py-1 text-slate-400">দ্য ডেইলি স্টার</span></li>
-                        <li><span class="block py-1 text-slate-400">দৈনিক সমকাল</span></li>
-                        <li><span class="block py-1 text-slate-400">দৈনিক ইত্তেফাক</span></li>
-                        <li><span class="block py-1 text-slate-400">কালের কণ্ঠ ও অন্যান্য</span></li>
-                    </ul>
-                </div>
-
-                <!-- Col 4: Contact & Office -->
-                <div class="space-y-3 sm:col-span-2 lg:col-span-1">
-                    <h4 class="text-white font-bold text-sm sm:text-base border-b border-slate-800 pb-2">যোগাযোগ ও সহায়তা</h4>
-                    <ul class="space-y-3 text-xs sm:text-sm text-slate-400">
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-phone text-emerald-400 mt-1 shrink-0"></i>
-                            <div>
-                                <a href="tel:01854820303" class="font-bold text-white hover:text-emerald-400 transition-colors text-sm sm:text-base block">01854-820303</a>
-                                <div class="text-[11px] text-slate-500">সকাল ৯টা - রাত ১০টা (সপ্তাহে ৭ দিন)</div>
+                        <img src="{{ asset('images/logo-icon.svg') }}" alt="Ads Bazar BD" class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl shadow-md object-contain shrink-0">
+                        <div>
+                            <div class="font-black text-2xl text-white tracking-tight flex items-center gap-2">
+                                Ads Bazar BD
+                                <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">অফিসিয়াল</span>
                             </div>
-                        </li>
-                        <li class="flex items-center gap-2.5">
-                            <i class="fa-solid fa-envelope text-emerald-400 shrink-0"></i>
-                            <a href="mailto:contact@adsbazarbd.com" class="hover:text-emerald-400 transition-colors break-all">contact@adsbazarbd.com</a>
-                        </li>
-                        <li class="flex items-start gap-2.5">
-                            <i class="fa-solid fa-location-dot text-emerald-400 mt-1 shrink-0"></i>
-                            <span>বাড়ি # ১২, রোড # ০৫, ধানমন্ডি, ঢাকা-১২০৫</span>
-                        </li>
-                        <li class="pt-1">
-                            <a href="https://wa.me/8801854820303" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30 border border-emerald-500/30 text-xs font-bold transition-all w-fit">
-                                <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i>
-                                <span>হোয়াটসঅ্যাপে চ্যাট করুন</span>
-                            </a>
-                        </li>
-                    </ul>
+                            <div class="text-[11px] text-slate-400 font-medium">সহজে জাতীয় সংবাদপত্রে বিজ্ঞাপন ও ডিজাইনার প্ল্যাটফর্ম</div>
+                        </div>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                        এজেন্টের কাছে দৌড়াদৌড়ি ছাড়াই ঘরে বসে দেশের শীর্ষ সকল বাংলা ও ইংরেজি পত্রিকায় সহজে বিজ্ঞাপন দিন অথবা দক্ষ গ্রাফিক ডিজাইনার হায়ার করুন।
+                    </p>
+                </div>
+
+                <!-- Trust Highlights -->
+                <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 text-xs w-full lg:w-auto">
+                    <div class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-emerald-400 shadow-2xs font-semibold">
+                        <i class="fa-solid fa-shield-halved text-sm"></i>
+                        <span>১০০% এসক্রো সুরক্ষিত</span>
+                    </div>
+                    <div class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-teal-400 shadow-2xs font-semibold">
+                        <i class="fa-solid fa-certificate text-sm"></i>
+                        <span>ভেরিফাইড রেট চার্ট</span>
+                    </div>
+                    <div class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-indigo-400 shadow-2xs font-semibold">
+                        <i class="fa-solid fa-headset text-sm"></i>
+                        <span>সার্বক্ষণিক হেল্পলাইন</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Bottom Legal & Social Bar -->
-            <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-400">
-                <div class="text-center md:text-left">
-                    &copy; {{ date('Y') }} <strong class="text-white">Ads Bazar BD Ltd.</strong> সর্বস্বত্ব সংরক্ষিত।
+            <!-- Middle Grid: 2-Cols on Mobile (Quick Links), Contact Card on Right -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
+                
+                <!-- Col 1: বিজ্ঞাপন সেবা (Mobile Col 1) -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-bold text-sm tracking-wide flex items-center gap-2 border-b border-slate-800/80 pb-2.5">
+                        <i class="fa-solid fa-rectangle-ad text-emerald-400 text-xs"></i>
+                        <span>বিজ্ঞাপন সেবা</span>
+                    </h4>
+                    <ul class="space-y-2 text-xs sm:text-sm text-slate-400">
+                        <li><a href="{{ route('classified.index') }}" class="hover:text-emerald-400 transition-colors block py-1">শ্রেণীভুক্ত বিজ্ঞাপন</a></li>
+                        <li><a href="{{ route('display.index') }}" class="hover:text-emerald-400 transition-colors block py-1">ডিসপ্লে বিজ্ঞাপন</a></li>
+                        <li><a href="{{ route('designers.index') }}" class="hover:text-emerald-400 transition-colors block py-1">ডিজাইনার নিয়োগ</a></li>
+                        <li><a href="{{ route('pricing') }}" class="hover:text-emerald-400 transition-colors block py-1">মূল্য তালিকা</a></li>
+                        <li><a href="{{ route('track') }}" class="hover:text-emerald-400 transition-colors block py-1">বিজ্ঞাপন ট্র্যাকিং</a></li>
+                    </ul>
                 </div>
 
-                <!-- Social Icons -->
-                <div class="flex items-center gap-3">
-                    <a href="https://wa.me/8801854820303" target="_blank" aria-label="WhatsApp" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition-colors shadow-xs">
+                <!-- Col 2: জনপ্রিয় সংবাদপত্র (Mobile Col 2) -->
+                <div class="space-y-3">
+                    <h4 class="text-white font-bold text-sm tracking-wide flex items-center gap-2 border-b border-slate-800/80 pb-2.5">
+                        <i class="fa-solid fa-newspaper text-teal-400 text-xs"></i>
+                        <span>শীর্ষ পত্রিকা</span>
+                    </h4>
+                    <ul class="space-y-2 text-xs sm:text-sm text-slate-400">
+                        <li><span class="block py-1 hover:text-slate-200 transition-colors">প্রথম আলো</span></li>
+                        <li><span class="block py-1 hover:text-slate-200 transition-colors">বাংলাদেশ প্রতিদিন</span></li>
+                        <li><span class="block py-1 hover:text-slate-200 transition-colors">দ্য ডেইলি স্টার</span></li>
+                        <li><span class="block py-1 hover:text-slate-200 transition-colors">দৈনিক সমকাল</span></li>
+                        <li><span class="block py-1 hover:text-slate-200 transition-colors">দৈনিক ইত্তেফাক</span></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: যোগাযোগ ও সরাসরি সহায়তা (Spans 2 cols on mobile) -->
+                <div class="col-span-2 md:col-span-1 lg:col-span-2 space-y-3">
+                    <h4 class="text-white font-bold text-sm tracking-wide flex items-center gap-2 border-b border-slate-800/80 pb-2.5">
+                        <i class="fa-solid fa-headset text-indigo-400 text-xs"></i>
+                        <span>যোগাযোগ ও সহায়তা</span>
+                    </h4>
+
+                    <!-- Contact Card Container -->
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-3.5 shadow-xs">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <!-- Direct Call Button -->
+                            <a href="tel:01854820303" class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/80 hover:bg-emerald-950/40 border border-slate-700/60 hover:border-emerald-500/50 transition-all group">
+                                <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                    <i class="fa-solid fa-phone text-sm"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="text-[10px] text-slate-400 font-medium">জরুরি হেল্পলাইন</div>
+                                    <div class="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">01854-820303</div>
+                                </div>
+                            </a>
+
+                            <!-- WhatsApp Direct Chat Button -->
+                            <a href="https://wa.me/8801854820303" target="_blank" class="flex items-center gap-3 p-3 rounded-xl bg-slate-800/80 hover:bg-emerald-950/40 border border-slate-700/60 hover:border-emerald-500/50 transition-all group">
+                                <div class="w-9 h-9 rounded-lg bg-emerald-500 text-white flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="text-[10px] text-slate-400 font-medium">সরাসরি চ্যাট</div>
+                                    <div class="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">হোয়াটসঅ্যাপ সাপোর্ট</div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Email & Office address -->
+                        <div class="pt-2 border-t border-slate-800/80 flex flex-col sm:flex-row justify-between gap-2 text-xs text-slate-400">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-envelope text-emerald-400 shrink-0"></i>
+                                <a href="mailto:contact@adsbazarbd.com" class="hover:text-emerald-400 transition-colors">contact@adsbazarbd.com</a>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-location-dot text-emerald-400 shrink-0"></i>
+                                <span>বাড়ি # ১২, রোড # ০৫, ধানমন্ডি, ঢাকা</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Partners Modern Strip -->
+            <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-2 text-slate-400 font-semibold">
+                    <i class="fa-solid fa-lock text-emerald-400 text-xs"></i>
+                    <span>নিরাপদ পেমেন্ট পার্টনার:</span>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-2">
+                    <span class="px-3 py-1 rounded-lg bg-slate-800 text-pink-400 font-bold border border-slate-700/60 text-[11px] inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-mobile-screen-button"></i> বিকাশ (bKash)
+                    </span>
+                    <span class="px-3 py-1 rounded-lg bg-slate-800 text-orange-400 font-bold border border-slate-700/60 text-[11px] inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-bolt"></i> নগদ (Nagad)
+                    </span>
+                    <span class="px-3 py-1 rounded-lg bg-slate-800 text-purple-400 font-bold border border-slate-700/60 text-[11px] inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-rocket"></i> রকেট (Rocket)
+                    </span>
+                    <span class="px-3 py-1 rounded-lg bg-slate-800 text-sky-400 font-bold border border-slate-700/60 text-[11px] inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-building-columns"></i> ব্যাংক ট্রান্সফার
+                    </span>
+                </div>
+            </div>
+
+            <!-- Bottom Legal Bar & Socials -->
+            <div class="pt-2 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500 border-t border-slate-800/80">
+                <div class="text-center sm:text-left">
+                    &copy; {{ date('Y') }} <strong class="text-slate-300">Ads Bazar BD Ltd.</strong> সর্বস্বত্ব সংরক্ষিত।
+                </div>
+
+                <!-- Social Media Badges -->
+                <div class="flex items-center gap-2.5">
+                    <a href="https://wa.me/8801854820303" target="_blank" aria-label="WhatsApp" class="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-emerald-600 hover:text-white text-slate-400 flex items-center justify-center transition-all shadow-xs">
                         <i class="fa-brands fa-whatsapp text-xs"></i>
                     </a>
-                    <a href="#" aria-label="Facebook" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-blue-600 hover:text-white flex items-center justify-center transition-colors shadow-xs">
+                    <a href="#" aria-label="Facebook" class="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-blue-600 hover:text-white text-slate-400 flex items-center justify-center transition-all shadow-xs">
                         <i class="fa-brands fa-facebook-f text-xs"></i>
                     </a>
-                    <a href="#" aria-label="YouTube" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-rose-600 hover:text-white flex items-center justify-center transition-colors shadow-xs">
+                    <a href="#" aria-label="YouTube" class="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-rose-600 hover:text-white text-slate-400 flex items-center justify-center transition-all shadow-xs">
                         <i class="fa-brands fa-youtube text-xs"></i>
                     </a>
-                    <a href="#" aria-label="LinkedIn" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-sky-600 hover:text-white flex items-center justify-center transition-colors shadow-xs">
+                    <a href="#" aria-label="LinkedIn" class="w-8 h-8 rounded-full bg-slate-800/80 hover:bg-sky-600 hover:text-white text-slate-400 flex items-center justify-center transition-all shadow-xs">
                         <i class="fa-brands fa-linkedin-in text-xs"></i>
                     </a>
                 </div>
 
-                <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-slate-400">
+                <!-- Quick Legal Links -->
+                <div class="flex flex-wrap justify-center gap-4 text-slate-400">
                     <a href="{{ route('about') }}" class="hover:text-emerald-400 transition-colors">আমাদের সম্পর্কে</a>
-                    <a href="{{ route('faq') }}" class="hover:text-emerald-400 transition-colors">শর্তাবলী ও নিয়মাবলী</a>
+                    <a href="{{ route('faq') }}" class="hover:text-emerald-400 transition-colors">শর্তাবলী</a>
                     <a href="{{ route('faq') }}" class="hover:text-emerald-400 transition-colors">গোপনীয়তা নীতি</a>
                 </div>
             </div>
+
         </div>
     </footer>
 
